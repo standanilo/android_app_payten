@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.JDBC.addOrder;
 import static com.example.myapplication.JDBC.getProducts;
 
 import androidx.appcompat.app.AlertDialog;
@@ -8,7 +9,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.floatingActionButton2);
         // Set an onClickListener or perform any desired action
-        button.setOnClickListener(v -> order(orders));
+        button.setOnClickListener(v -> {
+            order(orders, this);
+        });
 
 //        button = new Button(this);
 //        button.setId(View.generateViewId());
@@ -94,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             button1.setOnClickListener(v -> {
                 int amount = orders.get(p) + 1;
                 num_of_orders.getAndIncrement();
-                orders.remove(p);
                 orders.put(p, amount);
                 button2.setEnabled(true);
                 button.setEnabled(true);
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             button2.setOnClickListener(v -> {
                 // Perform action when button is clicked
                 int amount = orders.get(p) - 1;
-                orders.remove(p);
                 orders.put(p, amount);
                 num_of_orders.getAndDecrement();
                 textView1.setText(String.valueOf(amount));
@@ -154,10 +155,14 @@ public class MainActivity extends AppCompatActivity {
 //        buttonContainer.addView(button);
 
     }
-    public void order(HashMap<Product, Integer> orders) {
+    public void order(HashMap<Product, Integer> orders, Activity mainActivity) {
+        HashMap<Product, Integer> current = new HashMap<>();
         orders.forEach((key, value) -> {
-            if (value != 0)
+            if (value != 0) {
                 Log.d("Order", "key: " + key + " value: " + value);
+                current.put(key, value);
+            }
+
         });
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -165,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         Log.d("Confirm", "YES");
-                        // switch to order activity
+                        addOrder(current, "Danilo");
+                        Intent secondActivityIntent = new Intent(mainActivity, CurrentOrder.class);
+                        startActivity(secondActivityIntent);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -176,12 +183,24 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+        builder.setMessage("Da li ste sigurni?").setPositiveButton("Da", dialogClickListener)
+                .setNegativeButton("Ne", dialogClickListener).show();
     }
 
-    public void op(View v){
-        Log.d("Text", (String) ((TextView)v).getText());
+    public void openEdit(View v){
+        if (((TextView)v).getText().equals("Products")) {
+            Log.d("Text", "Products babyyyy");
+            Intent secondActivityIntent = new Intent(this, EditActivity.class);
+            startActivity(secondActivityIntent);
+        }
+        // change to according activity
+    }
+    public void openOrders(View v){
+        if (((TextView)v).getText().equals("Orders")) {
+            Log.d("Text", "Orders babyyyy");
+            Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+            startActivity(secondActivityIntent);
+        }
         // change to according activity
     }
 }

@@ -4,4 +4,11 @@
     <string name="products">Products</string>
     <string name="orders">Orders</string>
     <string name="porudzbina">Porudzbina</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="ime">Ime</string>
+    <string name="cena">Cena</string>
+    <string name="brisi">Brisi</string>
+    <string name="izmeni">Izmeni</string>
+    <string name="unesi_ime">Unesite ime proizvoda:</string>
+    <string name="unesi_cena">Unesite cenu proizvoda:</string>
 </resources>
