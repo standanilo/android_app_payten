@@ -27,7 +27,7 @@ public class CurrentOrder extends AppCompatActivity {
         buttonContainer = findViewById(R.id.buttonContainer);
         Intent intent = getIntent();
         HashMap<Product, Integer> order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
-
+        int orderID = intent.getIntExtra("ID", 0);
         AtomicInteger totalCost = new AtomicInteger();
 
         order.forEach((key, value) -> {
@@ -64,6 +64,8 @@ public class CurrentOrder extends AppCompatActivity {
         button1.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, PayActivity.class);
             secondActivityIntent.putExtra("Price", totalCost.get());
+            secondActivityIntent.putExtra("ID", orderID);
+            secondActivityIntent.putExtra("From", "order");
             startActivity(secondActivityIntent);
         });
 

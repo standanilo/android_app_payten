@@ -170,9 +170,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         Log.d("Confirm", "YES");
-                        addOrder(current, "Danilo");
+                        int orderID = addOrder(current, "Danilo");
                         Intent secondActivityIntent = new Intent(mainActivity, CurrentOrder.class);
                         secondActivityIntent.putExtra("order", current);
+                        secondActivityIntent.putExtra("ID", orderID);
                         startActivity(secondActivityIntent);
                         break;
 

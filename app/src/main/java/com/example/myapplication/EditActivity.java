@@ -110,8 +110,8 @@ public class EditActivity extends AppCompatActivity {
                 rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
             } else {
                 rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-
             }
+
             // Add the button to the layout container
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(rowLayout);

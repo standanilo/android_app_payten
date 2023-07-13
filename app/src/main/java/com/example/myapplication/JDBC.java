@@ -85,7 +85,7 @@ public class JDBC {
         Connection connection = DB.getInstance().getConnection();
         String query = "UPDATE Product SET productPrice = ? WHERE productID = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(query)){
+        try (PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setInt(1, price);
             ps.setInt(2, id);
 
@@ -96,7 +96,7 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
     }
-    public static void addOrder(HashMap<Product, Integer> orders, String customer) {
+    public static int addOrder(HashMap<Product, Integer> orders, String customer) {
         Date date = new Date(System.currentTimeMillis());
         int finished = 0;
         AtomicInteger orderID = new AtomicInteger();
@@ -150,7 +150,23 @@ public class JDBC {
                 }
             });
         }
+        return orderID.get();
 
+    }
+
+    public static void finishOrder(int orderID) {
+        Connection connection = DB.getInstance().getConnection();
+        String q = "UPDATE Orders SET finished = 1 WHERE orderID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setInt(1, orderID);
+
+            ps.executeUpdate();
+
+            Log.d("Update", "Updated " + orderID);
+
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
     }
     public static boolean addProduct(String name, int price) {
         Connection connection = DB.getInstance().getConnection();
@@ -188,4 +204,43 @@ public class JDBC {
         }
         return false;
     }
+
+    public static ArrayList<Order> getOrders(){
+        ArrayList<Order> orders = new ArrayList<>();
+        Connection connection = DB.getInstance().getConnection();
+
+        try (
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from Orders");
+        ) {
+            ResultSetMetaData metaData = rs.getMetaData();
+            while(rs.next()){
+                int id = 0;
+                String customer = "";
+                Date date = null;
+                int finished = 0;
+                int price = 0;
+                for(int i = 1; i < metaData.getColumnCount() + 1; i++){
+                    if (metaData.getColumnName(i).equals("orderID")) {
+                        id = rs.getInt(i);
+                    } else if (metaData.getColumnName(i).equals("customerName")) {
+                        customer = rs.getString(i);
+                    } else if (metaData.getColumnName(i).equals("dateOf")) {
+                        date = rs.getDate(i);
+                    } else if (metaData.getColumnName(i).equals("finished")) {
+                        finished = rs.getInt(i);
+                    } else {
+                        price = rs.getInt(i);
+                    }
+                }
+                Order order = new Order(id, customer, date, finished, price);
+                orders.add(order);
+            }
+        }
+        catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+        return orders;
+    }
+
 }

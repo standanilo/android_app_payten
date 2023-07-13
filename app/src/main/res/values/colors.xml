@@ -7,4 +7,8 @@
     <color name="cyan3">#69D4EF</color>
     <color name="cyan4">#69D4EF</color>
     <color name="cyan5">#3498E4</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="green1">#73AD75</color>
+    <color name="red1">#EC6257</color>
 </resources>
