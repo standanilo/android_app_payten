@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="cyan">#B0ECFB</color>
+    <color name="cyan2">#D7F4FB</color>
+    <color name="cyan3">#69D4EF</color>
+    <color name="cyan4">#69D4EF</color>
+    <color name="cyan5">#3498E4</color>
+</resources>
