@@ -168,7 +168,9 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
     }
+
     public static boolean addProduct(String name, int price) {
+
         Connection connection = DB.getInstance().getConnection();
         String q = "select * from Product where productName = ?";
         try (PreparedStatement ps = connection.prepareStatement(q, PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -182,7 +184,6 @@ public class JDBC {
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
-
 
         String query = "insert into Product (productName, productPrice, productImage) values (?, ?, ?) ";
 
@@ -241,6 +242,32 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
         return orders;
+    }
+
+    public static HashMap<Product, Integer> getOrder(int orderID){
+        HashMap<Product, Integer> order = new HashMap<>();
+        Connection connection = DB.getInstance().getConnection();
+
+        String q = "SELECT pr.productID, pr.productName, pr.productPrice, pr.productImage, p.quantity FROM orders o, Order_product p, Product pr where o.orderID = p.orderID and o.orderID = ? and p.productID = pr.productID";
+
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setInt(1, orderID);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                int price = rs.getInt(3);
+                String image = rs.getString(4);
+                int quantity = rs.getInt(5);
+                Product product = new Product(id, name, price, image);
+                order.put(product, quantity);
+            }
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+
+        return order;
     }
 
 }

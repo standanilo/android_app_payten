@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent secondActivityIntent = new Intent(mainActivity, CurrentOrder.class);
                         secondActivityIntent.putExtra("order", current);
                         secondActivityIntent.putExtra("ID", orderID);
+                        secondActivityIntent.putExtra("From", "main");
                         startActivity(secondActivityIntent);
                         break;
 

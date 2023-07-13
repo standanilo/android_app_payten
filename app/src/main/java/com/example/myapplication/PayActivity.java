@@ -60,7 +60,6 @@ public class PayActivity extends AppCompatActivity {
                 }
             }, 3000);
         } else {
-
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -90,7 +89,7 @@ public class PayActivity extends AppCompatActivity {
     }
 
     private void changeIntent(String from) {
-        if (from.equals("all")) {
+        if (from.equals("order")) {
             Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
             startActivity(secondActivityIntent);
         } else {

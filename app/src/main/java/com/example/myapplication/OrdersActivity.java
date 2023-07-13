@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.JDBC.getOrder;
 import static com.example.myapplication.JDBC.getOrders;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,10 +63,10 @@ public class OrdersActivity extends AppCompatActivity {
             }
             rowLayout.addView(button);
             button.setOnClickListener(v -> {
-                Intent secondActivityIntent = new Intent(this, PayActivity.class);
-                secondActivityIntent.putExtra("Price", o.getPrice());
+                Intent secondActivityIntent = new Intent(this, CurrentOrder.class);
+                secondActivityIntent.putExtra("order", getOrder(o.getId()));
                 secondActivityIntent.putExtra("ID", o.getId());
-                secondActivityIntent.putExtra("From", "all");
+                secondActivityIntent.putExtra("From", "orders");
                 startActivity(secondActivityIntent);
             });
 

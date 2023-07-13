@@ -19,7 +19,6 @@ public class Product implements Serializable {
     public int getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
