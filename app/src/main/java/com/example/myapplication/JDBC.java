@@ -27,7 +27,6 @@ public class JDBC {
                 int id = 0;
                 String name = "";
                 int price = 0;
-                String image = "";
                 for(int i = 1; i < metaData.getColumnCount() + 1; i++){
                     if (metaData.getColumnName(i).equals("productID")) {
                         id = rs.getInt(i);
@@ -36,10 +35,10 @@ public class JDBC {
                     } else if (metaData.getColumnName(i).equals("productPrice")) {
                         price = rs.getInt(i);
                     } else {
-                        image = rs.getString(i);
+                        Log.e("Error", "Not right column");
                     }
                 }
-                Product product = new Product(id, name, price, image);
+                Product product = new Product(id, name, price);
                 products.add(product);
             }
         }
@@ -104,7 +103,7 @@ public class JDBC {
         String query = "insert into Orders (customerName, dateOf, finished, price) values (?, ?, ?, ?) ";
         AtomicInteger price = new AtomicInteger();
         orders.forEach((key, value) -> {
-            price.addAndGet(value * key.getPrice());
+            price.addAndGet((int) (value * key.getPrice()));
         });
         try (PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, customer);
@@ -129,14 +128,14 @@ public class JDBC {
             orders.forEach((key, value) -> {
                 int productID = key.getId();
                 int quantity = value;
-                int amount = quantity * key.getPrice();
+                double amount = quantity * key.getPrice();
                 String query1 = "insert into Order_product (orderID, productID, quantity, price) values (?, ?, ?, ?) ";
 
                 try (PreparedStatement ps = connection.prepareStatement(query1, PreparedStatement.RETURN_GENERATED_KEYS)){
                     ps.setInt(1, orderID.get());
                     ps.setInt(2, productID);
                     ps.setInt(3, quantity);
-                    ps.setInt(4, amount);
+                    ps.setDouble(4, amount);
 
                     ps.executeUpdate();
 
@@ -185,12 +184,11 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
 
-        String query = "insert into Product (productName, productPrice, productImage) values (?, ?, ?) ";
+        String query = "insert into Product (productName, productPrice) values (?, ?) ";
 
         try (PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setString(1, name);
             ps.setInt(2, price);
-            ps.setString(3, "");
 
             ps.executeUpdate();
 
@@ -248,7 +246,7 @@ public class JDBC {
         HashMap<Product, Integer> order = new HashMap<>();
         Connection connection = DB.getInstance().getConnection();
 
-        String q = "SELECT pr.productID, pr.productName, pr.productPrice, pr.productImage, p.quantity FROM orders o, Order_product p, Product pr where o.orderID = p.orderID and o.orderID = ? and p.productID = pr.productID";
+        String q = "SELECT pr.productID, pr.productName, pr.productPrice, p.quantity FROM orders o, Order_product p, Product pr where o.orderID = p.orderID and o.orderID = ? and p.productID = pr.productID";
 
         try (PreparedStatement ps = connection.prepareStatement(q)){
             ps.setInt(1, orderID);
@@ -258,9 +256,8 @@ public class JDBC {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
                 int price = rs.getInt(3);
-                String image = rs.getString(4);
-                int quantity = rs.getInt(5);
-                Product product = new Product(id, name, price, image);
+                int quantity = rs.getInt(4);
+                Product product = new Product(id, name, price);
                 order.put(product, quantity);
             }
         } catch (Exception e) {

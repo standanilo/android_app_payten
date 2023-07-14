@@ -61,17 +61,6 @@ public class MainActivity extends AppCompatActivity {
         for (Product p : products) {
             ConstraintLayout rowLayout = new ConstraintLayout(this);
 
-            ImageView imageView = new ImageView(this);
-            imageView.setId(View.generateViewId()); // Generate a unique ID for the ImageView
-            // Set the image resource or use an image loader library to load the image
-
-            String imageString = p.getImage();
-
-            int imageResource = getResources().getIdentifier(imageString, "drawable", getPackageName());
-
-            imageView.setImageResource(imageResource); // Replace with your image resource
-            rowLayout.addView(imageView);
-
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(p.getName());
@@ -125,10 +114,6 @@ public class MainActivity extends AppCompatActivity {
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(rowLayout);
 
-            // position of image
-            constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(imageView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-
             // position of add button
             constraintSet.connect(button1.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
             constraintSet.connect(button1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
@@ -144,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             constraintSet.connect(button2.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
 
             // position of product name
-            constraintSet.connect(textView.getId(), ConstraintSet.START, imageView.getId(), ConstraintSet.END, 16);
+            constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
             constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
             constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
             constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);

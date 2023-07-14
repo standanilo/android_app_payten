@@ -42,7 +42,7 @@ public class CurrentOrder extends AppCompatActivity {
 
                 rowLayout.addView(textView1);
 
-                totalCost.addAndGet(key.getPrice() * value);
+                totalCost.addAndGet((int) (key.getPrice() * value));
 
                 ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(rowLayout);
@@ -57,14 +57,14 @@ public class CurrentOrder extends AppCompatActivity {
 
         });
         TextView tv = findViewById(R.id.prices);
-        tv.setText(String.valueOf(totalCost.get()));
+        tv.setText(String.valueOf(totalCost.get()) + ".00");
 
         Button button1 = findViewById(R.id.pay);
         Button button2 = findViewById(R.id.pay_later);
 
         button1.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, PayActivity.class);
-            secondActivityIntent.putExtra("Price", totalCost.get());
+            secondActivityIntent.putExtra("Price", String.valueOf(totalCost.get()));
             secondActivityIntent.putExtra("ID", orderID);
             if (from.equals("main")) {
                 secondActivityIntent.putExtra("From", "main");
