@@ -20,6 +20,34 @@ public class Order {
 
     private String phone;
 
+    public Order() {
+
+    }
+
+    public int getStaff() {
+        return staff;
+    }
+
+    public void setStaff(int staff) {
+        this.staff = staff;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Order(int id, Date date, int finished, int price) {
         this.id = id;
         this.date = date;

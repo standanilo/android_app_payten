@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.JDBC.getOnlyOrder;
+import static com.example.myapplication.JDBC.type;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -58,6 +61,26 @@ public class CurrentOrder extends AppCompatActivity {
 
         Button button1 = findViewById(R.id.pay);
         Button button2 = findViewById(R.id.pay_later);
+
+        if (type.equals("kurir")) {
+            TextView name = findViewById(R.id.name2);
+            TextView phone = findViewById(R.id.phone2);
+            TextView address = findViewById(R.id.address2);
+
+            Order o = getOnlyOrder(orderID);
+            name.setText(o.getCustomer());
+            phone.setText(o.getPhone());
+            address.setText(o.getAddress());
+
+        } else {
+            TextView name = findViewById(R.id.name1);
+            TextView phone = findViewById(R.id.phone1);
+            TextView address = findViewById(R.id.address1);
+
+            name.setEnabled(false);
+            phone.setEnabled(false);
+            address.setEnabled(false);
+        }
 
         button1.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, PayActivity.class);

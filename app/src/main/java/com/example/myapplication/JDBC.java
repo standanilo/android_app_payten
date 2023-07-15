@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JDBC {
 
-    private static int courier = 1;
     public static int currentCourierID = 0;
 
     public static String currentCourierName = "";
@@ -178,8 +177,8 @@ public class JDBC {
         String q = "update orders set customerName = ?, staff = ?, address = ?, phone = ? where orderID = ?";
         try (PreparedStatement ps = connection.prepareStatement(q)){
             ps.setString(1, name);
+            int courier = (getLastCourier() % 3) + 1;
             ps.setInt(2, courier);
-            courier = (courier % 3) + 1;
             ps.setString(3, address);
             ps.setString(4, phone);
             ps.setInt(5, orderID);
@@ -240,15 +239,12 @@ public class JDBC {
             ResultSetMetaData metaData = rs.getMetaData();
             while(rs.next()){
                 int id = 0;
-                String customer = "";
                 Date date = null;
                 int finished = 0;
                 int price = 0;
                 for(int i = 1; i < metaData.getColumnCount() + 1; i++){
                     if (metaData.getColumnName(i).equals("orderID")) {
                         id = rs.getInt(i);
-                    } else if (metaData.getColumnName(i).equals("customerName")) {
-                        customer = rs.getString(i);
                     } else if (metaData.getColumnName(i).equals("dateOf")) {
                         date = rs.getDate(i);
                     } else if (metaData.getColumnName(i).equals("finished")) {
@@ -315,6 +311,32 @@ public class JDBC {
         return order;
     }
 
+    public static Order getOnlyOrder(int orderID){
+        Order order = new Order();
+        Connection connection = DB.getInstance().getConnection();
+
+        String q = "SELECT * FROM orders where orderID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setInt(1, orderID);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                order.setId(rs.getInt(1));
+                order.setCustomer(rs.getString(2));
+                order.setDate(rs.getDate(3));
+                order.setFinished(rs.getInt(4));
+                order.setPrice(rs.getInt(5));
+                order.setStaff(rs.getInt(6));
+                order.setAddress(rs.getString(7));
+                order.setPhone(rs.getString(8));
+            }
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+
+        return order;
+    }
     public static String getStaff(String username, String password) {
         Connection connection = DB.getInstance().getConnection();
         String q = "SELECT staffID, type, name FROM Staff where username = ? and password = ?";
@@ -336,5 +358,29 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
         return "";
+    }
+
+    public static int getLastCourier() {
+        Connection connection = DB.getInstance().getConnection();
+        int lastCourier = 0;
+        try (
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT TOP 1 staff FROM orders where staff is not null order by orderID desc");
+        ) {
+            ResultSetMetaData metaData = rs.getMetaData();
+            if(rs.next()){
+                for(int i = 1; i < metaData.getColumnCount() + 1; i++){
+                    if (metaData.getColumnName(i).equals("staff")) {
+                        lastCourier = rs.getInt(i);
+                    } else {
+                        Log.e("Error", "Not right column");
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+        return lastCourier;
     }
 }

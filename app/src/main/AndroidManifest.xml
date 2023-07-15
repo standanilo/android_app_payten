@@ -19,9 +19,6 @@
             android:name=".CustomerActivity"
             android:exported="false" />
         <activity
-            android:name=".PayLaterActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
