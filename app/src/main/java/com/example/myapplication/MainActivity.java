@@ -8,10 +8,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,5 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.setMessage("Pogresno uneti podaci").setPositiveButton("OK", dialogClickListener).show();
             }
         });
+
     }
+
 }

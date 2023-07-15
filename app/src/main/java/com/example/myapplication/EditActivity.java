@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import static com.example.myapplication.JDBC.deleteProduct;
 import static com.example.myapplication.JDBC.getProducts;
+import static com.example.myapplication.JDBC.type;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,12 +48,19 @@ public class EditActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(p.getName());
+            if (type.equals("kurir")) {
+                textView.setTextSize(20);
+                textView.setPadding(0, 40, 0, 40);
+            }
             rowLayout.addView(textView);
+
 
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText(R.string.izmeni);
-            rowLayout.addView(button1);
+            if (!type.equals("kurir")) {
+                rowLayout.addView(button1);
+            }
 
 //            TextView textView1 = new TextView(this);
 //            textView1.setId(View.generateViewId());
@@ -62,7 +70,9 @@ public class EditActivity extends AppCompatActivity {
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText(R.string.brisi);
-            rowLayout.addView(button2);
+            if (!type.equals("kurir")) {
+                rowLayout.addView(button2);
+            }
 
             // Set an onClickListener or perform any desired action
             button1.setOnClickListener(v -> {
@@ -121,12 +131,13 @@ public class EditActivity extends AppCompatActivity {
             constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
             constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
             constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-            constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);
+//            constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);
             constraintSet.applyTo(rowLayout);
 
             buttonContainer.addView(rowLayout);
         }
-        buttonContainer.addView(button);
+        if (!type.equals("kurir"))
+            buttonContainer.addView(button);
     }
 
     public void openHome(View v){

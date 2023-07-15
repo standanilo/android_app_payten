@@ -234,7 +234,7 @@ public class JDBC {
 
         try (
                 Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("select * from Orders");
+                ResultSet rs = stmt.executeQuery("select * from Orders order by orderID desc");
         ) {
             ResultSetMetaData metaData = rs.getMetaData();
             while(rs.next()){
