@@ -12,8 +12,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Random;
 
 public class PayActivity extends AppCompatActivity {
@@ -24,13 +22,12 @@ public class PayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
         Intent intent = getIntent();
-        String p = intent.getStringExtra("Price");
-        double price = Double.parseDouble(p);
+        int price = intent.getIntExtra("Price", 0);
         int orderID = intent.getIntExtra("ID", 0);
         String from = intent.getStringExtra("From");
 
         TextView tv = findViewById(R.id.price);
-        tv.setText(String.valueOf(price) + "0");
+        tv.setText(String.valueOf(price));
 
 
         String cardNumber = getCardNumber();
@@ -96,7 +93,7 @@ public class PayActivity extends AppCompatActivity {
             Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
             startActivity(secondActivityIntent);
         } else {
-            Intent secondActivityIntent = new Intent(this, MainActivity.class);
+            Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
             startActivity(secondActivityIntent);
         }
     }

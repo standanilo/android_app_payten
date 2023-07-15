@@ -14,10 +14,15 @@ public class Order {
 
     private int price;
 
-    public Order(int id, String customer, Date date, int finished, int price) {
+    private int staff;
+
+    private String address;
+
+    private String phone;
+
+    public Order(int id, Date date, int finished, int price) {
         this.id = id;
         this.date = date;
-        this.customer = customer;
         this.finished = finished;
         this.price = price;
     }

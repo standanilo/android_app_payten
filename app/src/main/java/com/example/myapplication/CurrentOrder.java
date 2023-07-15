@@ -1,14 +1,11 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.changePrice;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -57,14 +54,14 @@ public class CurrentOrder extends AppCompatActivity {
 
         });
         TextView tv = findViewById(R.id.prices);
-        tv.setText(String.valueOf(totalCost.get()) + ".00");
+        tv.setText(String.valueOf(totalCost.get()));
 
         Button button1 = findViewById(R.id.pay);
         Button button2 = findViewById(R.id.pay_later);
 
         button1.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, PayActivity.class);
-            secondActivityIntent.putExtra("Price", String.valueOf(totalCost.get()));
+            secondActivityIntent.putExtra("Price", totalCost.get());
             secondActivityIntent.putExtra("ID", orderID);
             if (from.equals("main")) {
                 secondActivityIntent.putExtra("From", "main");
@@ -76,7 +73,8 @@ public class CurrentOrder extends AppCompatActivity {
 
         button2.setOnClickListener(v -> {
             if (from.equals("main")) {
-                Intent secondActivityIntent = new Intent(this, MainActivity.class);
+                Intent secondActivityIntent = new Intent(this, CustomerActivity.class);
+                secondActivityIntent.putExtra("ID", orderID);
                 startActivity(secondActivityIntent);
             } else {
                 Intent secondActivityIntent = new Intent(this, OrdersActivity.class);

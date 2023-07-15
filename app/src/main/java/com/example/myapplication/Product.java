@@ -6,7 +6,7 @@ public class Product implements Serializable {
 
     private int id;
     private String name;
-    private double price;
+    private int price;
 
     public Product(int id, String name, int price) {
         this.id = id;
@@ -21,7 +21,7 @@ public class Product implements Serializable {
         return name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 

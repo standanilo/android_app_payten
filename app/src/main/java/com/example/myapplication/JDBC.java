@@ -14,6 +14,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JDBC {
 
+    private static int courier = 1;
+    public static int currentCourierID = 0;
+
+    public static String currentCourierName = "";
+
+    public static String type = "";
     public static ArrayList<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
         Connection connection = DB.getInstance().getConnection();
@@ -95,21 +101,21 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
     }
-    public static int addOrder(HashMap<Product, Integer> orders, String customer) {
+    public static int addOrder(HashMap<Product, Integer> orders) {
         Date date = new Date(System.currentTimeMillis());
         int finished = 0;
         AtomicInteger orderID = new AtomicInteger();
         Connection connection = DB.getInstance().getConnection();
-        String query = "insert into Orders (customerName, dateOf, finished, price) values (?, ?, ?, ?) ";
+        String query = "insert into Orders (dateOf, finished, price) values (?, ?, ?) ";
         AtomicInteger price = new AtomicInteger();
+
         orders.forEach((key, value) -> {
-            price.addAndGet((int) (value * key.getPrice()));
+            price.addAndGet(value * key.getPrice());
         });
         try (PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
-            ps.setString(1, customer);
-            ps.setDate(2, date);
-            ps.setInt(3, finished);
-            ps.setInt(4, price.get());
+            ps.setDate(1, date);
+            ps.setInt(2, finished);
+            ps.setInt(3, price.get());
 
             ps.executeUpdate();
 
@@ -128,14 +134,14 @@ public class JDBC {
             orders.forEach((key, value) -> {
                 int productID = key.getId();
                 int quantity = value;
-                double amount = quantity * key.getPrice();
+                int amount = quantity * key.getPrice();
                 String query1 = "insert into Order_product (orderID, productID, quantity, price) values (?, ?, ?, ?) ";
 
                 try (PreparedStatement ps = connection.prepareStatement(query1, PreparedStatement.RETURN_GENERATED_KEYS)){
                     ps.setInt(1, orderID.get());
                     ps.setInt(2, productID);
                     ps.setInt(3, quantity);
-                    ps.setDouble(4, amount);
+                    ps.setInt(4, amount);
 
                     ps.executeUpdate();
 
@@ -150,7 +156,6 @@ public class JDBC {
             });
         }
         return orderID.get();
-
     }
 
     public static void finishOrder(int orderID) {
@@ -158,6 +163,26 @@ public class JDBC {
         String q = "UPDATE Orders SET finished = 1 WHERE orderID = ?";
         try (PreparedStatement ps = connection.prepareStatement(q)){
             ps.setInt(1, orderID);
+
+            ps.executeUpdate();
+
+            Log.d("Update", "Updated " + orderID);
+
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+    }
+
+    public static void updateOrder(int orderID, String name, String address, String phone) {
+        Connection connection = DB.getInstance().getConnection();
+        String q = "update orders set customerName = ?, staff = ?, address = ?, phone = ? where orderID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setString(1, name);
+            ps.setInt(2, courier);
+            courier = (courier % 3) + 1;
+            ps.setString(3, address);
+            ps.setString(4, phone);
+            ps.setInt(5, orderID);
 
             ps.executeUpdate();
 
@@ -228,15 +253,38 @@ public class JDBC {
                         date = rs.getDate(i);
                     } else if (metaData.getColumnName(i).equals("finished")) {
                         finished = rs.getInt(i);
-                    } else {
+                    } else if (metaData.getColumnName(i).equals("price")) {
                         price = rs.getInt(i);
                     }
                 }
-                Order order = new Order(id, customer, date, finished, price);
+                Order order = new Order(id, date, finished, price);
                 orders.add(order);
             }
         }
         catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+        return orders;
+    }
+
+    public static ArrayList<Order> getOrdersForCourier(int courierID) {
+        ArrayList<Order> orders = new ArrayList<>();
+        Connection connection = DB.getInstance().getConnection();
+        String q = "select * from Orders where staff = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setInt(1, courierID);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int orderID = rs.getInt(1);
+                Date date = rs.getDate(3);
+                int finished = rs.getInt(4);
+                int price = rs.getInt(5);
+                Order order = new Order(orderID, date, finished, price);
+                orders.add(order);
+            }
+        } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
         return orders;
@@ -267,4 +315,26 @@ public class JDBC {
         return order;
     }
 
+    public static String getStaff(String username, String password) {
+        Connection connection = DB.getInstance().getConnection();
+        String q = "SELECT staffID, type, name FROM Staff where username = ? and password = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(q)){
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                type = rs.getString(2);
+                currentCourierID = rs.getInt(1);
+                currentCourierName = rs.getString(3);
+                return rs.getString(2);
+            } else {
+                return "";
+            }
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+        return "";
+    }
 }

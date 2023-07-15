@@ -1,7 +1,10 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.JDBC.currentCourierID;
 import static com.example.myapplication.JDBC.getOrder;
 import static com.example.myapplication.JDBC.getOrders;
+import static com.example.myapplication.JDBC.getOrdersForCourier;
+import static com.example.myapplication.JDBC.type;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,7 +28,12 @@ public class OrdersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
-        ArrayList<Order> orders = getOrders();
+        ArrayList<Order> orders = new ArrayList<>();
+        if (type.equals("trgovac")) {
+            orders = getOrders();
+        } else {
+            orders = getOrdersForCourier(currentCourierID);
+        }
         buttonContainer = findViewById(R.id.buttonContainer_edit);
 
         for (Order o : orders) {
@@ -36,11 +44,14 @@ public class OrdersActivity extends AppCompatActivity {
             textView.setText("ID: " + String.valueOf(o.getId()));
             textView.setTextSize(25);
             textView.setHeight(150);
+            textView.setWidth(300);
             rowLayout.addView(textView);
 
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
-            textView1.setText(o.getCustomer() + "/");
+            if (o.getCustomer() != null) {
+                textView1.setText(o.getCustomer() + "/");
+            }
             textView1.setTextSize(18);
             rowLayout.addView(textView1);
 
@@ -52,16 +63,20 @@ public class OrdersActivity extends AppCompatActivity {
 
             TextView textView3 = new TextView(this);
             textView3.setId(View.generateViewId());
-            textView3.setText(String.valueOf(o.getPrice()) + " din");
+            textView3.setText(o.getPrice() + " din");
             textView3.setTextSize(18);
             rowLayout.addView(textView3);
+
+
             Button button = new Button(this);
             button.setId(View.generateViewId());
             button.setText(R.string.plati);
-            if (o.getFinished() == 1) {
+
+            if (o.getFinished() == 1 || JDBC.type.equals("trgovac")) {
                 button.setVisibility(View.GONE);
             }
             rowLayout.addView(button);
+
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, CurrentOrder.class);
                 secondActivityIntent.putExtra("order", getOrder(o.getId()));
@@ -125,7 +140,7 @@ public class OrdersActivity extends AppCompatActivity {
     public void openHome(View v){
         if (((TextView)v).getText().equals("Home")) {
             Log.d("Text", "Home babyyyy");
-            Intent secondActivityIntent = new Intent(this, MainActivity.class);
+            Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
             startActivity(secondActivityIntent);
         }
     }

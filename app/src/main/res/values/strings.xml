@@ -8,7 +8,12 @@
     <string name="ime">Ime</string>
     <string name="iznos">Iznos</string>
     <string name="nazad">Nazad</string>
+    <string name="korisnicko_ime">Korisnicko ime</string>
+    <string name="uloguj_se">Uloguj se</string>
+    <string name="sifra">Sifra</string>
     <string name="ime_proizvoda">Ime proizvoda:</string>
+    <string name="adresa">Adresa</string>
+    <string name="telefon">Broj telefona</string>
     <string name="id_proizvoda">ID proizvoda:</string>
     <string name="plati">Plati</string>
     <string name="plati_kasnije">Plati kasnije</string>

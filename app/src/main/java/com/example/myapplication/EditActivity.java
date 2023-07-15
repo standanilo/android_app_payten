@@ -14,11 +14,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -135,7 +132,7 @@ public class EditActivity extends AppCompatActivity {
     public void openHome(View v){
         if (((TextView)v).getText().equals("Home")) {
             Log.d("Text", "Home babyyyy");
-            Intent secondActivityIntent = new Intent(this, MainActivity.class);
+            Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
             startActivity(secondActivityIntent);
         }
     }
