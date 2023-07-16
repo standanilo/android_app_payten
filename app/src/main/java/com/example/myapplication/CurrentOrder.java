@@ -37,12 +37,12 @@ public class CurrentOrder extends AppCompatActivity {
 
                 TextView textView1 = new TextView(this);
                 textView1.setId(View.generateViewId());
-                textView1.setText(key.getName() + ": " + String.valueOf(key.getPrice()) + " x " + String.valueOf(value) + " = " + String.valueOf(key.getPrice() * value));
+                textView1.setText(key.getProductName() + ": " + String.valueOf(key.getProductPrice()) + " x " + String.valueOf(value) + " = " + String.valueOf(key.getProductPrice() * value));
                 textView1.setTextSize(20);
 
                 rowLayout.addView(textView1);
 
-                totalCost.addAndGet((int) (key.getPrice() * value));
+                totalCost.addAndGet((int) (key.getProductPrice() * value));
 
                 ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(rowLayout);
@@ -68,7 +68,7 @@ public class CurrentOrder extends AppCompatActivity {
             TextView address = findViewById(R.id.address2);
 
             Order o = getOnlyOrder(orderID);
-            name.setText(o.getCustomer());
+            name.setText(o.getCustomerName());
             phone.setText(o.getPhone());
             address.setText(o.getAddress());
 

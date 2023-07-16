@@ -73,7 +73,7 @@ public class MerchantActivity extends AppCompatActivity {
 
                 TextView textView = new TextView(this);
                 textView.setId(View.generateViewId());
-                textView.setText(p.getName());
+                textView.setText(p.getProductName());
                 rowLayout.addView(textView);
 
                 Button button1 = new Button(this);
@@ -100,7 +100,7 @@ public class MerchantActivity extends AppCompatActivity {
                     button2.setEnabled(true);
                     button.setEnabled(true);
                     textView1.setText(String.valueOf(amount));
-                    incPrice(p.getPrice());
+                    incPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
                 });
                 button2.setOnClickListener(v -> {
@@ -115,7 +115,7 @@ public class MerchantActivity extends AppCompatActivity {
                     if (num_of_orders.get() == 0) {
                         button.setEnabled(false);
                     }
-                    decPrice(p.getPrice());
+                    decPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
                 });
                 if (products.indexOf(p) % 2 == 0) {

@@ -1,40 +1,67 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "Product")
 public class Product implements Serializable {
 
-    private int id;
-    private String name;
-    private int price;
+    @PrimaryKey(autoGenerate = true)
+    private int productID;
+    @NonNull
+    @ColumnInfo(name = "productName")
+    private String productName;
+    @ColumnInfo(name = "productPrice")
+    private int productPrice;
+
+    public Product() {
+
+    }
+
+    public Product(String name, int price) {
+        this.productName = name;
+        this.productPrice = price;
+    }
 
     public Product(int id, String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+        this.productID = id;
+        this.productName = name;
+        this.productPrice = price;
     }
 
-    public int getId() {
-        return id;
-    }
-    public String getName() {
-        return name;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
-    public int getPrice() {
-        return price;
+    public void setProductName(@NonNull String productName) {
+        this.productName = productName;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public int getProductID() {
+        return productID;
+    }
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
     }
 
 
     @Override
     public String toString() {
         return "Product:" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price;
+                "id=" + productID +
+                ", name='" + productName + '\'' +
+                ", price=" + productPrice;
     }
 }

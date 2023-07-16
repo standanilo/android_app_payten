@@ -1,23 +1,36 @@
 package com.example.myapplication;
 
-import java.sql.Date;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
+import java.sql.Date;
+@Entity(tableName = "Orders", foreignKeys = @ForeignKey(entity = Staff.class, parentColumns = "staffID", childColumns = "staff", onUpdate = ForeignKey.CASCADE))
 public class Order {
 
-    private int id;
+    @PrimaryKey(autoGenerate = true)
+    private int orderID;
 
-    private String customer;
+    @ColumnInfo(name = "customerName")
+    private String customerName;
 
-    private Date date;
+    @ColumnInfo(name = "dateOf")
+    private String dateOf;
 
+    @ColumnInfo(name = "finished")
     private int finished;
 
+    @ColumnInfo(name = "price")
     private int price;
 
-    private int staff;
+    @ColumnInfo(name = "staff")
+    private Integer staff;
 
+    @ColumnInfo(name = "address")
     private String address;
 
+    @ColumnInfo(name = "phone")
     private String phone;
 
     public Order() {
@@ -48,35 +61,40 @@ public class Order {
         this.phone = phone;
     }
 
-    public Order(int id, Date date, int finished, int price) {
-        this.id = id;
-        this.date = date;
+    public Order(String date, int finished, int price) {
+        this.dateOf = date;
+        this.finished = finished;
+        this.price = price;
+    }
+    public Order(int id, String date, int finished, int price) {
+        this.orderID = id;
+        this.dateOf = date;
         this.finished = finished;
         this.price = price;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDateOf() {
+        return dateOf;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateOf(String dateOf) {
+        this.dateOf = dateOf;
     }
 
     public int getFinished() {

@@ -29,63 +29,70 @@ public class PayActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.price);
         tv.setText(String.valueOf(price));
 
+//        intent = new Intent("com.payten.ecr.action");
+//        intent.setPackage("com.payten.paytenapos");
+//        intent.putExtra("ecrJson", ecrJsonRequestData);
+//        intent.putExtra("senderIntentFilter", senderIntentFilterValue);
+//        intent.putExtra("senderPackage", senderPackageValue);
+//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES;
+//        sendBroadcast(intent);
 
-        String cardNumber = getCardNumber();
-
-        Log.d("card", cardNumber);
-
-        if (checkPayment()) {
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    finishOrder(orderID);
-                                    changeIntent(from);
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    // stay on same activity
-                                    break;
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PayActivity.this);
-                    builder.setMessage("Broj kartice: " + cardNumber + ", odobreno").setPositiveButton("OK", dialogClickListener).show();
-                }
-            }, 3000);
-        } else {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    finish();
-                                    startActivity(getIntent());
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    // stay on same activity
-                                    break;
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PayActivity.this);
-                    builder.setMessage("Broj kartice: " + cardNumber + ", odbijeno").setPositiveButton("OK", dialogClickListener).show();
-                }
-            }, 3000);
-        }
-        if (finished) {
-        }
+//        String cardNumber = getCardNumber();
+//
+//        Log.d("card", cardNumber);
+//
+//        if (checkPayment()) {
+//
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            switch (which){
+//                                case DialogInterface.BUTTON_POSITIVE:
+//                                    finishOrder(orderID);
+//                                    changeIntent(from);
+//                                    break;
+//
+//                                case DialogInterface.BUTTON_NEGATIVE:
+//                                    // stay on same activity
+//                                    break;
+//                            }
+//                        }
+//                    };
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(PayActivity.this);
+//                    builder.setMessage("Broj kartice: " + cardNumber + ", odobreno").setPositiveButton("OK", dialogClickListener).show();
+//                }
+//            }, 3000);
+//        } else {
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            switch (which){
+//                                case DialogInterface.BUTTON_POSITIVE:
+//                                    finish();
+//                                    startActivity(getIntent());
+//                                    break;
+//
+//                                case DialogInterface.BUTTON_NEGATIVE:
+//                                    // stay on same activity
+//                                    break;
+//                            }
+//                        }
+//                    };
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(PayActivity.this);
+//                    builder.setMessage("Broj kartice: " + cardNumber + ", odbijeno").setPositiveButton("OK", dialogClickListener).show();
+//                }
+//            }, 3000);
+//        }
+//        if (finished) {
+//        }
     }
 
     private void changeIntent(String from) {

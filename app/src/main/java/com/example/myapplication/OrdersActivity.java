@@ -41,7 +41,7 @@ public class OrdersActivity extends AppCompatActivity {
 
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
-            textView.setText("ID: " + String.valueOf(o.getId()));
+            textView.setText("ID: " + String.valueOf(o.getOrderID()));
             textView.setTextSize(25);
             textView.setHeight(150);
             textView.setWidth(300);
@@ -49,15 +49,15 @@ public class OrdersActivity extends AppCompatActivity {
 
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
-            if (o.getCustomer() != null) {
-                textView1.setText(o.getCustomer() + "/");
+            if (o.getCustomerName() != null) {
+                textView1.setText(o.getCustomerName() + "/");
             }
             textView1.setTextSize(18);
             rowLayout.addView(textView1);
 
             TextView textView2 = new TextView(this);
             textView2.setId(View.generateViewId());
-            textView2.setText(String.valueOf(o.getDate()) + "/");
+            textView2.setText(String.valueOf(o.getDateOf()) + "/");
             textView2.setTextSize(18);
             rowLayout.addView(textView2);
 
@@ -79,8 +79,8 @@ public class OrdersActivity extends AppCompatActivity {
 
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, CurrentOrder.class);
-                secondActivityIntent.putExtra("order", getOrder(o.getId()));
-                secondActivityIntent.putExtra("ID", o.getId());
+                secondActivityIntent.putExtra("order", getOrder(o.getOrderID()));
+                secondActivityIntent.putExtra("ID", o.getOrderID());
                 secondActivityIntent.putExtra("From", "orders");
                 startActivity(secondActivityIntent);
             });

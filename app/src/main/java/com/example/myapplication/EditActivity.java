@@ -47,7 +47,7 @@ public class EditActivity extends AppCompatActivity {
 
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
-            textView.setText(p.getName());
+            textView.setText(p.getProductName());
             if (type.equals("kurir")) {
                 textView.setTextSize(20);
                 textView.setPadding(0, 40, 0, 40);
@@ -77,10 +77,10 @@ public class EditActivity extends AppCompatActivity {
             // Set an onClickListener or perform any desired action
             button1.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, ProductActivity.class);
-                secondActivityIntent.putExtra("name", p.getName());
-                secondActivityIntent.putExtra("price", p.getPrice());
-                secondActivityIntent.putExtra("id", p.getId());
-                Log.d("Product", p.getName() + ": cena: " + p.getPrice());
+                secondActivityIntent.putExtra("name", p.getProductName());
+                secondActivityIntent.putExtra("price", p.getProductPrice());
+                secondActivityIntent.putExtra("id", p.getProductID());
+                Log.d("Product", p.getProductName() + ": cena: " + p.getProductPrice());
                 startActivity(secondActivityIntent);
             });
             button2.setOnClickListener(v -> {
