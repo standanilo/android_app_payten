@@ -202,6 +202,7 @@ public class StaffActivity extends AppCompatActivity {
 
     public void goBack(View view) {
         Intent secondActivityIntent = new Intent(this, MainActivity.class);
+        finish();
         startActivity(secondActivityIntent);
     }
 }

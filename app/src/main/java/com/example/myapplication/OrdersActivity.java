@@ -229,6 +229,7 @@ public class OrdersActivity extends AppCompatActivity {
         if (((TextView)v).getText().equals("Products")) {
             Log.d("Text", "Products babyyyy");
             Intent secondActivityIntent = new Intent(this, EditActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         }
         // change to according activity
@@ -237,6 +238,7 @@ public class OrdersActivity extends AppCompatActivity {
         if (((TextView)v).getText().equals("Home")) {
             Log.d("Text", "Home babyyyy");
             Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         }
     }

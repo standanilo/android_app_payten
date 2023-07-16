@@ -79,9 +79,9 @@ public class CurrentOrderActivity extends AppCompatActivity {
             TextView phone = findViewById(R.id.phone1);
             TextView address = findViewById(R.id.address1);
 
-            name.setEnabled(false);
-            phone.setEnabled(false);
-            address.setEnabled(false);
+            name.setVisibility(View.INVISIBLE);
+            phone.setVisibility(View.INVISIBLE);
+            address.setVisibility(View.INVISIBLE);
         }
 
         button1.setOnClickListener(v -> {

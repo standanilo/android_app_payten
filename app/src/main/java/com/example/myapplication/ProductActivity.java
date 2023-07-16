@@ -44,6 +44,7 @@ public class ProductActivity extends AppCompatActivity {
                 changePrice(id, newPrice, dao);
             }
             Intent secondActivityIntent = new Intent(this, EditActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         });
     }

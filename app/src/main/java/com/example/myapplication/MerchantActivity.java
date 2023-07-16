@@ -191,6 +191,7 @@ public class MerchantActivity extends AppCompatActivity {
             button.setEnabled(true);
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+                finish();
                 startActivity(secondActivityIntent);
             });
 
@@ -247,6 +248,7 @@ public class MerchantActivity extends AppCompatActivity {
         if (((TextView)v).getText().equals("Products")) {
             Log.d("Text", "Products babyyyy");
             Intent secondActivityIntent = new Intent(this, EditActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         }
         // change to according activity
@@ -255,6 +257,7 @@ public class MerchantActivity extends AppCompatActivity {
         if (((TextView)v).getText().equals("Orders")) {
             Log.d("Text", "Orders babyyyy");
             Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         }
         // change to according activity
