@@ -10,6 +10,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class JDBC {
@@ -19,6 +21,10 @@ public class JDBC {
     public static String currentCourierName = "";
 
     public static String type = "";
+
+    public static ArrayList<Product> getProducts(Dao dao) {
+        return (ArrayList<Product>) dao.getProducts();
+    }
     public static ArrayList<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
         Connection connection = DB.getInstance().getConnection();
@@ -53,6 +59,22 @@ public class JDBC {
         return products;
     }
 
+    public static boolean deleteProduct(String name, Dao dao) {
+        Product product = dao.findProduct(name);
+        if (product != null) {
+            Log.d("ID", "id: " + product.getProductID());
+        } else {
+            Log.e("ID", " id: 0" );
+            return false;
+        }
+        int deleted = dao.deleteProduct(product);
+        if (deleted > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     public static boolean deleteProduct(String name) {
         Connection connection = DB.getInstance().getConnection();
         String q = "select * from Product where productName = ?";
@@ -85,6 +107,9 @@ public class JDBC {
         return false;
     }
 
+    public static void changePrice(int id, int price, Dao dao) {
+        dao.changePrice(id, price);
+    }
     public static void changePrice(int id, int price) {
         Connection connection = DB.getInstance().getConnection();
         String query = "UPDATE Product SET productPrice = ? WHERE productID = ?";
@@ -100,6 +125,30 @@ public class JDBC {
             Log.e("Error", e.getMessage());
         }
     }
+
+    public static int addOrder(HashMap<Product, Integer> orders, Dao dao) {
+        Date date = new Date(System.currentTimeMillis());
+        int finished = 0;
+        AtomicInteger price = new AtomicInteger();
+
+        orders.forEach((key, value) -> {
+            price.addAndGet(value * key.getProductPrice());
+        });
+        long id = dao.addOrd(new Order(date.toString(), finished, price.get()));
+
+        if (id != 0) {
+            orders.forEach((key, value) -> {
+                int productID = key.getProductID();
+                int quantity = value;
+                int amount = quantity * key.getProductPrice();
+                int idOP = (int) dao.addOP(new OrderProduct((int) id, productID, quantity, amount));
+                if (idOP == 0) {
+                    Log.e("Error", "Couldn't add product " + productID);
+                }
+            });
+        }
+        return (int) id;
+    }
     public static int addOrder(HashMap<Product, Integer> orders) {
         Date date = new Date(System.currentTimeMillis());
         int finished = 0;
@@ -109,7 +158,7 @@ public class JDBC {
         AtomicInteger price = new AtomicInteger();
 
         orders.forEach((key, value) -> {
-            price.addAndGet(value * key.getPrice());
+            price.addAndGet(value * key.getProductPrice());
         });
         try (PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
             ps.setDate(1, date);
@@ -131,9 +180,9 @@ public class JDBC {
         if (orderID.get() != 0) {
 
             orders.forEach((key, value) -> {
-                int productID = key.getId();
+                int productID = key.getProductID();
                 int quantity = value;
-                int amount = quantity * key.getPrice();
+                int amount = quantity * key.getProductPrice();
                 String query1 = "insert into Order_product (orderID, productID, quantity, price) values (?, ?, ?, ?) ";
 
                 try (PreparedStatement ps = connection.prepareStatement(query1, PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -157,6 +206,9 @@ public class JDBC {
         return orderID.get();
     }
 
+    public static void finishOrder(int orderID, Dao dao) {
+        dao.finishOrder(orderID);
+    }
     public static void finishOrder(int orderID) {
         Connection connection = DB.getInstance().getConnection();
         String q = "UPDATE Orders SET finished = 1 WHERE orderID = ?";
@@ -172,6 +224,33 @@ public class JDBC {
         }
     }
 
+    public static void updateOrder(int orderID, String name, String address, String phone, Dao dao) {
+        Staff courier = dao.getLastCourier();
+        Order order = dao.getOnlyOrder(orderID);
+        if (courier == null) {
+            courier = dao.getCourier().get(0);
+        }
+        List<Staff> couriers = dao.getCourier();
+
+        int last = -1;
+
+        for(Staff staff : couriers) {
+            last++;
+            if (staff.getStaffID() == courier.getStaffID()) {
+                break;
+            }
+        }
+
+        if (last == couriers.size() - 1) {
+            order.setStaff(couriers.get(0).getStaffID());
+        } else {
+            order.setStaff(couriers.get(last + 1).getStaffID());
+        }
+        order.setCustomerName(name);
+        order.setAddress(address);
+        order.setPhone(phone);
+        dao.updateOrder(order);
+    }
     public static void updateOrder(int orderID, String name, String address, String phone) {
         Connection connection = DB.getInstance().getConnection();
         String q = "update orders set customerName = ?, staff = ?, address = ?, phone = ? where orderID = ?";
@@ -192,6 +271,12 @@ public class JDBC {
         }
     }
 
+    public static boolean addProduct(String name, int price, Dao dao) {
+        Product product = dao.findProduct(name);
+        if (product != null) return false;
+        int id = (int) dao.addProduct(new Product(name, price));
+        return id != 0;
+    }
     public static boolean addProduct(String name, int price) {
 
         Connection connection = DB.getInstance().getConnection();
@@ -228,6 +313,9 @@ public class JDBC {
         return false;
     }
 
+    public static ArrayList<Order> getOrders(Dao dao){
+          return (ArrayList<Order>) dao.getOrders();
+    }
     public static ArrayList<Order> getOrders(){
         ArrayList<Order> orders = new ArrayList<>();
         Connection connection = DB.getInstance().getConnection();
@@ -239,14 +327,14 @@ public class JDBC {
             ResultSetMetaData metaData = rs.getMetaData();
             while(rs.next()){
                 int id = 0;
-                Date date = null;
+                String date = null;
                 int finished = 0;
                 int price = 0;
                 for(int i = 1; i < metaData.getColumnCount() + 1; i++){
                     if (metaData.getColumnName(i).equals("orderID")) {
                         id = rs.getInt(i);
                     } else if (metaData.getColumnName(i).equals("dateOf")) {
-                        date = rs.getDate(i);
+                        date = rs.getString(i);
                     } else if (metaData.getColumnName(i).equals("finished")) {
                         finished = rs.getInt(i);
                     } else if (metaData.getColumnName(i).equals("price")) {
@@ -263,6 +351,9 @@ public class JDBC {
         return orders;
     }
 
+    public static ArrayList<Order> getOrdersForCourier(int courierID, Dao dao) {
+        return (ArrayList<Order>) dao.getOrdersForCourier(courierID);
+    }
     public static ArrayList<Order> getOrdersForCourier(int courierID) {
         ArrayList<Order> orders = new ArrayList<>();
         Connection connection = DB.getInstance().getConnection();
@@ -274,7 +365,7 @@ public class JDBC {
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 int orderID = rs.getInt(1);
-                Date date = rs.getDate(3);
+                String date = rs.getString(3);
                 int finished = rs.getInt(4);
                 int price = rs.getInt(5);
                 Order order = new Order(orderID, date, finished, price);
@@ -286,6 +377,16 @@ public class JDBC {
         return orders;
     }
 
+    public static HashMap<Product, Integer> getOrder(int orderID, Dao dao) {
+        List<OrderProductInfo> orderedProducts = dao.getOrderInfo(orderID);
+        HashMap<Product, Integer> order = new HashMap<>();
+
+        for(OrderProductInfo op : orderedProducts) {
+            order.put(new Product(op.productID, op.productName, op.productPrice), op.quantity);
+        }
+
+        return order;
+    }
     public static HashMap<Product, Integer> getOrder(int orderID){
         HashMap<Product, Integer> order = new HashMap<>();
         Connection connection = DB.getInstance().getConnection();
@@ -311,6 +412,9 @@ public class JDBC {
         return order;
     }
 
+    public static Order getOnlyOrder(int orderID, Dao dao) {
+        return dao.getOnlyOrder(orderID);
+    }
     public static Order getOnlyOrder(int orderID){
         Order order = new Order();
         Connection connection = DB.getInstance().getConnection();
@@ -322,9 +426,9 @@ public class JDBC {
 
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                order.setId(rs.getInt(1));
-                order.setCustomer(rs.getString(2));
-                order.setDate(rs.getDate(3));
+                order.setOrderID(rs.getInt(1));
+                order.setCustomerName(rs.getString(2));
+                order.setDateOf(rs.getString(3));
                 order.setFinished(rs.getInt(4));
                 order.setPrice(rs.getInt(5));
                 order.setStaff(rs.getInt(6));
@@ -336,6 +440,18 @@ public class JDBC {
         }
 
         return order;
+    }
+
+    public static String getStaff(String username, String password, Dao dao) {
+        Staff staff = dao.getStaff(username, password);
+        if (staff == null) {
+            type = "";
+        } else {
+            type = staff.getType();
+            currentCourierID = staff.getStaffID();
+            currentCourierName = staff.getName();
+        }
+        return type;
     }
     public static String getStaff(String username, String password) {
         Connection connection = DB.getInstance().getConnection();
@@ -360,6 +476,9 @@ public class JDBC {
         return "";
     }
 
+    public static Staff getLastCourier(Dao dao) {
+        return dao.getLastCourier();
+    }
     public static int getLastCourier() {
         Connection connection = DB.getInstance().getConnection();
         int lastCourier = 0;
@@ -383,4 +502,5 @@ public class JDBC {
         }
         return lastCourier;
     }
+
 }
