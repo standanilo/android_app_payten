@@ -1,9 +1,10 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.addProduct;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,8 @@ public class NewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_product);
         EditText et = findViewById(R.id.editTextText);
         EditText en = findViewById(R.id.editTextNumber);
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
 
         Button button = findViewById(R.id.button_new);
 
@@ -79,7 +82,7 @@ public class NewProductActivity extends AppCompatActivity {
                             break;
                     }
                 };
-                if (addProduct(et.getText().toString(), Integer.parseInt(en.getText().toString()))) {
+                if (addProduct(et.getText().toString(), Integer.parseInt(en.getText().toString()), dao)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
                     builder.setMessage("Proizvod: " + et.getText().toString() + ", sa cenom: " + en.getText().toString() + " je dodat.").setPositiveButton("OK", dialogClickListener).show();
                 } else {

@@ -37,11 +37,11 @@ public class Order {
 
     }
 
-    public int getStaff() {
+    public Integer getStaff() {
         return staff;
     }
 
-    public void setStaff(int staff) {
+    public void setStaff(Integer staff) {
         this.staff = staff;
     }
 

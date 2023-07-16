@@ -1,8 +1,9 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.changePrice;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -38,7 +41,7 @@ public class ProductActivity extends AppCompatActivity {
             if (newPrice == price) {
                 Log.d("Price", "Price stayed the same");
             } else {
-                changePrice(id, newPrice);
+                changePrice(id, newPrice, dao);
             }
             Intent secondActivityIntent = new Intent(this, EditActivity.class);
             startActivity(secondActivityIntent);

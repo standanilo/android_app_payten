@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.finishOrder;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,13 +29,13 @@ public class PayActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.price);
         tv.setText(String.valueOf(price));
 
-//        intent = new Intent("com.payten.ecr.action");
-//        intent.setPackage("com.payten.paytenapos");
+        intent = new Intent("com.payten.ecr.action");
+        intent.setPackage("com.payten.paytenapos");
 //        intent.putExtra("ecrJson", ecrJsonRequestData);
 //        intent.putExtra("senderIntentFilter", senderIntentFilterValue);
 //        intent.putExtra("senderPackage", senderPackageValue);
-//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES;
-//        sendBroadcast(intent);
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        sendBroadcast(intent);
 
 //        String cardNumber = getCardNumber();
 //

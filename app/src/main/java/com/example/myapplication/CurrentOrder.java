@@ -1,11 +1,11 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.getOnlyOrder;
-import static com.example.myapplication.JDBC.type;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +25,8 @@ public class CurrentOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_order);
         buttonContainer = findViewById(R.id.buttonContainer);
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
         Intent intent = getIntent();
         HashMap<Product, Integer> order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
         int orderID = intent.getIntExtra("ID", 0);
@@ -38,7 +40,7 @@ public class CurrentOrder extends AppCompatActivity {
                 TextView textView1 = new TextView(this);
                 textView1.setId(View.generateViewId());
                 textView1.setText(key.getProductName() + ": " + String.valueOf(key.getProductPrice()) + " x " + String.valueOf(value) + " = " + String.valueOf(key.getProductPrice() * value));
-                textView1.setTextSize(20);
+                textView1.setTextSize(12);
 
                 rowLayout.addView(textView1);
 
@@ -67,7 +69,7 @@ public class CurrentOrder extends AppCompatActivity {
             TextView phone = findViewById(R.id.phone2);
             TextView address = findViewById(R.id.address2);
 
-            Order o = getOnlyOrder(orderID);
+            Order o = getOnlyOrder(orderID, dao);
             name.setText(o.getCustomerName());
             phone.setText(o.getPhone());
             address.setText(o.getAddress());
@@ -95,7 +97,7 @@ public class CurrentOrder extends AppCompatActivity {
         });
 
         button2.setOnClickListener(v -> {
-            if (from.equals("main")) {
+            if (type.equals("trgovac")) {
                 Intent secondActivityIntent = new Intent(this, CustomerActivity.class);
                 secondActivityIntent.putExtra("ID", orderID);
                 startActivity(secondActivityIntent);

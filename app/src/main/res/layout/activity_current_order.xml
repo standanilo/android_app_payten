@@ -34,7 +34,7 @@
         android:id="@+id/pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="20dp"
         android:text="@string/plati"
         android:theme="@style/Theme.AppCompat.Light"
@@ -52,7 +52,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginBottom="50dp"
         android:text="@string/cena"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/pay"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/price2"
         app:layout_constraintStart_toStartOf="@+id/address2"
         app:layout_constraintTop_toTopOf="@+id/price2" />
@@ -70,6 +70,7 @@
         android:id="@+id/pay_later"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
         android:text="@string/plati_kasnije"
         android:theme="@style/Theme.AppCompat.Light"
@@ -77,7 +78,6 @@
         app:borderWidth="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pay"
         app:rippleColor="@color/cyan2"
         app:shapeAppearanceOverlay="@style/FabShapeAppearance" />
 
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/adresa"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/price2"
         app:layout_constraintEnd_toEndOf="@+id/price2"
         app:layout_constraintHorizontal_bias="0.291"
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/address1"
         app:layout_constraintStart_toStartOf="@+id/phone2"
         app:layout_constraintTop_toTopOf="@+id/address1" />
@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/telefon"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/address1"
         app:layout_constraintEnd_toEndOf="@+id/address1"
         app:layout_constraintStart_toStartOf="@+id/address1" />
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/ime"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/phone1"
         app:layout_constraintEnd_toEndOf="@+id/phone1"
         app:layout_constraintStart_toStartOf="@+id/phone1" />
@@ -131,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text=""
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/phone1"
         app:layout_constraintStart_toEndOf="@+id/phone1"
         app:layout_constraintTop_toTopOf="@+id/phone1" />
@@ -141,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/name1"
         app:layout_constraintStart_toStartOf="@+id/phone2"
         app:layout_constraintTop_toTopOf="@+id/name1" />

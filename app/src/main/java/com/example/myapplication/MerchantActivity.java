@@ -1,29 +1,28 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.addOrder;
-import static com.example.myapplication.JDBC.currentCourierID;
-import static com.example.myapplication.JDBC.currentCourierName;
-import static com.example.myapplication.JDBC.getOrdersForCourier;
-import static com.example.myapplication.JDBC.getProducts;
-import static com.example.myapplication.JDBC.type;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,16 +38,18 @@ public class MerchantActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
         if (type.equals("trgovac")) {
 
-            ArrayList<Product> products = getProducts();
+            ArrayList<Product> products = getProducts(dao);
             buttonContainer = findViewById(R.id.buttonContainer);
             HashMap<Product, Integer> orders = new HashMap<>();
 
             button = findViewById(R.id.floatingActionButton2);
             // Set an onClickListener or perform any desired action
             button.setOnClickListener(v -> {
-                order(orders, this);
+                order(orders, this, dao);
             });
 
             TextView prices = findViewById(R.id.price1);
@@ -69,28 +70,60 @@ public class MerchantActivity extends AppCompatActivity {
             }
 
             for (Product p : products) {
-                ConstraintLayout rowLayout = new ConstraintLayout(this);
+//                ConstraintLayout rowLayout = new ConstraintLayout(this);
+                LinearLayout linearLayout = new LinearLayout(this);
+                LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        10
+                );
+                LinearLayout.LayoutParams text1Params = new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1
+                );
+                LinearLayout.LayoutParams button1Params = new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        3
+                );
+                LinearLayout.LayoutParams button2Params = new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        3
+                );
 
                 TextView textView = new TextView(this);
                 textView.setId(View.generateViewId());
                 textView.setText(p.getProductName());
-                rowLayout.addView(textView);
+                textView.setTextSize(15);
+                textView.setPadding(10, 0,0,0);
+//                rowLayout.addView(textView);
+                textView.setLayoutParams(textParams);
+                linearLayout.addView(textView);
 
                 Button button1 = new Button(this);
                 button1.setId(View.generateViewId());
                 button1.setText("+");
-                rowLayout.addView(button1);
+//                rowLayout.addView(button1);
+                button1.setLayoutParams(button1Params);
+                linearLayout.addView(button1);
 
                 TextView textView1 = new TextView(this);
                 textView1.setId(View.generateViewId());
                 textView1.setText("0");
-                rowLayout.addView(textView1);
+                textView1.setGravity(Gravity.CENTER);
+//                rowLayout.addView(textView1);
+                textView1.setLayoutParams(text1Params);
+                linearLayout.addView(textView1);
 
                 Button button2 = new Button(this);
                 button2.setId(View.generateViewId());
                 button2.setText("-");
                 button2.setEnabled(false);
-                rowLayout.addView(button2);
+//                rowLayout.addView(button2);
+                button2.setLayoutParams(button2Params);
+                linearLayout.addView(button2);
 
                 // Set an onClickListener or perform any desired action
                 button1.setOnClickListener(v -> {
@@ -119,38 +152,41 @@ public class MerchantActivity extends AppCompatActivity {
                     prices.setText("Cena: " + price);
                 });
                 if (products.indexOf(p) % 2 == 0) {
-                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
                 } else {
-                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                 }
 
                 // Add the button to the layout container
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(rowLayout);
+//                ConstraintSet constraintSet = new ConstraintSet();
+//                constraintSet.clone(rowLayout);
 
                 // position of add button
-                constraintSet.connect(button1.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-                constraintSet.connect(button1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-
-                // position of product amount
-                constraintSet.connect(textView1.getId(), ConstraintSet.START, button2.getId(), ConstraintSet.END, 16);
-                constraintSet.connect(textView1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-                constraintSet.connect(textView1.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-                constraintSet.connect(textView1.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 16);
-
-                // position of sub button
-                constraintSet.connect(button2.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 45); // Adjust the margin as needed
-                constraintSet.connect(button2.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-
-                // position of product name
-                constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
-                constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-                constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-                constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);
-                constraintSet.applyTo(rowLayout);
+//                constraintSet.connect(button1.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+//                constraintSet.connect(button1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+//
+//                // position of product amount
+//                constraintSet.connect(textView1.getId(), ConstraintSet.START, button2.getId(), ConstraintSet.END, 16);
+//                constraintSet.connect(textView1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+//                constraintSet.connect(textView1.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+//                constraintSet.connect(textView1.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 16);
+//
+//                // position of sub button
+//                constraintSet.connect(button2.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 45); // Adjust the margin as needed
+//                constraintSet.connect(button2.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+//
+//                // position of product name
+//                constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
+//                constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+//                constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+//                constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);
+//                constraintSet.applyTo(rowLayout);
 
                 buttonContainer = findViewById(R.id.buttonContainer);
-                buttonContainer.addView(rowLayout);
+//                buttonContainer.addView(rowLayout);
+                buttonContainer.addView(linearLayout);
             }
 //        buttonContainer.addView(button);
         } else {
@@ -163,13 +199,13 @@ public class MerchantActivity extends AppCompatActivity {
             });
 
             TextView text = findViewById(R.id.textView9);
-            text.setText("Zdravo " + currentCourierName + ", broj poruzbina " + numberOfOrders(getOrdersForCourier(currentCourierID)) + ".");
+            text.setText("Zdravo " + currentCourierName + ", broj poruzbina " + numberOfOrders(getOrdersForCourier(currentCourierID, dao)) + ".");
             text.setTextSize(25);
 
         }
 
     }
-    public void order(HashMap<Product, Integer> orders, Activity activity) {
+    public void order(HashMap<Product, Integer> orders, Activity activity, Dao dao) {
         HashMap<Product, Integer> current = new HashMap<>();
         orders.forEach((key, value) -> {
             if (value != 0) {
@@ -184,7 +220,7 @@ public class MerchantActivity extends AppCompatActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         Log.d("Confirm", "YES");
-                        int orderID = addOrder(current);
+                        int orderID = addOrder(current, dao);
                         Intent secondActivityIntent = new Intent(activity, CurrentOrder.class);
                         secondActivityIntent.putExtra("order", current);
                         secondActivityIntent.putExtra("ID", orderID);

@@ -10,7 +10,7 @@ public class OrderProductInfo {
     public String productName;
 
     @ColumnInfo(name = "productPrice")
-    public String productPrice;
+    public int productPrice;
 
     @ColumnInfo(name = "quantity")
     public int quantity;

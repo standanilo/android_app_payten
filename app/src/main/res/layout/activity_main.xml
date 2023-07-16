@@ -42,10 +42,11 @@
         android:theme="@style/Theme.AppCompat.Light"
         app:backgroundTint="@color/cyan4"
         app:borderWidth="5dp"
-        app:rippleColor="@color/cyan2"
-        app:shapeAppearanceOverlay="@style/FabShapeAppearance"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/cyan2"
+        app:shapeAppearanceOverlay="@style/FabShapeAppearance" />
 </androidx.constraintlayout.widget.ConstraintLayout>

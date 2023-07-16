@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public interface Dao {
     int deleteProduct(Product p);
 
     @Query("UPDATE Product SET productPrice = :price WHERE productID = :id")
-    void changePrice(int price, int id);
+    void changePrice(int id, int price);
 
     @Query("insert into Orders (dateOf, finished, price) values (:date, :finished, :price)")
     void addOrder(String date, int finished, int price);
@@ -39,7 +40,10 @@ public interface Dao {
     void finishOrder(int id);
 
     @Query("update orders set customerName = :name, staff = :staff, address = :address, phone = :phone where orderID = :orderID")
-    void updateOrder(int orderID, String name, String address, String phone, int staff);
+    void updateOrder(int orderID, String name, String address, String phone, Integer staff);
+
+    @Update
+    void updateOrder(Order order);
 
     @Insert
     long addProduct(Product product);
@@ -62,8 +66,14 @@ public interface Dao {
     @Query("SELECT * FROM Staff where username = :username and password = :password")
     Staff getStaff(String username, String password);
 
-    @Query("SELECT staff FROM orders where staff is not null order by orderID desc LIMIT 1")
-    int getLastCourier();
+    @Query("SELECT staff.* FROM staff, orders o where o.staff is not null and staffID=o.staff order by orderID desc LIMIT 1")
+    Staff getLastCourier();
+
+    @Query("SELECT * FROM staff where type = 'kurir'")
+    List<Staff> getCourier();
+
+    @Query("SELECT * FROM staff where staffID = :id")
+    Staff getCourierInfo(int id);
 
     @Query("DELETE FROM Product")
     void clearProducts();
@@ -84,7 +94,7 @@ public interface Dao {
     void initProducts(Product ... product);
 
     @Query("select * from Staff")
-    List<Staff> getStaff();
+    List<Staff> getAllStaff();
 
     @Query("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'Product'")
     void clearIDProduct();

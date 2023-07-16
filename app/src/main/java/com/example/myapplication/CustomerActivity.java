@@ -1,11 +1,10 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.addOrder;
-import static com.example.myapplication.JDBC.getOrder;
-import static com.example.myapplication.JDBC.updateOrder;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +21,8 @@ public class CustomerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
 
         EditText name = findViewById(R.id.name);
         EditText address = findViewById(R.id.address);
@@ -30,12 +31,10 @@ public class CustomerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int orderID = intent.getIntExtra("ID", 0);
 
-
         Button button = findViewById(R.id.add);
 
-
         button.setOnClickListener(v -> {
-            updateOrder(orderID, name.getText().toString(), address.getText().toString(), phone.getText().toString());
+            updateOrder(orderID, name.getText().toString(), address.getText().toString(), phone.getText().toString(), dao);
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
