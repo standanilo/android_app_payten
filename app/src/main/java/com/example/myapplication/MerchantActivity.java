@@ -185,7 +185,7 @@ public class MerchantActivity extends AppCompatActivity {
                 buttonContainer.addView(linearLayout);
             }
 //        buttonContainer.addView(button);
-        } else {
+        } else if (type.equals("kurir")){
             button = findViewById(R.id.floatingActionButton2);
             // Set an onClickListener or perform any desired action
             button.setEnabled(true);

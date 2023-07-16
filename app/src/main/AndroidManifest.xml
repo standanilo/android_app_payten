@@ -54,6 +54,13 @@
         <activity
             android:name=".MerchantActivity"
             android:exported="false" />
+        <receiver
+            android:name=".MyReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.myapplication.senderIntentFilter"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

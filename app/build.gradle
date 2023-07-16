@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation 'androidx.room:room-runtime:2.5.2'
+    implementation files('C:\\Users\\Uros\\Downloads\\android_app_payten-master\\app\\libs\\gson-2.10.1.jar')
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

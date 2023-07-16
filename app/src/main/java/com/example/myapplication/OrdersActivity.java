@@ -161,6 +161,10 @@ public class OrdersActivity extends AppCompatActivity {
             }
 //            rowLayout.addView(button);
 
+            if (o.getStaff() == null) {
+                button.setVisibility(View.VISIBLE);
+            }
+
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, CurrentOrderActivity.class);
                 secondActivityIntent.putExtra("order", getOrder(o.getOrderID(), dao));
