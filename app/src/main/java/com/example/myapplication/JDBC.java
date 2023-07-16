@@ -503,4 +503,24 @@ public class JDBC {
         return lastCourier;
     }
 
+    public static boolean getUser(String username, Dao dao) {
+        Staff staff = dao.getUsername(username);
+        return staff == null;
+    }
+
+    public static void insertStaff(Staff staff, Dao dao) {
+        dao.insertStaff(staff);
+    }
+    public static boolean deleteStaff(int id, Dao dao) {
+        Staff staff = dao.getCourierInfo(id);
+        return dao.deleteStaff(staff) > 0;
+    }
+    public static void clearAll(Dao dao){
+        dao.clearOP();
+        dao.clearIDOP();
+        dao.clearOrders();
+        dao.clearIDOrder();
+        dao.clearProducts();
+        dao.clearIDProduct();
+    }
 }

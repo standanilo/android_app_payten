@@ -98,9 +98,11 @@ public class PayActivity extends AppCompatActivity {
     private void changeIntent(String from) {
         if (from.equals("order")) {
             Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         } else {
             Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+            finish();
             startActivity(secondActivityIntent);
         }
     }

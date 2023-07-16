@@ -6,8 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Order_product", foreignKeys =
-        { @ForeignKey(entity = Order.class, parentColumns = "orderID", childColumns = "orderID", onUpdate = ForeignKey.CASCADE),
-                @ForeignKey(entity = Product.class, parentColumns = "productID", childColumns = "productID", onUpdate = ForeignKey.CASCADE)})
+        { @ForeignKey(entity = Order.class, parentColumns = "orderID", childColumns = "orderID", onUpdate = ForeignKey.CASCADE, onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Product.class, parentColumns = "productID", childColumns = "productID", onUpdate = ForeignKey.CASCADE, onDelete = ForeignKey.CASCADE)})
 public class OrderProduct {
     @PrimaryKey(autoGenerate = true)
     private int ID;

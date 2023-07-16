@@ -4,8 +4,6 @@ import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
@@ -21,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -221,7 +217,7 @@ public class MerchantActivity extends AppCompatActivity {
                     case DialogInterface.BUTTON_POSITIVE:
                         Log.d("Confirm", "YES");
                         int orderID = addOrder(current, dao);
-                        Intent secondActivityIntent = new Intent(activity, CurrentOrder.class);
+                        Intent secondActivityIntent = new Intent(activity, CurrentOrderActivity.class);
                         secondActivityIntent.putExtra("order", current);
                         secondActivityIntent.putExtra("ID", orderID);
                         secondActivityIntent.putExtra("From", "main");

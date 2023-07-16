@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CurrentOrder extends AppCompatActivity {
+public class CurrentOrderActivity extends AppCompatActivity {
     private LinearLayout buttonContainer;
 
     @Override
@@ -100,9 +100,11 @@ public class CurrentOrder extends AppCompatActivity {
             if (type.equals("trgovac")) {
                 Intent secondActivityIntent = new Intent(this, CustomerActivity.class);
                 secondActivityIntent.putExtra("ID", orderID);
+                finish();
                 startActivity(secondActivityIntent);
             } else {
                 Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+                finish();
                 startActivity(secondActivityIntent);
             }
         });

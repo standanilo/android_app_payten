@@ -37,6 +37,7 @@ public class EditActivity extends AppCompatActivity {
         Button button = new Button(this);
         button.setId(View.generateViewId());
         button.setText(R.string.dodaj);
+        button.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan4));
         // Set an onClickListener or perform any desired action
         button.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, NewProductActivity.class);
@@ -94,6 +95,7 @@ public class EditActivity extends AppCompatActivity {
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText(R.string.brisi);
+
             if (!type.equals("kurir")) {
 //                rowLayout.addView(button2);
                 button2.setLayoutParams(button2Params);

@@ -18,7 +18,7 @@ public class NewProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
-        EditText et = findViewById(R.id.editTextText);
+        EditText et = findViewById(R.id.imeEdit);
         EditText en = findViewById(R.id.editTextNumber);
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
@@ -74,6 +74,7 @@ public class NewProductActivity extends AppCompatActivity {
                         case DialogInterface.BUTTON_POSITIVE:
                             // switch to other activity
                             Intent secondActivityIntent = new Intent(this, EditActivity.class);
+                            finish();
                             startActivity(secondActivityIntent);
                             break;
 

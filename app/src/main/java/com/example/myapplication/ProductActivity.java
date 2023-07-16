@@ -26,7 +26,7 @@ public class ProductActivity extends AppCompatActivity {
         int price = intent.getIntExtra("price", 0);
         int id = intent.getIntExtra("id", 0);
 
-        TextView idField = findViewById(R.id.id_field);
+        TextView idField = findViewById(R.id.korisnicko);
         EditText priceField = findViewById(R.id.price_field);
         TextView nameField = findViewById(R.id.name_field);
 

@@ -3,8 +3,6 @@ package com.example.myapplication;
 import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
@@ -164,7 +162,7 @@ public class OrdersActivity extends AppCompatActivity {
 //            rowLayout.addView(button);
 
             button.setOnClickListener(v -> {
-                Intent secondActivityIntent = new Intent(this, CurrentOrder.class);
+                Intent secondActivityIntent = new Intent(this, CurrentOrderActivity.class);
                 secondActivityIntent.putExtra("order", getOrder(o.getOrderID(), dao));
                 secondActivityIntent.putExtra("ID", o.getOrderID());
                 secondActivityIntent.putExtra("From", "orders");

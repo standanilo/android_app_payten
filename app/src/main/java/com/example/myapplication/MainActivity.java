@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -23,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = findViewById(R.id.login);
 
-        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
+        Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         Dao dao = database.getDao();
 
-        ArrayList<Product> products = getProducts(dao);
         ArrayList<Staff> staffs = (ArrayList<Staff>) dao.getAllStaff();
 
         if (staffs.size() == 0) {
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
                     new Staff("Relja", "kurir", "relja", "relja"));
         }
 
-//        dao.clearProducts();
+//        clearAll(dao);
 
-//        dao.clearIDProduct();
+        ArrayList<Product> products = getProducts(dao);
 
         if (products.size() == 0) {
             dao.initProducts(new Product("Sporet", 15000), new Product("Frizider", 12000),
@@ -57,12 +57,6 @@ public class MainActivity extends AppCompatActivity {
                     new Product("Aparat za kafu", 3900), new Product("Pegla", 2600));
         }
 
-//        dao.clearOP();
-//        dao.clearIDOP();
-//
-//        dao.clearOrders();
-//        dao.clearIDOrder();
-
         button.setOnClickListener(v -> {
             EditText username = findViewById(R.id.username);
             EditText password = findViewById(R.id.password);
@@ -71,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (type.equals("kurir") || type.equals("trgovac")) {
                 Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+                finish();
                 startActivity(secondActivityIntent);
             } else {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -88,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Pogresno uneti podaci").setPositiveButton("OK", dialogClickListener).show();
             }
+        });
+
+        ImageButton button1 = findViewById(R.id.imageButton);
+        button1.setOnClickListener(v -> {
+            Intent secondActivityIntent = new Intent(this, StaffActivity.class);
+            startActivity(secondActivityIntent);
         });
 
     }

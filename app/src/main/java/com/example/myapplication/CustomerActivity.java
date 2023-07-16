@@ -55,7 +55,8 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     private void changeIntent() {
-            Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
-            startActivity(secondActivityIntent);
+        Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+        finish();
+        startActivity(secondActivityIntent);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @androidx.room.Dao
 public interface Dao {
 
-    @Query("select * from Product")
+    @Query("select * from Product order by productName")
     List<Product> getProducts();
 
     @Query("select * from Product where productName = :name")
@@ -72,6 +72,9 @@ public interface Dao {
     @Query("SELECT * FROM staff where type = 'kurir'")
     List<Staff> getCourier();
 
+    @Query("SELECT * FROM staff where username = :username")
+    Staff getUsername(String username);
+
     @Query("SELECT * FROM staff where staffID = :id")
     Staff getCourierInfo(int id);
 
@@ -81,11 +84,17 @@ public interface Dao {
     @Query("DELETE FROM Orders")
     void clearOrders();
 
+    @Insert
+    void insertStaff(Staff staff);
+
     @Query("DELETE FROM Order_product")
     void clearOP();
 
     @Query("DELETE FROM Staff")
     void clearStaff();
+
+    @Delete
+    int deleteStaff(Staff staff);
 
     @Insert
     void initStaff(Staff ... staff);

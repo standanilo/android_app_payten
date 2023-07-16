@@ -10,7 +10,7 @@
     <string name="nazad">Nazad</string>
     <string name="korisnicko_ime">Korisnicko ime</string>
     <string name="uloguj_se">Uloguj se</string>
-    <string name="sifra">Sifra</string>
+    <string name="sifra">Lozinka</string>
     <string name="ime_proizvoda">Ime proizvoda:</string>
     <string name="adresa">Adresa</string>
     <string name="telefon">Broj telefona</string>
@@ -23,6 +23,10 @@
     <string name="cena_proizvoda">Cena:</string>
     <string name="brisi">Brisi</string>
     <string name="izmeni">Izmeni</string>
-    <string name="unesi_ime">Unesite ime proizvoda:</string>
+    <string name="kurir">kurir</string>
+    <string name="unesi_ime">Unesite ime:</string>
+    <string name="unesi_sifra">Unesite lozinku:</string>
+    <string name="unesi_koris">Unesite korisnicko ime:</string>
+    <string name="unesi_ime_proizvoda">Unesite ime proizvoda:</string>
     <string name="unesi_cena">Unesite cenu proizvoda:</string>
 </resources>
