@@ -155,14 +155,14 @@ public class OrdersActivity extends AppCompatActivity {
             } else {
                 button.setText(R.string.info);
             }
-
-            if (o.getFinished() == 1 || JDBC.type.equals("trgovac")) {
-                button.setVisibility(View.GONE);
-            }
 //            rowLayout.addView(button);
 
             if (o.getStaff() == null) {
                 button.setVisibility(View.VISIBLE);
+            }
+
+            if (o.getFinished() == 1) {
+                button.setVisibility(View.GONE);
             }
 
             button.setOnClickListener(v -> {

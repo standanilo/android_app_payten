@@ -1,77 +1,85 @@
 package com.example.myapplication;
 
 public class jsonResponse {
-    
-    public class Card{
+    // import com.fasterxml.jackson.databind.ObjectMapper; // version 2.11.1
+// import com.fasterxml.jackson.annotation.JsonProperty; // version 2.11.1
+/* ObjectMapper om = new ObjectMapper();
+Root root = om.readValue(myJsonString, Root.class); */
+    public Header header;
+    public Response response;
+    public static class Card{
         public String bin;
         public String cardInterface;
         public String name;
         public String pan;
     }
 
-    public class Cryptogram1{
+    public static class Cryptogram1{
         public String type;
         public String value;
     }
 
-    public class Cryptogram2{
-        public String type;
-        public String value;
+    public static class Cvm{
     }
 
-    public class Cvm{
-        public String pinOnline;
-    }
-
-    public class Emv{
+    public static class Emv{
         public String aid;
         public String aidLabel;
         public Cryptogram1 cryptogram1;
-        public Cryptogram2 cryptogram2;
+        public String ctq;
+        public String ttq;
         public String tvr;
     }
 
-    public class Financial{
+    public static class Financial{
+        public Amounts amounts;
         public String dateTime;
         public Emv emv;
         public Flags flags;
         public Id id;
         public Result result;
+        public String transaction;
     }
 
-    public class Flags{
+    public static class Flags{
         public Cvm cvm;
     }
 
-    public class Header{
+    public static class Header{
         public String hash;
         public int length;
         public String version;
     }
 
-    public class Id{
+    public static class Id{
         public String authorization;
         public String batch;
         public Card card;
+        public String ecr;
         public String invoice;
         public String merchant;
         public String reference;
         public String terminal;
     }
 
-    public class Response{
+    public static class Response{
         public Financial financial;
     }
 
-    public class Result{
+    public static class Result{
         public String code;
         public String message;
     }
 
-    public class Root{
+    public static class Root{
         public Header header;
         public Response response;
     }
 
+    public static class Amounts{
+        public String base;
+        public String currencyCode;
+        public String total;
+    }
 
 }

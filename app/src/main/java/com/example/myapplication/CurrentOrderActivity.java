@@ -9,16 +9,20 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CurrentOrderActivity extends AppCompatActivity {
     private LinearLayout buttonContainer;
+    public static int orderID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         Dao dao = database.getDao();
         Intent intent = getIntent();
         HashMap<Product, Integer> order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
-        int orderID = intent.getIntExtra("ID", 0);
+        orderID = intent.getIntExtra("ID", 0);
         String from = intent.getStringExtra("From");
         AtomicInteger totalCost = new AtomicInteger();
 
@@ -85,15 +89,51 @@ public class CurrentOrderActivity extends AppCompatActivity {
         }
 
         button1.setOnClickListener(v -> {
-            Intent secondActivityIntent = new Intent(this, PayActivity.class);
-            secondActivityIntent.putExtra("Price", totalCost.get());
-            secondActivityIntent.putExtra("ID", orderID);
-            if (from.equals("main")) {
-                secondActivityIntent.putExtra("From", "main");
-            } else {
-                secondActivityIntent.putExtra("From", "order");
-            }
-            startActivity(secondActivityIntent);
+            Intent intent1 = new Intent("com.payten.ecr.action");
+            intent1.setPackage("com.payten.paytenapos");
+            jsonRequest jreq = new jsonRequest();
+            jsonRequest.Amounts amounts = jreq.new Amounts();
+            jsonRequest.Financial financial = jreq.new Financial();
+            jsonRequest.Header header = jreq.new Header();
+            jsonRequest.Id id = jreq.new Id();
+            jsonRequest.Options options = jreq.new Options();
+            jsonRequest.Request request = jreq.new Request();
+            jsonRequest.Root root = jreq.new Root();
+
+            options.language = "sr";
+            options.print = "true";
+
+            amounts.base = totalCost.get() + ".00";
+            amounts.currencyCode = "RSD";
+
+            id.ecr = "000001";
+
+            financial.transaction = "sale";
+            financial.id = id;
+            financial.options = options;
+            financial.amounts = amounts;
+
+            header.length = "282";
+            header.version = "01";
+            header.hash = "123456";
+
+            request.financial = financial;
+
+            root.header = header;
+            root.request = request;
+
+            Gson gson = new Gson();
+
+            String req = gson.toJson(root);
+            Log.d("JSON", req);
+
+            intent1.putExtra("ecrJson", req);
+            intent1.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilter");
+            intent1.putExtra("senderPackage", "com.example.myapplication");
+//        intent.putExtra("senderClass", MainActivity.class);
+            intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            finish();
+            sendBroadcast(intent1);
         });
 
         button2.setOnClickListener(v -> {
