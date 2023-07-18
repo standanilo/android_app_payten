@@ -2,40 +2,38 @@ package com.example.myapplication;
 
 public class jsonRequest {
 
-    public class Amounts{
+    public Header header;
+    public Request request;
+
+    public static class Amounts{
         public String base;
         public String currencyCode;
     }
 
-    public class Financial{
+    public static class Financial{
         public String transaction;
         public Id id;
         public Amounts amounts;
         public Options options;
     }
 
-    public class Header{
-        public String length;
+    public static class Header{
+        public int length;
         public String hash;
         public String version;
     }
 
-    public class Id{
+    public static class Id{
         public String ecr;
     }
 
-    public class Options{
+    public static class Options{
         public String language;
         public String print;
     }
 
-    public class Request{
+    public static class Request{
         public Financial financial;
-    }
-
-    public class Root{
-        public Header header;
-        public Request request;
     }
 
 

@@ -71,11 +71,6 @@ Root root = om.readValue(myJsonString, Root.class); */
         public String message;
     }
 
-    public static class Root{
-        public Header header;
-        public Response response;
-    }
-
     public static class Amounts{
         public String base;
         public String currencyCode;

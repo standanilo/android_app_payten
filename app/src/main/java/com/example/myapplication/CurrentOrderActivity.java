@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CurrentOrderActivity extends AppCompatActivity {
     private LinearLayout buttonContainer;
     public static int orderID = 0;
+    public static HashMap<Product, Integer> order = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
         Intent intent = getIntent();
-        HashMap<Product, Integer> order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
+        order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
         orderID = intent.getIntExtra("ID", 0);
         String from = intent.getStringExtra("From");
         AtomicInteger totalCost = new AtomicInteger();
@@ -91,46 +92,39 @@ public class CurrentOrderActivity extends AppCompatActivity {
         button1.setOnClickListener(v -> {
             Intent intent1 = new Intent("com.payten.ecr.action");
             intent1.setPackage("com.payten.paytenapos");
+            //ecrJsonReq.request.financial.id = new EcrJsonReq.Id();
             jsonRequest jreq = new jsonRequest();
-            jsonRequest.Amounts amounts = jreq.new Amounts();
-            jsonRequest.Financial financial = jreq.new Financial();
-            jsonRequest.Header header = jreq.new Header();
-            jsonRequest.Id id = jreq.new Id();
-            jsonRequest.Options options = jreq.new Options();
-            jsonRequest.Request request = jreq.new Request();
-            jsonRequest.Root root = jreq.new Root();
+            jreq.header = new jsonRequest.Header();
+            jreq.request = new jsonRequest.Request();
+            jreq.request.financial = new jsonRequest.Financial();
+            jreq.request.financial.transaction = "sale";
+            jreq.request.financial.amounts = new jsonRequest.Amounts();
+            jreq.request.financial.id = new jsonRequest.Id();
 
-            options.language = "sr";
-            options.print = "true";
+            jreq.request.financial.amounts.base = totalCost.get() + ".00";
+            jreq.request.financial.amounts.currencyCode = "RSD";
 
-            amounts.base = totalCost.get() + ".00";
-            amounts.currencyCode = "RSD";
+            jreq.request.financial.options = new jsonRequest.Options();
+            jreq.request.financial.options.language = "sr";
+            jreq.request.financial.options.print = "true";
 
-            id.ecr = "000001";
+            jreq.request.financial.id.ecr = "000001";
 
-            financial.transaction = "sale";
-            financial.id = id;
-            financial.options = options;
-            financial.amounts = amounts;
+            String tempRequest = "\"request\":"+new Gson().toJson(jreq.request);
+            String generatedSHA512 = HashUtils.performSHA512(tempRequest);
 
-            header.length = "282";
-            header.version = "01";
-            header.hash = "123456";
+            jreq.header.version = "01";
+            jreq.header.length = tempRequest.length();
+            jreq.header.hash = generatedSHA512;
 
-            request.financial = financial;
+            String req = new Gson().toJson(jreq);
 
-            root.header = header;
-            root.request = request;
-
-            Gson gson = new Gson();
-
-            String req = gson.toJson(root);
             Log.d("JSON", req);
 
             intent1.putExtra("ecrJson", req);
             intent1.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilter");
             intent1.putExtra("senderPackage", "com.example.myapplication");
-//        intent.putExtra("senderClass", MainActivity.class);
+            intent1.putExtra("senderClass", "com.payten.ecrdemo.CurrentOrderActivity");
             intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
             finish();
             sendBroadcast(intent1);

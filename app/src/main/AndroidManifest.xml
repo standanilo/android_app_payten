@@ -61,5 +61,12 @@
                 <action android:name="com.example.myapplication.senderIntentFilter"/>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".MyPrintReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.myapplication.senderIntentFilterPrint"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

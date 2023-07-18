@@ -172,6 +172,7 @@ public class OrdersActivity extends AppCompatActivity {
                 secondActivityIntent.putExtra("order", getOrder(o.getOrderID(), dao));
                 secondActivityIntent.putExtra("ID", o.getOrderID());
                 secondActivityIntent.putExtra("From", "orders");
+                finish();
                 startActivity(secondActivityIntent);
             });
 
