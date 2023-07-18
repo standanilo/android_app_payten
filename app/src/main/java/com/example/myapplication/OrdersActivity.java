@@ -159,6 +159,8 @@ public class OrdersActivity extends AppCompatActivity {
 
             if (o.getStaff() == null) {
                 button.setVisibility(View.VISIBLE);
+            } else if (type.equals("trgovac")) {
+                button.setVisibility(View.GONE);
             }
 
             if (o.getFinished() == 1) {

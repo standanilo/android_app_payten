@@ -37,27 +37,38 @@ public class PayActivity extends AppCompatActivity {
                 tv.setText("Transaction approved");
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 dao.finishOrder(orderID);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent1 = new Intent(PayActivity.this, MerchantActivity.class);
-                        finish();
-                        startActivity(intent1);
+
+
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            Intent intent1 = new Intent(PayActivity.this, MerchantActivity.class);
+                            finish();
+                            startActivity(intent1);
+                            break;
                     }
-                }, 3000);
+                };
             } else {
                 TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction declined");
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent1 = new Intent(PayActivity.this, CurrentOrderActivity.class);
-                        intent1.putExtra("ID", orderID);
-                        finish();
-                        startActivity(intent1);
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            Intent intent1 = new Intent(PayActivity.this, MerchantActivity.class);
+                            finish();
+                            startActivity(intent1);
+                            break;
                     }
-                }, 3000);
+                };
             }
         }
 

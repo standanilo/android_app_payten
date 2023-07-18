@@ -11,9 +11,11 @@ import androidx.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class NewStaffActivity extends AppCompatActivity {
 
@@ -34,44 +36,28 @@ public class NewStaffActivity extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             if (name.getText().toString().equals("") || username.getText().toString().equals("") || password.getText().toString().equals("")) {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to order activity
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            // stay on same activity
-                            break;
-                    }
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewStaffActivity.this);
-                builder.setMessage("Polja ne smeju biti prazna").setPositiveButton("OK", dialogClickListener).show();
+                Toast toast = Toast.makeText(this, "Polja ne smeju biti prazna", Toast.LENGTH_LONG);
+                toast.show();
             } else {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to other activity
-                            Intent secondActivityIntent = new Intent(this, StaffActivity.class);
-                            finish();
-                            startActivity(secondActivityIntent);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                };
                 if (getUser(username.getText().toString(), dao)) {
                     String type = "";
                     if (radioButton.isActivated()) type = "kurir";
                     else type = "trgovac";
                     Staff staff = new Staff(name.getText().toString(), type, username.getText().toString(), password.getText().toString());
                     JDBC.insertStaff(staff, dao);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NewStaffActivity.this);
-                    builder.setMessage("Ime: " + name.getText().toString() + " je dodat.").setPositiveButton("OK", dialogClickListener).show();
+                    Toast toast = Toast.makeText(this, "Ime: " + username.getText().toString() + " je dodat.", Toast.LENGTH_LONG);
+                    toast.show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent1 = new Intent(NewStaffActivity.this, StaffActivity.class);
+                            finish();
+                            startActivity(intent1);
+                        }
+                    }, 2000);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NewStaffActivity.this);
-                    builder.setMessage("Ime: " + name.getText().toString() + " vec postoji.").setPositiveButton("OK", dialogClickListener).show();
+                    Toast toast = Toast.makeText(this, "Ime: " + username.getText().toString() + " vec postoji.", Toast.LENGTH_LONG);
+                    toast.show();
                 }
 
             }

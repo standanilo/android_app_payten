@@ -154,32 +154,6 @@ public class MerchantActivity extends AppCompatActivity {
 //                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                     linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                 }
-
-                // Add the button to the layout container
-//                ConstraintSet constraintSet = new ConstraintSet();
-//                constraintSet.clone(rowLayout);
-
-                // position of add button
-//                constraintSet.connect(button1.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-//                constraintSet.connect(button1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//
-//                // position of product amount
-//                constraintSet.connect(textView1.getId(), ConstraintSet.START, button2.getId(), ConstraintSet.END, 16);
-//                constraintSet.connect(textView1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//                constraintSet.connect(textView1.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//                constraintSet.connect(textView1.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 16);
-//
-//                // position of sub button
-//                constraintSet.connect(button2.getId(), ConstraintSet.END, button1.getId(), ConstraintSet.START, 45); // Adjust the margin as needed
-//                constraintSet.connect(button2.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//
-//                // position of product name
-//                constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
-//                constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//                constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//                constraintSet.connect(textView.getId(), ConstraintSet.END, button2.getId(), ConstraintSet.START);
-//                constraintSet.applyTo(rowLayout);
-
                 buttonContainer = findViewById(R.id.buttonContainer);
 //                buttonContainer.addView(rowLayout);
                 buttonContainer.addView(linearLayout);

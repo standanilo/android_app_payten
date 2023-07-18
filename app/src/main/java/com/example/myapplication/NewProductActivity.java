@@ -9,8 +9,10 @@ import androidx.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -27,68 +29,29 @@ public class NewProductActivity extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             if (et.getText().toString().equals("") && en.getText().toString().equals("")) {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to order activity
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            // stay on same activity
-                            break;
-                    }
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
-                builder.setMessage("Ime i cena ne smeju biti prazni").setPositiveButton("OK", dialogClickListener).show();
+                Toast toast = Toast.makeText(this, "Ime i cena ne smeju biti prazni", Toast.LENGTH_LONG);
+                toast.show();
             } else if (et.getText().toString().equals("")) {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to order activity
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            // stay on same activity
-                            break;
-                    }
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
-                builder.setMessage("Ime ne sme biti prazno").setPositiveButton("OK", dialogClickListener).show();
+                Toast toast = Toast.makeText(this, "Ime ne sme biti prazno", Toast.LENGTH_LONG);
+                toast.show();
             } else if (en.getText().toString().equals("")) {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to order activity
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            // stay on same activity
-                            break;
-                    }
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
-                builder.setMessage("Cena ne sme biti prazna").setPositiveButton("OK", dialogClickListener).show();
+                Toast toast = Toast.makeText(this, "Cena ne sme biti prazna", Toast.LENGTH_LONG);
+                toast.show();
             } else {
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            // switch to other activity
-                            Intent secondActivityIntent = new Intent(this, EditActivity.class);
-                            finish();
-                            startActivity(secondActivityIntent);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            // stay on same activity
-                            break;
-                    }
-                };
                 if (addProduct(et.getText().toString(), Integer.parseInt(en.getText().toString()), dao)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
-                    builder.setMessage("Proizvod: " + et.getText().toString() + ", sa cenom: " + en.getText().toString() + " je dodat.").setPositiveButton("OK", dialogClickListener).show();
+                    Toast toast = Toast.makeText(this, "Proizvod: " + et.getText().toString() + ", sa cenom: " + en.getText().toString() + " je dodat.", Toast.LENGTH_LONG);
+                    toast.show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent1 = new Intent(NewProductActivity.this, EditActivity.class);
+                            finish();
+                            startActivity(intent1);
+                        }
+                    }, 2000);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NewProductActivity.this);
-                    builder.setMessage("Proizvod: " + et.getText().toString() + " vec postoji").setNegativeButton("OK", dialogClickListener).show();
+                    Toast toast = Toast.makeText(this, "Proizvod: " + et.getText().toString() + " vec postoji", Toast.LENGTH_LONG);
+                    toast.show();
                 }
 
             }

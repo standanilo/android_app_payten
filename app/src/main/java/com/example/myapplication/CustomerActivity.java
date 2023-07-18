@@ -9,9 +9,11 @@ import androidx.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -35,28 +37,17 @@ public class CustomerActivity extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             updateOrder(orderID, name.getText().toString(), address.getText().toString(), phone.getText().toString(), dao);
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            Toast toast = Toast.makeText(this, "Porudzbina dodata", Toast.LENGTH_LONG);
+            toast.show();
+            new Handler().postDelayed(new Runnable() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            changeIntent();
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
+                public void run() {
+                    Intent intent1 = new Intent(CustomerActivity.this, MerchantActivity.class);
+                    finish();
+                    startActivity(intent1);
                 }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(CustomerActivity.this);
-            builder.setMessage("Porudzbina dodata").setPositiveButton("OK", dialogClickListener).show();
+            }, 2000);
         });
 
-    }
-
-    private void changeIntent() {
-        Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
-        finish();
-        startActivity(secondActivityIntent);
     }
 }

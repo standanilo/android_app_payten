@@ -23,20 +23,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
     implementation 'androidx.room:room-runtime:2.5.2'
-    implementation files('C:\\Users\\Uros\\Downloads\\android_app_payten-master\\app\\libs\\gson-2.10.1.jar')
+    implementation files('../app/libs/gson-2.10.1.jar')
+    implementation files('../app/libs/javax.ws.rs-api-2.1.1.jar')
+    implementation files('../app/libs/jtds-1.3.1.jar')
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation files('C:\\Users\\Uros\\Downloads\\android_app_payten-master\\app\\libs\\jtds-1.3.1.jar')
-    implementation files('C:\\Users\\Uros\\Downloads\\android_app_payten-master\\app\\libs\\javax.ws.rs-api-2.1.1.jar')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
