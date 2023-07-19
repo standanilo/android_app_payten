@@ -108,7 +108,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
             jreq.request.financial.options.language = "sr";
             jreq.request.financial.options.print = "true";
 
-            jreq.request.financial.id.ecr = "000001";
+//            jreq.request.financial.id.ecr = "000001";
 
             String tempRequest = "\"request\":"+new Gson().toJson(jreq.request);
             String generatedSHA512 = HashUtils.performSHA512(tempRequest);
@@ -124,7 +124,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
             intent1.putExtra("ecrJson", req);
             intent1.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilter");
             intent1.putExtra("senderPackage", "com.example.myapplication");
-            intent1.putExtra("senderClass", "com.payten.ecrdemo.CurrentOrderActivity");
+            intent1.putExtra("senderClass", "com.example.myapplication.CurrentOrderActivity");
             intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
             finish();
             sendBroadcast(intent1);
