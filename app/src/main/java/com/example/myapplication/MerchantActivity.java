@@ -196,6 +196,7 @@ public class MerchantActivity extends AppCompatActivity {
                         secondActivityIntent.putExtra("order", current);
                         secondActivityIntent.putExtra("ID", orderID);
                         secondActivityIntent.putExtra("From", "main");
+                        finish();
                         startActivity(secondActivityIntent);
                         break;
 

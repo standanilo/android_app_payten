@@ -40,7 +40,6 @@ public class PayActivity extends AppCompatActivity {
                 tv.setText("Transaction approved");
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 dao.finishOrder(orderID);
-
             } else {
                 TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction declined");
@@ -117,6 +116,7 @@ public class PayActivity extends AppCompatActivity {
             intent1.putExtra("senderPackage", "com.example.myapplication");
             intent1.putExtra("senderClass", "com.payten.ecrdemo.PayActivity");
             intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            finish();
             getApplicationContext().sendBroadcast(intent1);
         });
     }
