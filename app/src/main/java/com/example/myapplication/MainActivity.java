@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         Dao dao = database.getDao();
 
-        ArrayList<Staff> staffs = (ArrayList<Staff>) dao.getAllStaff();
+        ArrayList<Staff> staffs = (ArrayList<Staff>) getAllStaff(dao);
 
         if (staffs.size() == 0) {
             dao.initStaff(new Staff("Danilo", "trgovac", "danilo", "danilo"),
