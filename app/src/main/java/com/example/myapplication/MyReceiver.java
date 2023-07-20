@@ -21,19 +21,23 @@ public class MyReceiver extends BroadcastReceiver {
 
         Gson gson = new Gson();
 
-        jsonResponse jres = gson.fromJson(res, jsonResponse.class);
+        JSONSaleResponse jres = gson.fromJson(res, JSONSaleResponse.class);
 
         Log.d("JSON", jres.response.financial.result.code);
 
-        invoice = jres.response.financial.id.invoice;
-        pan = jres.response.financial.id.card.pan;
-        auth = jres.response.financial.id.authorization;
-        base = jres.response.financial.amounts.base;
-        curCode = jres.response.financial.amounts.currencyCode;
+        getDetails(jres);
 
         i.putExtra("ResponseResult", res);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(i);
+    }
+
+    private void getDetails(JSONSaleResponse jres) {
+        invoice = jres.response.financial.id.invoice;
+        pan = jres.response.financial.id.card.pan;
+        auth = jres.response.financial.id.authorization;
+        base = jres.response.financial.amounts.base;
+        curCode = jres.response.financial.amounts.currencyCode;
     }
 }

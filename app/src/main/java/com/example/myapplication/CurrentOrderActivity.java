@@ -29,13 +29,17 @@ public class CurrentOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_order);
+
         buttonContainer = findViewById(R.id.buttonContainer);
+
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
+
         Intent intent = getIntent();
+
         order = (HashMap<Product, Integer>) intent.getSerializableExtra("order");
         orderID = intent.getIntExtra("ID", 0);
-        String from = intent.getStringExtra("From");
+
         AtomicInteger totalCost = new AtomicInteger();
 
         order.forEach((key, value) -> {
@@ -63,6 +67,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
             }
 
         });
+
         TextView tv = findViewById(R.id.prices);
         tv.setText(String.valueOf(totalCost.get()));
 
@@ -78,54 +83,25 @@ public class CurrentOrderActivity extends AppCompatActivity {
             name.setText(o.getCustomerName());
             phone.setText(o.getPhone());
             address.setText(o.getAddress());
-
         } else {
             TextView name = findViewById(R.id.name1);
             TextView phone = findViewById(R.id.phone1);
             TextView address = findViewById(R.id.address1);
 
-            name.setVisibility(View.INVISIBLE);
-            phone.setVisibility(View.INVISIBLE);
-            address.setVisibility(View.INVISIBLE);
+            setVisible(name, phone, address);
         }
 
         button1.setOnClickListener(v -> {
             Intent intent1 = new Intent("com.payten.ecr.action");
             intent1.setPackage("com.payten.paytenapos");
-            //ecrJsonReq.request.financial.id = new EcrJsonReq.Id();
-            jsonRequest jreq = new jsonRequest();
-            jreq.header = new jsonRequest.Header();
-            jreq.request = new jsonRequest.Request();
-            jreq.request.financial = new jsonRequest.Financial();
-            jreq.request.financial.transaction = "sale";
-            jreq.request.financial.amounts = new jsonRequest.Amounts();
-            jreq.request.financial.id = new jsonRequest.Id();
 
-            jreq.request.financial.amounts.base = totalCost.get() + ".00";
-            jreq.request.financial.amounts.currencyCode = "RSD";
-
-            jreq.request.financial.options = new jsonRequest.Options();
-            jreq.request.financial.options.language = "sr";
-            jreq.request.financial.options.print = "true";
-
-//            jreq.request.financial.id.ecr = "000001";
-
-            String tempRequest = "\"request\":"+new Gson().toJson(jreq.request);
-            String generatedSHA512 = HashUtils.performSHA512(tempRequest);
-
-            jreq.header.version = "01";
-            jreq.header.length = tempRequest.length();
-            jreq.header.hash = generatedSHA512;
+            JSONSaleRequest jreq = new JSONSaleRequest(totalCost.get());
 
             String req = new Gson().toJson(jreq);
 
-            Log.d("JSON", req);
+//            Log.d("JSON", req);
 
-            intent1.putExtra("ecrJson", req);
-            intent1.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilter");
-            intent1.putExtra("senderPackage", "com.example.myapplication");
-            intent1.putExtra("senderClass", "com.example.myapplication.CurrentOrderActivity");
-            intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            prepareTransaction(intent1, req);
             finish();
             sendBroadcast(intent1);
         });
@@ -143,5 +119,19 @@ public class CurrentOrderActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private static void prepareTransaction(Intent intent, String req) {
+        intent.putExtra("ecrJson", req);
+        intent.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilter");
+        intent.putExtra("senderPackage", "com.example.myapplication");
+        intent.putExtra("senderClass", "com.example.myapplication.CurrentOrderActivity");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+    }
+
+    private static void setVisible(TextView name, TextView phone, TextView address) {
+        name.setVisibility(View.INVISIBLE);
+        phone.setVisibility(View.INVISIBLE);
+        address.setVisibility(View.INVISIBLE);
     }
 }

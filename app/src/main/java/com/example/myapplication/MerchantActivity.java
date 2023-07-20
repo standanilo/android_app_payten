@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MerchantActivity extends AppCompatActivity {
     private LinearLayout buttonContainer;
-//    Button button;
     FloatingActionButton button;
     int price = 0;
 
@@ -43,7 +42,7 @@ public class MerchantActivity extends AppCompatActivity {
             HashMap<Product, Integer> orders = new HashMap<>();
 
             button = findViewById(R.id.floatingActionButton2);
-            // Set an onClickListener or perform any desired action
+
             button.setOnClickListener(v -> {
                 order(orders, this, dao);
             });
@@ -51,22 +50,12 @@ public class MerchantActivity extends AppCompatActivity {
             TextView prices = findViewById(R.id.price1);
             prices.setText("Cena: ");
 
-
-//        button = new Button(this);
-//        button.setId(View.generateViewId());
-//        button.setText(R.string.porudzbina);
-//        button.setEnabled(false);
-//        // Set an onClickListener or perform any desired action
-//        button.setOnClickListener(v -> order(orders));
-
-
             AtomicInteger num_of_orders = new AtomicInteger();
             for (Product p : products) {
                 orders.put(p, 0);
             }
 
             for (Product p : products) {
-//                ConstraintLayout rowLayout = new ConstraintLayout(this);
                 LinearLayout linearLayout = new LinearLayout(this);
                 LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                         0,
@@ -94,14 +83,12 @@ public class MerchantActivity extends AppCompatActivity {
                 textView.setText(p.getProductName());
                 textView.setTextSize(15);
                 textView.setPadding(10, 0,0,0);
-//                rowLayout.addView(textView);
                 textView.setLayoutParams(textParams);
                 linearLayout.addView(textView);
 
                 Button button1 = new Button(this);
                 button1.setId(View.generateViewId());
                 button1.setText("+");
-//                rowLayout.addView(button1);
                 button1.setLayoutParams(button1Params);
                 linearLayout.addView(button1);
 
@@ -109,7 +96,6 @@ public class MerchantActivity extends AppCompatActivity {
                 textView1.setId(View.generateViewId());
                 textView1.setText("0");
                 textView1.setGravity(Gravity.CENTER);
-//                rowLayout.addView(textView1);
                 textView1.setLayoutParams(text1Params);
                 linearLayout.addView(textView1);
 
@@ -117,11 +103,9 @@ public class MerchantActivity extends AppCompatActivity {
                 button2.setId(View.generateViewId());
                 button2.setText("-");
                 button2.setEnabled(false);
-//                rowLayout.addView(button2);
                 button2.setLayoutParams(button2Params);
                 linearLayout.addView(button2);
 
-                // Set an onClickListener or perform any desired action
                 button1.setOnClickListener(v -> {
                     int amount = orders.get(p) + 1;
                     num_of_orders.getAndIncrement();
@@ -133,7 +117,6 @@ public class MerchantActivity extends AppCompatActivity {
                     prices.setText("Cena: " + price);
                 });
                 button2.setOnClickListener(v -> {
-                    // Perform action when button is clicked
                     int amount = orders.get(p) - 1;
                     orders.put(p, amount);
                     num_of_orders.getAndDecrement();
@@ -148,21 +131,18 @@ public class MerchantActivity extends AppCompatActivity {
                     prices.setText("Cena: " + price);
                 });
                 if (products.indexOf(p) % 2 == 0) {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
                     linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
                 } else {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                     linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                 }
                 buttonContainer = findViewById(R.id.buttonContainer);
-//                buttonContainer.addView(rowLayout);
                 buttonContainer.addView(linearLayout);
             }
-//        buttonContainer.addView(button);
+
         } else if (type.equals("kurir")){
             button = findViewById(R.id.floatingActionButton2);
-            // Set an onClickListener or perform any desired action
             button.setEnabled(true);
+
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
                 finish();
@@ -196,7 +176,6 @@ public class MerchantActivity extends AppCompatActivity {
                         secondActivityIntent.putExtra("order", current);
                         secondActivityIntent.putExtra("ID", orderID);
                         secondActivityIntent.putExtra("From", "main");
-                        finish();
                         startActivity(secondActivityIntent);
                         break;
 
@@ -220,22 +199,12 @@ public class MerchantActivity extends AppCompatActivity {
         price -= amount;
     }
     public void openEdit(View v){
-        if (((TextView)v).getText().equals("Products")) {
-            Log.d("Text", "Products babyyyy");
-            Intent secondActivityIntent = new Intent(this, EditActivity.class);
-            finish();
-            startActivity(secondActivityIntent);
-        }
-        // change to according activity
+        Intent secondActivityIntent = new Intent(this, EditActivity.class);
+        startActivity(secondActivityIntent);
     }
     public void openOrders(View v){
-        if (((TextView)v).getText().equals("Orders")) {
-            Log.d("Text", "Orders babyyyy");
-            Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
-            finish();
-            startActivity(secondActivityIntent);
-        }
-        // change to according activity
+        Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+        startActivity(secondActivityIntent);
     }
 
     public int numberOfOrders(ArrayList<Order> orders) {

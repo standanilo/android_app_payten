@@ -34,7 +34,7 @@ public class PayActivity extends AppCompatActivity {
         ImageButton print = findViewById(R.id.print);
 
         if (resp != null) {
-            jsonResponse jres = gson.fromJson(resp, jsonResponse.class);
+            JSONSaleResponse jres = gson.fromJson(resp, JSONSaleResponse.class);
             if (jres.response.financial.result.code.equals("Approved")) {
                 TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction approved");
@@ -55,7 +55,7 @@ public class PayActivity extends AppCompatActivity {
         });
 
         print.setOnClickListener(v -> {
-            ArrayList<printReq.PrintLine> lines = new ArrayList<>();
+            ArrayList<JSONPrintRequest.PrintLine> lines = new ArrayList<>();
 
             String t = "text";
             String st = "NORMAL";
@@ -91,41 +91,33 @@ public class PayActivity extends AppCompatActivity {
             addLine(lines, t, st, "________________________________");
             addLine(lines, t, st, " ");
 
-            printReq preq = new printReq();
-            preq.header = new printReq.Header();
-            preq.request = new printReq.Request();
-            preq.request.command = new printReq.Command();
-            preq.request.command.printer = new printReq.Printer();
-            preq.request.command.printer.type = "JSON";
-            preq.request.command.printer.printLines = lines;
-
-            String tempRequest = "\"request\":"+new GsonBuilder().disableHtmlEscaping().create().toJson(preq.request);
-            String generatedSHA512 = HashUtils.performSHA512(tempRequest);
-
-            preq.header.version = "01";
-            preq.header.length = tempRequest.length();
-            preq.header.hash = generatedSHA512;
+            JSONPrintRequest preq = new JSONPrintRequest(lines);
 
             String printRequest = new GsonBuilder().disableHtmlEscaping().create().toJson(preq);
             Log.d("PRINT", printRequest);
 
-            Intent intent1 = new Intent("com.payten.ecr.action");
-            intent1.setPackage("com.payten.paytenapos");
-            intent1.putExtra("ecrJson", printRequest);
-            intent1.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilterPrint");
-            intent1.putExtra("senderPackage", "com.example.myapplication");
-            intent1.putExtra("senderClass", "com.payten.ecrdemo.PayActivity");
-            intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            Intent intent1 = preparePrint(printRequest);
             finish();
             getApplicationContext().sendBroadcast(intent1);
         });
     }
 
-    public static void addLine(ArrayList<printReq.PrintLine> lines, String type, String style, String content){
-        printReq.PrintLine line = new printReq.PrintLine();
+    public static void addLine(ArrayList<JSONPrintRequest.PrintLine> lines, String type, String style, String content){
+        JSONPrintRequest.PrintLine line = new JSONPrintRequest.PrintLine();
         line.type = type;
         line.style = style;
         line.content = content;
         lines.add(line);
+    }
+
+    private static Intent preparePrint(String printRequest) {
+        Intent intent = new Intent("com.payten.ecr.action");
+        intent.setPackage("com.payten.paytenapos");
+        intent.putExtra("ecrJson", printRequest);
+        intent.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilterPrint");
+        intent.putExtra("senderPackage", "com.example.myapplication");
+        intent.putExtra("senderClass", "com.payten.ecrdemo.PayActivity");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        return intent;
     }
 }

@@ -20,8 +20,10 @@ public class NewProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
+
         EditText et = findViewById(R.id.imeEdit);
         EditText en = findViewById(R.id.editTextNumber);
+
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
 

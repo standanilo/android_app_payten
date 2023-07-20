@@ -26,7 +26,7 @@ public class OrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orders);
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
-        ArrayList<Order> orders = new ArrayList<>();
+        ArrayList<Order> orders;
         if (type.equals("trgovac")) {
             orders = getOrders(dao);
         } else {
@@ -35,7 +35,6 @@ public class OrdersActivity extends AppCompatActivity {
         buttonContainer = findViewById(R.id.buttonContainer_edit);
 
         for (Order o : orders) {
-//            ConstraintLayout rowLayout = new ConstraintLayout(this);
             LinearLayout linearLayoutMain = new LinearLayout(this);
             linearLayoutMain.setOrientation(LinearLayout.VERTICAL);
 
@@ -79,8 +78,7 @@ public class OrdersActivity extends AppCompatActivity {
 
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
-            textView.setText("ID: " + String.valueOf(o.getOrderID()));
-//            rowLayout.addView(textView);
+            textView.setText("ID: " + o.getOrderID());
             textView.setTextSize(20);
             textView.setLayoutParams(textParams);
             linearLayout1.addView(textView);
@@ -107,7 +105,6 @@ public class OrdersActivity extends AppCompatActivity {
                 textView1.setText(o.getCustomerName());
             }
             textView1.setTextSize(18);
-//            rowLayout.addView(textView1);
             textView1.setLayoutParams(text1Params);
             linearLayout2.addView(textView1);
 
@@ -118,7 +115,6 @@ public class OrdersActivity extends AppCompatActivity {
             }
             textView4.setTextSize(18);
             textView4.setGravity(Gravity.CENTER);
-//            rowLayout.addView(textView4);
             textView4.setLayoutParams(text4Params);
             linearLayout2.addView(textView4);
 
@@ -129,7 +125,6 @@ public class OrdersActivity extends AppCompatActivity {
             }
             textView2.setTextSize(18);
             textView2.setGravity(Gravity.CENTER);
-//            rowLayout.addView(textView2);
             textView2.setLayoutParams(text2Params);
             linearLayout2.addView(textView2);
 
@@ -155,7 +150,6 @@ public class OrdersActivity extends AppCompatActivity {
             } else {
                 button.setText(R.string.info);
             }
-//            rowLayout.addView(button);
 
             if (o.getStaff() == null) {
                 button.setVisibility(View.VISIBLE);
@@ -179,52 +173,22 @@ public class OrdersActivity extends AppCompatActivity {
 
             if (o.getFinished() == 1) {
                 if (orders.indexOf(o) % 2 == 0) {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 } else {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                 }
             } else {
                 if (orders.indexOf(o) % 2 == 0) {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 } else {
-//                    rowLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
                 }
             }
 
-//            ConstraintSet constraintSet = new ConstraintSet();
-//            constraintSet.clone(rowLayout);
-
-//            // position of add button
-//            constraintSet.connect(button.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-//            constraintSet.connect(button.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//
-//            constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
-//            constraintSet.connect(textView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//            constraintSet.connect(textView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//
-//            constraintSet.connect(textView1.getId(), ConstraintSet.START, textView.getId(), ConstraintSet.END, 50);
-//            constraintSet.connect(textView1.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//            constraintSet.connect(textView1.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//
-//            constraintSet.connect(textView2.getId(), ConstraintSet.START, textView1.getId(), ConstraintSet.END);
-//            constraintSet.connect(textView2.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//            constraintSet.connect(textView2.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//
-//            constraintSet.connect(textView3.getId(), ConstraintSet.START, textView2.getId(), ConstraintSet.END);
-//            constraintSet.connect(textView3.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-//            constraintSet.connect(textView3.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
-//
-//            constraintSet.applyTo(rowLayout);
-
-//            buttonContainer.addView(rowLayout);
             linearLayoutMain.addView(linearLayout1);
             linearLayoutMain.addView(linearLayout2);
 
@@ -233,20 +197,11 @@ public class OrdersActivity extends AppCompatActivity {
     }
 
     public void openEdit(View v){
-        if (((TextView)v).getText().equals("Products")) {
-            Log.d("Text", "Products babyyyy");
-            Intent secondActivityIntent = new Intent(this, EditActivity.class);
-            finish();
-            startActivity(secondActivityIntent);
-        }
-        // change to according activity
+        Intent secondActivityIntent = new Intent(this, EditActivity.class);
+        startActivity(secondActivityIntent);
     }
     public void openHome(View v){
-        if (((TextView)v).getText().equals("Home")) {
-            Log.d("Text", "Home babyyyy");
-            Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
-            finish();
-            startActivity(secondActivityIntent);
-        }
+        Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+        startActivity(secondActivityIntent);
     }
 }

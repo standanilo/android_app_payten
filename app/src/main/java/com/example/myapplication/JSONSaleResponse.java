@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-public class jsonResponse {
+public class JSONSaleResponse {
     // import com.fasterxml.jackson.databind.ObjectMapper; // version 2.11.1
 // import com.fasterxml.jackson.annotation.JsonProperty; // version 2.11.1
 /* ObjectMapper om = new ObjectMapper();

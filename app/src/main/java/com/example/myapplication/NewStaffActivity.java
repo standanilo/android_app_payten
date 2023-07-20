@@ -3,6 +3,7 @@ package com.example.myapplication;
 import static com.example.myapplication.JDBC.addProduct;
 import static com.example.myapplication.JDBC.finishOrder;
 import static com.example.myapplication.JDBC.getUser;
+import static com.example.myapplication.JDBC.insertStaff;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class NewStaffActivity extends AppCompatActivity {
                     if (radioButton.isActivated()) type = "kurir";
                     else type = "trgovac";
                     Staff staff = new Staff(name.getText().toString(), type, username.getText().toString(), password.getText().toString());
-                    JDBC.insertStaff(staff, dao);
+                    insertStaff(staff, dao);
                     Toast toast = Toast.makeText(this, "Ime: " + username.getText().toString() + " je dodat.", Toast.LENGTH_LONG);
                     toast.show();
                     new Handler().postDelayed(new Runnable() {

@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -15,8 +14,7 @@ public class MyPrintReceiver extends BroadcastReceiver {
 
         Gson gson = new Gson();
 
-        jsonResponse jres = gson.fromJson(res, jsonResponse.class);
-
+        JSONSaleResponse jres = gson.fromJson(res, JSONSaleResponse.class);
 
         i.putExtra("ResponseResult", res);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

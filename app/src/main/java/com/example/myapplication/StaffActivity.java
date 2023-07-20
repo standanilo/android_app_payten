@@ -38,7 +38,7 @@ public class StaffActivity extends AppCompatActivity {
         button.setId(View.generateViewId());
         button.setText(R.string.dodaj);
         button.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan4));
-        // Set an onClickListener or perform any desired action
+
         button.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, NewStaffActivity.class);
             startActivity(secondActivityIntent);
@@ -80,7 +80,6 @@ public class StaffActivity extends AppCompatActivity {
         text.setLayoutParams(Params);
         linear.addView(text);
 
-
         TextView text1 = new TextView(this);
         text1.setId(View.generateViewId());
         text1.setText(R.string.ime);
@@ -108,6 +107,7 @@ public class StaffActivity extends AppCompatActivity {
         button2.setLayoutParams(Params3);
         button2.setVisibility(View.INVISIBLE);
         linear.addView(button2);
+
         buttonContainer.addView(linear);
 
         for (Staff s : staff) {
@@ -138,7 +138,6 @@ public class StaffActivity extends AppCompatActivity {
                     3
             );
 
-
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(String.valueOf(s.getStaffID()));
@@ -146,7 +145,6 @@ public class StaffActivity extends AppCompatActivity {
             textView.setPadding(20, 0,0,0);
             textView.setLayoutParams(textParams);
             linearLayout.addView(textView);
-
 
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
