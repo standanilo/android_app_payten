@@ -5,8 +5,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @androidx.room.Dao
@@ -39,6 +37,12 @@ public interface Dao {
     @Query("UPDATE Orders SET finished = 1 WHERE orderID = :id")
     void finishOrder(int id);
 
+    @Query("UPDATE Orders SET finished = 2 WHERE orderID = :id")
+    void payOrder(int id);
+
+    @Query("UPDATE Orders SET finished = 3 WHERE orderID = :id")
+    void cancelOrder(int id);
+
     @Query("update orders set customerName = :name, staff = :staff, address = :address, phone = :phone where orderID = :orderID")
     void updateOrder(int orderID, String name, String address, String phone, Integer staff);
 
@@ -66,7 +70,7 @@ public interface Dao {
     @Query("SELECT * FROM Staff where username = :username and password = :password")
     Staff getStaff(String username, String password);
 
-    @Query("SELECT staff.* FROM staff, orders o where o.staff is not null and staffID=o.staff order by orderID desc LIMIT 1")
+    @Query("SELECT staff.* FROM staff, orders o where o.staff is not null and staffID=o.staff and o.finished!=3 order by orderID desc LIMIT 1")
     Staff getLastCourier();
 
     @Query("SELECT * FROM staff where type = 'kurir'")

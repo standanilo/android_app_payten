@@ -10,7 +10,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -209,6 +208,10 @@ public class JDBC {
     public static void finishOrder(int orderID, Dao dao) {
         dao.finishOrder(orderID);
     }
+
+    public static void payOrder(int orderID, Dao dao) {
+        dao.payOrder(orderID);
+    }
     public static void finishOrder(int orderID) {
         Connection connection = DB.getInstance().getConnection();
         String q = "UPDATE Orders SET finished = 1 WHERE orderID = ?";
@@ -222,6 +225,10 @@ public class JDBC {
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
+    }
+
+    public static void cancelOrder(int id, Dao dao) {
+        dao.cancelOrder(id);
     }
 
     public static void updateOrder(int orderID, String name, String address, String phone, Dao dao) {
@@ -515,6 +522,11 @@ public class JDBC {
         Staff staff = dao.getCourierInfo(id);
         return dao.deleteStaff(staff) > 0;
     }
+
+    public static Staff getCourierInfo(int id, Dao dao) {
+        return dao.getCourierInfo(id);
+    }
+
     public static void clearAll(Dao dao){
         dao.clearOP();
         dao.clearIDOP();
@@ -523,4 +535,9 @@ public class JDBC {
         dao.clearProducts();
         dao.clearIDProduct();
     }
+
+    public static List<Staff> getAllStaff(Dao dao) {
+        return dao.getAllStaff();
+    }
+
 }

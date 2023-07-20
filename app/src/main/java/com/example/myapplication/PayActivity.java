@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.JDBC.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,12 +22,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PayActivity extends AppCompatActivity {
 
+    public static boolean delivery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+
         Database database = Room.databaseBuilder(getApplicationContext(), Database.class, "baza").allowMainThreadQueries().build();
         Dao dao = database.getDao();
+
         Intent intent = getIntent();
         int orderID = CurrentOrderActivity.orderID;
         Gson gson = new Gson();
@@ -32,6 +39,10 @@ public class PayActivity extends AppCompatActivity {
 
         ImageButton back = findViewById(R.id.back);
         ImageButton print = findViewById(R.id.print);
+        CheckBox cb = findViewById(R.id.delivery);
+        if (type.equals("kurir")) {
+            cb.setVisibility(View.INVISIBLE);
+        }
 
         if (resp != null) {
             JSONSaleResponse jres = gson.fromJson(resp, JSONSaleResponse.class);
@@ -39,7 +50,6 @@ public class PayActivity extends AppCompatActivity {
                 TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction approved");
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                dao.finishOrder(orderID);
             } else {
                 TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction declined");
@@ -48,8 +58,20 @@ public class PayActivity extends AppCompatActivity {
             }
         }
 
+        CheckBox deliver = findViewById(R.id.delivery);
+
         back.setOnClickListener(v -> {
-            Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+            Intent secondActivityIntent;
+            if (deliver.isChecked()) {
+                delivery = true;
+                secondActivityIntent = new Intent(this, CustomerActivity.class);
+                secondActivityIntent.putExtra("ID", orderID);
+                payOrder(orderID, dao);
+            } else {
+                delivery = false;
+                finishOrder(orderID, dao);
+                secondActivityIntent = new Intent(this, OrdersActivity.class);
+            }
             finish();
             startActivity(secondActivityIntent);
         });
@@ -57,6 +79,8 @@ public class PayActivity extends AppCompatActivity {
         print.setOnClickListener(v -> {
             ArrayList<JSONPrintRequest.PrintLine> lines = new ArrayList<>();
 
+            if (deliver.isChecked()) delivery = true;
+            else delivery = false;
             String t = "text";
             String st = "NORMAL";
 
@@ -79,7 +103,6 @@ public class PayActivity extends AppCompatActivity {
             addLine(lines, t, st, "________________________________");
             addLine(lines, t, st, "UKUPAN IZNOS                    ".substring(0, 25 - String.valueOf(price.get()).length()) + price.get() + ".00 RSD");
             addLine(lines, t, st, " ");
-
             addLine(lines, t, st, " ");
             addLine(lines, t, st, "================================");
             addLine(lines, t, st, "PAID BY CARD");
@@ -90,7 +113,10 @@ public class PayActivity extends AppCompatActivity {
             addLine(lines, t, st, "AUTH #:  " + MyReceiver.auth);
             addLine(lines, t, st, "________________________________");
             addLine(lines, t, st, " ");
-
+            if (type.equals("kurir")) {
+                addLine(lines, t, st, " ");
+                addLine(lines, t, st, "POTPIS__________________________");
+            }
             JSONPrintRequest preq = new JSONPrintRequest(lines);
 
             String printRequest = new GsonBuilder().disableHtmlEscaping().create().toJson(preq);
@@ -110,7 +136,7 @@ public class PayActivity extends AppCompatActivity {
         lines.add(line);
     }
 
-    private static Intent preparePrint(String printRequest) {
+    public static Intent preparePrint(String printRequest) {
         Intent intent = new Intent("com.payten.ecr.action");
         intent.setPackage("com.payten.paytenapos");
         intent.putExtra("ecrJson", printRequest);

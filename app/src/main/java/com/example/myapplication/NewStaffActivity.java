@@ -1,21 +1,16 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.addProduct;
-import static com.example.myapplication.JDBC.finishOrder;
-import static com.example.myapplication.JDBC.getUser;
-import static com.example.myapplication.JDBC.insertStaff;
+import static com.example.myapplication.JDBC.*;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class NewStaffActivity extends AppCompatActivity {
@@ -33,7 +28,7 @@ public class NewStaffActivity extends AppCompatActivity {
         EditText username = findViewById(R.id.korisnickoEdit);
         EditText password = findViewById(R.id.lozinkaEdit);
 
-        RadioButton radioButton = findViewById(R.id.radioButton);
+        CheckBox checkBox = findViewById(R.id.checkBox);
 
         button.setOnClickListener(v -> {
             if (name.getText().toString().equals("") || username.getText().toString().equals("") || password.getText().toString().equals("")) {
@@ -41,8 +36,8 @@ public class NewStaffActivity extends AppCompatActivity {
                 toast.show();
             } else {
                 if (getUser(username.getText().toString(), dao)) {
-                    String type = "";
-                    if (radioButton.isActivated()) type = "kurir";
+                    String type;
+                    if (checkBox.isChecked()) type = "kurir";
                     else type = "trgovac";
                     Staff staff = new Staff(name.getText().toString(), type, username.getText().toString(), password.getText().toString());
                     insertStaff(staff, dao);

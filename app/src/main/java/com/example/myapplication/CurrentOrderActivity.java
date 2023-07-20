@@ -48,7 +48,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
                 TextView textView1 = new TextView(this);
                 textView1.setId(View.generateViewId());
-                textView1.setText(key.getProductName() + ": " + String.valueOf(key.getProductPrice()) + " x " + String.valueOf(value) + " = " + String.valueOf(key.getProductPrice() * value));
+                textView1.setText(key.getProductName() + ": " + key.getProductPrice() + " x " + value + " = " + (key.getProductPrice() * value));
                 textView1.setTextSize(12);
 
                 rowLayout.addView(textView1);
@@ -68,18 +68,24 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
         });
 
+        Order o = getOnlyOrder(orderID, dao);
+
         TextView tv = findViewById(R.id.prices);
         tv.setText(String.valueOf(totalCost.get()));
 
         Button button1 = findViewById(R.id.pay);
         Button button2 = findViewById(R.id.pay_later);
 
+
         if (type.equals("kurir")) {
             TextView name = findViewById(R.id.name2);
             TextView phone = findViewById(R.id.phone2);
             TextView address = findViewById(R.id.address2);
 
-            Order o = getOnlyOrder(orderID, dao);
+            if (o.getFinished() == 2) {
+                button1.setText("Dostavi");
+                button2.setText("Nazad");
+            }
             name.setText(o.getCustomerName());
             phone.setText(o.getPhone());
             address.setText(o.getAddress());
@@ -92,18 +98,28 @@ public class CurrentOrderActivity extends AppCompatActivity {
         }
 
         button1.setOnClickListener(v -> {
-            Intent intent1 = new Intent("com.payten.ecr.action");
-            intent1.setPackage("com.payten.paytenapos");
+            if (o.getFinished() == 2) {
+                finishOrder(orderID, dao);
+                Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+                finish();
+                startActivity(secondActivityIntent);
+            } else {
+                if (type.equals("kurir")) {
+                    finishOrder(orderID, dao);
+                }
+                Intent intent1 = new Intent("com.payten.ecr.action");
+                intent1.setPackage("com.payten.paytenapos");
 
-            JSONSaleRequest jreq = new JSONSaleRequest(totalCost.get());
+                JSONSaleRequest jreq = new JSONSaleRequest(totalCost.get());
 
-            String req = new Gson().toJson(jreq);
+                String req = new Gson().toJson(jreq);
 
 //            Log.d("JSON", req);
 
-            prepareTransaction(intent1, req);
-            finish();
-            sendBroadcast(intent1);
+                prepareTransaction(intent1, req);
+                finish();
+                sendBroadcast(intent1);
+            }
         });
 
         button2.setOnClickListener(v -> {

@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import static com.example.myapplication.JDBC.*;
+import static com.example.myapplication.PayActivity.addLine;
+import static com.example.myapplication.PayActivity.preparePrint;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -15,7 +17,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class OrdersActivity extends AppCompatActivity {
 
@@ -40,40 +46,56 @@ public class OrdersActivity extends AppCompatActivity {
 
             LinearLayout linearLayout1 = new LinearLayout(this);
             LinearLayout linearLayout2 = new LinearLayout(this);
+            LinearLayout linearLayout3 = new LinearLayout(this);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    3
+                    1
             );
             LinearLayout.LayoutParams text1Params = new LinearLayout.LayoutParams(
-                    0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    2
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
             );
             LinearLayout.LayoutParams text2Params = new LinearLayout.LayoutParams(
-                    0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    2
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
             );
             LinearLayout.LayoutParams text3Params = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    5
+                    2
             );
             LinearLayout.LayoutParams text4Params = new LinearLayout.LayoutParams(
-                    0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    2
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
             );
             LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    5
+                    1
+            );
+            LinearLayout.LayoutParams button1Params = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
+            );
+            LinearLayout.LayoutParams button2Params = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
             );
             LinearLayout.LayoutParams text5Params = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    5
+                    2
+            );
+            LinearLayout.LayoutParams text6Params = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    2
             );
 
             TextView textView = new TextView(this);
@@ -132,18 +154,30 @@ public class OrdersActivity extends AppCompatActivity {
             button.setId(View.generateViewId());
             button.setText(R.string.plati);
             button.setLayoutParams(buttonParams);
-            linearLayout1.addView(button);
+            linearLayout3.addView(button);
 
-            if (JDBC.type.equals("trgovac")) {
+            Button button1 = new Button(this);
+            button1.setId(View.generateViewId());
+            button1.setText("Print");
+            button1.setLayoutParams(button1Params);
+            linearLayout3.addView(button1);
+
+            Button button2 = new Button(this);
+            button2.setId(View.generateViewId());
+            button2.setText("Otkazi");
+            button2.setLayoutParams(button2Params);
+            linearLayout3.addView(button2);
+
+            if (type.equals("trgovac")) {
                 if (o.getStaff() != null){
-                    Staff staff = dao.getCourierInfo(o.getStaff());
+                    Staff staff = getCourierInfo(o.getStaff(), dao);
                     if (staff != null) {
                         TextView textView6 = new TextView(this);
                         textView6.setId(View.generateViewId());
                         textView6.setText("kurir: " + staff.getName());
                         textView6.setTextSize(18);
                         textView6.setGravity(Gravity.CENTER);
-                        textView6.setLayoutParams(buttonParams);
+                        textView6.setLayoutParams(text6Params);
                         linearLayout1.addView(textView6);
                     }
                 }
@@ -154,13 +188,18 @@ public class OrdersActivity extends AppCompatActivity {
             if (o.getStaff() == null) {
                 button.setVisibility(View.VISIBLE);
             } else if (type.equals("trgovac")) {
-                button.setVisibility(View.GONE);
+                button.setVisibility(View.INVISIBLE);
+            } else if (type.equals("kurir")) {
+                button2.setVisibility(View.INVISIBLE);
             }
 
-            if (o.getFinished() == 1) {
-                button.setVisibility(View.GONE);
+            if (o.getFinished() == 1 || o.getFinished() == 3) {
+                button.setVisibility(View.INVISIBLE);
+                button2.setVisibility(View.INVISIBLE);
             }
-
+            if (type.equals("kurir") && o.getFinished() == 3) {
+                button1.setVisibility(View.INVISIBLE);
+            }
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, CurrentOrderActivity.class);
                 secondActivityIntent.putExtra("order", getOrder(o.getOrderID(), dao));
@@ -170,27 +209,109 @@ public class OrdersActivity extends AppCompatActivity {
                 startActivity(secondActivityIntent);
             });
 
-
             if (o.getFinished() == 1) {
                 if (orders.indexOf(o) % 2 == 0) {
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 } else {
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                 }
-            } else {
+            } else if (o.getFinished() == 3){
                 if (orders.indexOf(o) % 2 == 0) {
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 } else {
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+                }
+            } else if (o.getFinished() == 2){
+                if (orders.indexOf(o) % 2 == 0) {
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                } else {
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                }
+            } else {
+                if (orders.indexOf(o) % 2 == 0) {
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                } else {
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
                 }
             }
 
+            button1.setOnClickListener(v -> {
+                ArrayList<JSONPrintRequest.PrintLine> lines = new ArrayList<>();
+                HashMap<Product, Integer> order = getOrder(o.getOrderID(), dao);
+
+                String t = "text";
+                String st = "NORMAL";
+
+                AtomicInteger price = new AtomicInteger();
+
+                addLine(lines, t, st, "Prodavnica");
+                addLine(lines, t, st, " ");
+                addLine(lines, t, st, " ");
+
+                addLine(lines, t, st, "================================");
+                addLine(lines, t, st, "Naziv   Cena   Kolicina   Ukupno");
+                addLine(lines, t, st, "================================");
+
+                order.forEach((key, value) -> {
+                    price.addAndGet(key.getProductPrice() * value);
+                    addLine(lines, t, st, key.getProductName() + "                                ".substring(0, 31 - key.getProductName().length()));
+                    addLine(lines, t, st, String.format("%-6s %-10s %-3s %10s", "      ", key.getProductPrice() + ".00", value, (key.getProductPrice() * value) + ".00"));
+                });
+
+                addLine(lines, t, st, "________________________________");
+                addLine(lines, t, st, "UKUPAN IZNOS                    ".substring(0, 25 - String.valueOf(price.get()).length()) + price.get() + ".00 RSD");
+                addLine(lines, t, st, " ");
+                if (type.equals("kurir")) {
+                    addLine(lines, t, st, " ");
+                    addLine(lines, t, st, "POTPIS__________________________");
+                    addLine(lines, t, st, " ");
+                } else {
+                    addLine(lines, t, st, "________________________________");
+                    addLine(lines, t, st, " ");
+                }
+
+                JSONPrintRequest preq = new JSONPrintRequest(lines);
+
+                String printRequest = new GsonBuilder().disableHtmlEscaping().create().toJson(preq);
+                Log.d("PRINT", printRequest);
+
+                Intent intent1 = preparePrint(printRequest);
+                finish();
+                getApplicationContext().sendBroadcast(intent1);
+            });
+
+            button2.setOnClickListener(v -> {
+                if (o.getFinished() == 2) {
+                    // odradi storno
+                }
+                cancelOrder(o.getOrderID(), dao);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
+            });
+
             linearLayoutMain.addView(linearLayout1);
-            linearLayoutMain.addView(linearLayout2);
+            if (o.getStaff() != null) {
+                linearLayoutMain.addView(linearLayout2);
+            }
+            linearLayoutMain.addView(linearLayout3);
 
             buttonContainer.addView(linearLayoutMain);
         }
@@ -198,10 +319,16 @@ public class OrdersActivity extends AppCompatActivity {
 
     public void openEdit(View v){
         Intent secondActivityIntent = new Intent(this, EditActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
     public void openHome(View v){
         Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
 }

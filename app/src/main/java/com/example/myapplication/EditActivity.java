@@ -4,8 +4,6 @@ import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
@@ -106,8 +104,10 @@ public class EditActivity extends AppCompatActivity {
                         case DialogInterface.BUTTON_POSITIVE:
                             // switch to order activity
                             if (deleteProduct(textView.getText().toString(), dao)) {
-                                Intent secondActivityIntent = new Intent(this, EditActivity.class);
-                                startActivity(secondActivityIntent);
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(getIntent());
+                                overridePendingTransition(0, 0);
                             }
                             break;
 
@@ -131,10 +131,16 @@ public class EditActivity extends AppCompatActivity {
 
     public void openHome(View v){
         Intent secondActivityIntent = new Intent(this, MerchantActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
     public void openOrders(View v){
         Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
 }

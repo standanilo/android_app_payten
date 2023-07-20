@@ -2,20 +2,15 @@ package com.example.myapplication;
 
 import static com.example.myapplication.JDBC.*;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.HashMap;
 
 public class CustomerActivity extends AppCompatActivity {
 

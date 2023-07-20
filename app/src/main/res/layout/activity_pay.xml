@@ -41,4 +41,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
+    <CheckBox
+        android:id="@+id/delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/dostava"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

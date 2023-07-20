@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.deleteProduct;
-import static com.example.myapplication.JDBC.deleteStaff;
+import static com.example.myapplication.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +31,7 @@ public class StaffActivity extends AppCompatActivity {
 
         buttonContainer = findViewById(R.id.buttonContainer_edit);
 
-        ArrayList<Staff> staff = (ArrayList<Staff>) dao.getAllStaff();
+        ArrayList<Staff> staff = (ArrayList<Staff>) getAllStaff(dao);
 
         Button button = new Button(this);
         button.setId(View.generateViewId());

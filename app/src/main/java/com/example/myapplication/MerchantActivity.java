@@ -200,17 +200,23 @@ public class MerchantActivity extends AppCompatActivity {
     }
     public void openEdit(View v){
         Intent secondActivityIntent = new Intent(this, EditActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
     public void openOrders(View v){
         Intent secondActivityIntent = new Intent(this, OrdersActivity.class);
+        secondActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
+        overridePendingTransition(0, 0);
     }
 
     public int numberOfOrders(ArrayList<Order> orders) {
         int count = 0;
         for(Order o: orders) {
-            if (o.getFinished() == 0) {
+            if (o.getFinished() == 0 || o.getFinished() == 2) {
                 count++;
             }
         }
