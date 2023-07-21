@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
@@ -369,13 +370,24 @@ public class OrdersActivity extends AppCompatActivity {
 
             button2.setOnClickListener(v -> {
                 if (o.getFinished() == 2 || o.getFinished() == 1) {
-                    // odradi storno
+                    Intent intent1 = new Intent("com.payten.ecr.action");
+                    intent1.setPackage("com.payten.paytenapos");
+
+                    JSONVoidRequest jreq = new JSONVoidRequest(o);
+
+                    String req = new Gson().toJson(jreq);
+
+                    CurrentOrderActivity.orderID = o.getOrderID();
+                    prepareTransaction(intent1, req);
+                    finish();
+                    sendBroadcast(intent1);
+                } else {
+                    cancelOrder(o.getOrderID(), dao);
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
                 }
-                cancelOrder(o.getOrderID(), dao);
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
             });
 
             linearLayoutMain.addView(linearLayout1);
@@ -401,5 +413,13 @@ public class OrdersActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         startActivity(secondActivityIntent);
         overridePendingTransition(0, 0);
+    }
+
+    private static void prepareTransaction(Intent intent, String req) {
+        intent.putExtra("ecrJson", req);
+        intent.putExtra("senderIntentFilter", "com.example.myapplication.senderIntentFilterVoid");
+        intent.putExtra("senderPackage", "com.example.myapplication");
+        intent.putExtra("senderClass", "com.example.myapplication.OrdersActivity");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
     }
 }

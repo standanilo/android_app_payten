@@ -38,7 +38,7 @@ public class JSONVoidRequest {
         public Financial financial;
     }
 
-    public JSONVoidRequest(int totalCost, int invoice) {
+    public JSONVoidRequest(Order order) {
         this.header = new JSONVoidRequest.Header();
         this.request = new JSONVoidRequest.Request();
         this.request.financial = new JSONVoidRequest.Financial();
@@ -46,14 +46,14 @@ public class JSONVoidRequest {
         this.request.financial.amounts = new JSONVoidRequest.Amounts();
         this.request.financial.id = new JSONVoidRequest.Id();
 
-        this.request.financial.amounts.base = totalCost + ".00";
+        this.request.financial.amounts.base = order.getPrice() + ".00";
         this.request.financial.amounts.currencyCode = "RSD";
 
         this.request.financial.options = new JSONVoidRequest.Options();
         this.request.financial.options.language = "sr";
         this.request.financial.options.print = "true";
 
-        this.request.financial.id.invoice = String.valueOf(invoice);
+        this.request.financial.id.invoice = order.getInvoice();
 
         String tempRequest = "\"request\":"+new Gson().toJson(this.request);
         String generatedSHA512 = HashUtils.performSHA512(tempRequest);
