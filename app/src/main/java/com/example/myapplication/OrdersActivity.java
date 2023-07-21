@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +40,73 @@ public class OrdersActivity extends AppCompatActivity {
             orders = getOrdersForCourier(currentCourierID, dao);
         }
         buttonContainer = findViewById(R.id.buttonContainer_edit);
+
+        LinearLayout.LayoutParams t1Params = new LinearLayout.LayoutParams(
+                0,
+                80,
+                1
+        );
+        LinearLayout.LayoutParams t2Params = new LinearLayout.LayoutParams(
+                0,
+                80,
+                1
+        );
+        LinearLayout.LayoutParams t3Params = new LinearLayout.LayoutParams(
+                0,
+                80,
+                1
+        );
+        LinearLayout.LayoutParams t4Params = new LinearLayout.LayoutParams(
+                0,
+                80,
+                1
+        );
+
+        LinearLayout.LayoutParams l1Params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                90
+        );
+
+        LinearLayout linearLayout = new LinearLayout(this);
+        TextView t1 = new TextView(this);
+        t1.setId(View.generateViewId());
+        t1.setText("placeno + dostavljeno +");
+        t1.setTextSize(15);
+        t1.setGravity(Gravity.CENTER_HORIZONTAL);
+        t1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+        t1.setLayoutParams(t1Params);
+        linearLayout.addView(t1);
+
+        TextView t2 = new TextView(this);
+        t2.setId(View.generateViewId());
+        t2.setText("placeno + dostavljeno -");
+        t2.setTextSize(15);
+        t2.setGravity(Gravity.CENTER_HORIZONTAL);
+        t2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+        t2.setLayoutParams(t2Params);
+        linearLayout.addView(t2);
+
+        TextView t3 = new TextView(this);
+        t3.setId(View.generateViewId());
+        t3.setText("placeno - dostavljeno -");
+        t3.setTextSize(15);
+        t3.setGravity(Gravity.CENTER_HORIZONTAL);
+        t3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+        t3.setLayoutParams(t3Params);
+        linearLayout.addView(t3);
+
+        TextView t4 = new TextView(this);
+        t4.setId(View.generateViewId());
+        t4.setText("otkazano");
+        t4.setTextSize(15);
+        t4.setGravity(Gravity.CENTER_HORIZONTAL);
+        t4.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        t4.setLayoutParams(t4Params);
+        linearLayout.addView(t4);
+
+        linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        linearLayout.setLayoutParams(l1Params);
+        buttonContainer.addView(linearLayout);
 
         for (Order o : orders) {
             LinearLayout linearLayoutMain = new LinearLayout(this);
@@ -195,11 +263,14 @@ public class OrdersActivity extends AppCompatActivity {
 
             if (o.getFinished() == 1 || o.getFinished() == 3) {
                 button.setVisibility(View.INVISIBLE);
-                button2.setVisibility(View.INVISIBLE);
             }
             if (type.equals("kurir") && o.getFinished() == 3) {
                 button1.setVisibility(View.INVISIBLE);
             }
+            if (o.getFinished() == 3) {
+                button2.setVisibility(View.INVISIBLE);
+            }
+
             button.setOnClickListener(v -> {
                 Intent secondActivityIntent = new Intent(this, CurrentOrderActivity.class);
                 secondActivityIntent.putExtra("order", getOrder(o.getOrderID(), dao));
@@ -211,13 +282,13 @@ public class OrdersActivity extends AppCompatActivity {
 
             if (o.getFinished() == 1) {
                 if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
                 } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                 }
             } else if (o.getFinished() == 3){
                 if (orders.indexOf(o) % 2 == 0) {
@@ -231,13 +302,13 @@ public class OrdersActivity extends AppCompatActivity {
                 }
             } else if (o.getFinished() == 2){
                 if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
                 } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
                 }
             } else {
                 if (orders.indexOf(o) % 2 == 0) {
@@ -297,7 +368,7 @@ public class OrdersActivity extends AppCompatActivity {
             });
 
             button2.setOnClickListener(v -> {
-                if (o.getFinished() == 2) {
+                if (o.getFinished() == 2 || o.getFinished() == 1) {
                     // odradi storno
                 }
                 cancelOrder(o.getOrderID(), dao);

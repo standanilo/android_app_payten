@@ -85,6 +85,8 @@ public class CurrentOrderActivity extends AppCompatActivity {
             if (o.getFinished() == 2) {
                 button1.setText("Dostavi");
                 button2.setText("Nazad");
+            } else if (o.getFinished() == 0) {
+                button2.setText("Nazad");
             }
             name.setText(o.getCustomerName());
             phone.setText(o.getPhone());

@@ -68,5 +68,12 @@
                 <action android:name="com.example.myapplication.senderIntentFilterPrint"/>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".MyVoidReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.myapplication.senderIntentFilterVoid"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

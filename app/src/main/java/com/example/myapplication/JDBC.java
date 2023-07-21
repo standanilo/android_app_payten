@@ -209,6 +209,10 @@ public class JDBC {
         dao.finishOrder(orderID);
     }
 
+    public static void updateOrderInvoice(int orderID, String invoice, Dao dao) {
+        dao.updateOrderInvoice(orderID, invoice);
+    }
+
     public static void payOrder(int orderID, Dao dao) {
         dao.payOrder(orderID);
     }

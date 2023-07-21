@@ -46,6 +46,8 @@ public interface Dao {
     @Query("update orders set customerName = :name, staff = :staff, address = :address, phone = :phone where orderID = :orderID")
     void updateOrder(int orderID, String name, String address, String phone, Integer staff);
 
+    @Query("update orders set invoice = :invoice where orderID = :orderID")
+    void updateOrderInvoice(int orderID, String invoice);
     @Update
     void updateOrder(Order order);
 

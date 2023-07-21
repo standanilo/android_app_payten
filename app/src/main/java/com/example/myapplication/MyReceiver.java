@@ -1,9 +1,15 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.CurrentOrderActivity.orderID;
+import static com.example.myapplication.JDBC.getOnlyOrder;
+import static com.example.myapplication.JDBC.updateOrderInvoice;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import androidx.room.Room;
 
 import com.google.gson.Gson;
 
@@ -25,7 +31,7 @@ public class MyReceiver extends BroadcastReceiver {
 
         Log.d("JSON", jres.response.financial.result.code);
 
-        getDetails(jres);
+        getDetails(context, jres);
 
         i.putExtra("ResponseResult", res);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -33,11 +39,16 @@ public class MyReceiver extends BroadcastReceiver {
         context.startActivity(i);
     }
 
-    private void getDetails(JSONSaleResponse jres) {
+    private void getDetails(Context context, JSONSaleResponse jres) {
+
+        Database database = Room.databaseBuilder(context, Database.class, "baza").allowMainThreadQueries().build();
+        Dao dao = database.getDao();
+
         invoice = jres.response.financial.id.invoice;
         pan = jres.response.financial.id.card.pan;
         auth = jres.response.financial.id.authorization;
         base = jres.response.financial.amounts.base;
         curCode = jres.response.financial.amounts.currencyCode;
+        updateOrderInvoice(orderID, invoice, dao);
     }
 }

@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.sql.Date;
 @Entity(tableName = "Orders", foreignKeys = @ForeignKey(entity = Staff.class, parentColumns = "staffID", childColumns = "staff", onUpdate = ForeignKey.CASCADE))
 public class Order {
 
@@ -32,6 +31,9 @@ public class Order {
 
     @ColumnInfo(name = "phone")
     private String phone;
+
+    @ColumnInfo(name = "invoice")
+    private String invoice;
 
     public Order() {
 
@@ -111,5 +113,13 @@ public class Order {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
     }
 }

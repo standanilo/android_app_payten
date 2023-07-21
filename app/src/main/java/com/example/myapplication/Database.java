@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import androidx.room.RoomDatabase;
 
-@androidx.room.Database(entities = {Order.class, Product.class, Staff.class, OrderProduct.class}, version = 2)
+@androidx.room.Database(entities = {Order.class, Product.class, Staff.class, OrderProduct.class}, version = 4)
 public abstract class Database extends RoomDatabase {
     public abstract Dao getDao();
 }
