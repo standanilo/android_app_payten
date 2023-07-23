@@ -156,6 +156,11 @@ public class OrdersActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1
             );
+            LinearLayout.LayoutParams button3Params = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1
+            );
             LinearLayout.LayoutParams text5Params = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -237,6 +242,13 @@ public class OrdersActivity extends AppCompatActivity {
             button2.setLayoutParams(button2Params);
             linearLayout3.addView(button2);
 
+            Button button3 = new Button(this);
+            button3.setId(View.generateViewId());
+            button3.setText("Vrati");
+            button3.setLayoutParams(button3Params);
+            linearLayout3.addView(button3);
+            button3.setVisibility(View.INVISIBLE);
+
             if (type.equals("trgovac")) {
                 if (o.getStaff() != null){
                     Staff staff = getCourierInfo(o.getStaff(), dao);
@@ -270,6 +282,9 @@ public class OrdersActivity extends AppCompatActivity {
             }
             if (o.getFinished() == 3) {
                 button2.setVisibility(View.INVISIBLE);
+            }
+            if (type.equals("trgovac") && o.getFinished() == 1) {
+                button3.setVisibility(View.VISIBLE);
             }
 
             button.setOnClickListener(v -> {
@@ -388,6 +403,14 @@ public class OrdersActivity extends AppCompatActivity {
                     startActivity(getIntent());
                     overridePendingTransition(0, 0);
                 }
+            });
+
+            button3.setOnClickListener(v -> {
+                Intent secondActivityIntent = new Intent(this, RefundActivity.class);
+                secondActivityIntent.putExtra("ID", o.getOrderID());
+                finish();
+                startActivity(secondActivityIntent);
+                CurrentOrderActivity.orderID = o.getOrderID();
             });
 
             linearLayoutMain.addView(linearLayout1);

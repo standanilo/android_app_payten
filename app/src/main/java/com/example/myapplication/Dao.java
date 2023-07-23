@@ -16,8 +16,17 @@ public interface Dao {
     @Query("select * from Product where productName = :name")
     Product findProduct(String name);
 
+    @Query("select * from Product where productID = :id")
+    Product getProduct(int id);
+
+    @Query("select * from Order_product where productID = :pid and orderID = :oid")
+    OrderProduct getOrderProduct(int pid, int oid);
+
     @Delete
     int deleteProduct(Product p);
+
+    @Delete
+    void deleteOrderProduct(OrderProduct op);
 
     @Query("UPDATE Product SET productPrice = :price WHERE productID = :id")
     void changePrice(int id, int price);
@@ -51,6 +60,9 @@ public interface Dao {
     @Update
     void updateOrder(Order order);
 
+    @Update
+    void updateOrderProduct(OrderProduct op);
+
     @Insert
     long addProduct(Product product);
 
@@ -62,6 +74,9 @@ public interface Dao {
 
     @Query("select * from Orders where staff = :courier")
     List<Order> getOrdersForCourier(int courier);
+
+    @Query("select * from Order_product where orderID = :id")
+    List<OrderProduct> getProductForOrder(int id);
 
     @Query("SELECT pr.productID, pr.productName, pr.productPrice, p.quantity FROM orders o, Order_product p, Product pr where o.orderID = p.orderID and o.orderID = :orderID and p.productID = pr.productID")
     List<OrderProductInfo> getOrderInfo(int orderID);
@@ -101,6 +116,9 @@ public interface Dao {
 
     @Delete
     int deleteStaff(Staff staff);
+
+    @Delete
+    int deleteOrder(Order order);
 
     @Insert
     void initStaff(Staff ... staff);

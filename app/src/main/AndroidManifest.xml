@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".RefundActivity"
+            android:exported="false" />
+        <activity
             android:name=".StaffActivity"
             android:exported="false" />
         <activity
@@ -54,26 +57,35 @@
         <activity
             android:name=".MerchantActivity"
             android:exported="false" />
+
         <receiver
             android:name=".MyReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.myapplication.senderIntentFilter"/>
+                <action android:name="com.example.myapplication.senderIntentFilter" />
             </intent-filter>
         </receiver>
         <receiver
             android:name=".MyPrintReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.myapplication.senderIntentFilterPrint"/>
+                <action android:name="com.example.myapplication.senderIntentFilterPrint" />
             </intent-filter>
         </receiver>
         <receiver
             android:name=".MyVoidReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.myapplication.senderIntentFilterVoid"/>
+                <action android:name="com.example.myapplication.senderIntentFilterVoid" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".MyRefundReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.myapplication.senderIntentFilterRefund" />
             </intent-filter>
         </receiver>
     </application>
+
 </manifest>

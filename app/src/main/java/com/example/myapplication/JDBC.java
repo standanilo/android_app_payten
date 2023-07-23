@@ -58,6 +58,10 @@ public class JDBC {
         return products;
     }
 
+    public static void deleteOrderProduct(OrderProduct orderProduct, Dao dao) {
+        dao.deleteOrderProduct(orderProduct);
+    }
+
     public static boolean deleteProduct(String name, Dao dao) {
         Product product = dao.findProduct(name);
         if (product != null) {
@@ -125,6 +129,14 @@ public class JDBC {
         }
     }
 
+    public static ArrayList<OrderProduct> getProductsForOrder(int id, Dao dao) {
+        return (ArrayList<OrderProduct>) dao.getProductForOrder(id);
+    }
+
+    public static Product getProduct(int id, Dao dao) {
+        return dao.getProduct(id);
+    }
+
     public static int addOrder(HashMap<Product, Integer> orders, Dao dao) {
         Date date = new Date(System.currentTimeMillis());
         int finished = 0;
@@ -148,6 +160,7 @@ public class JDBC {
         }
         return (int) id;
     }
+
     public static int addOrder(HashMap<Product, Integer> orders) {
         Date date = new Date(System.currentTimeMillis());
         int finished = 0;
@@ -262,6 +275,13 @@ public class JDBC {
         order.setPhone(phone);
         dao.updateOrder(order);
     }
+
+    public static void updateOrder(Order order, Dao dao) {
+        dao.updateOrder(order);
+    }
+    public static void updateOrderProduct(OrderProduct op, Dao dao) {
+        dao.updateOrderProduct(op);
+    }
     public static void updateOrder(int orderID, String name, String address, String phone) {
         Connection connection = DB.getInstance().getConnection();
         String q = "update orders set customerName = ?, staff = ?, address = ?, phone = ? where orderID = ?";
@@ -364,6 +384,10 @@ public class JDBC {
 
     public static ArrayList<Order> getOrdersForCourier(int courierID, Dao dao) {
         return (ArrayList<Order>) dao.getOrdersForCourier(courierID);
+    }
+
+    public static OrderProduct getOrderProduct(int productID, int orderID, Dao dao) {
+        return dao.getOrderProduct(productID, orderID);
     }
     public static ArrayList<Order> getOrdersForCourier(int courierID) {
         ArrayList<Order> orders = new ArrayList<>();

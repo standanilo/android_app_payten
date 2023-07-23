@@ -27,6 +27,7 @@
     <string name="print">Print</string>
     <string name="kurir">kurir</string>
     <string name="unesi_ime">Unesite ime:</string>
+    <string name="proizvodi">Izberite koje proizvode zelite da vratite</string>
     <string name="unesi_sifra">Unesite lozinku:</string>
     <string name="unesi_koris">Unesite korisnicko ime:</string>
     <string name="unesi_ime_proizvoda">Unesite ime proizvoda:</string>
