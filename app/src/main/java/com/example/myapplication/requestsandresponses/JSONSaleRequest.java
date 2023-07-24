@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.requestsandresponses;
 
 import com.google.gson.Gson;
 

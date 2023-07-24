@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.*;
+import static com.example.myapplication.database.JDBC.*;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.tables.Staff;
 
 import java.util.ArrayList;
 

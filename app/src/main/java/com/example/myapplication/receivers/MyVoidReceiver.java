@@ -1,7 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.receivers;
 
 import static com.example.myapplication.CurrentOrderActivity.orderID;
-import static com.example.myapplication.JDBC.cancelOrder;
+import static com.example.myapplication.database.JDBC.cancelOrder;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +9,11 @@ import android.content.Intent;
 
 import androidx.room.Room;
 
+import com.example.myapplication.OrdersActivity;
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONSaleResponse;
+import com.example.myapplication.tables.Order;
 import com.google.gson.Gson;
 
 public class MyVoidReceiver extends BroadcastReceiver {

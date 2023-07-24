@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.*;
+import static com.example.myapplication.database.JDBC.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
 
 public class CustomerActivity extends AppCompatActivity {
 

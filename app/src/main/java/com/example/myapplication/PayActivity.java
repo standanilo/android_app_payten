@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.*;
+import static com.example.myapplication.database.JDBC.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,6 +14,11 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONPrintRequest;
+import com.example.myapplication.requestsandresponses.JSONSaleResponse;
+import com.example.myapplication.receivers.MyReceiver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

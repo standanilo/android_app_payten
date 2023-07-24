@@ -1,8 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.receivers;
 
 import static com.example.myapplication.CurrentOrderActivity.orderID;
-import static com.example.myapplication.JDBC.getOnlyOrder;
-import static com.example.myapplication.JDBC.updateOrderInvoice;
+import static com.example.myapplication.database.JDBC.getOnlyOrder;
+import static com.example.myapplication.database.JDBC.updateOrderInvoice;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +11,10 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.example.myapplication.PayActivity;
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONSaleResponse;
 import com.google.gson.Gson;
 
 public class MyReceiver extends BroadcastReceiver {

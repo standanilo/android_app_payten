@@ -1,11 +1,11 @@
-package com.example.myapplication;
+package com.example.myapplication.receivers;
 
 import static com.example.myapplication.CurrentOrderActivity.orderID;
-import static com.example.myapplication.JDBC.deleteOrderProduct;
-import static com.example.myapplication.JDBC.getOnlyOrder;
-import static com.example.myapplication.JDBC.getOrderProduct;
-import static com.example.myapplication.JDBC.updateOrder;
-import static com.example.myapplication.JDBC.updateOrderProduct;
+import static com.example.myapplication.database.JDBC.deleteOrderProduct;
+import static com.example.myapplication.database.JDBC.getOnlyOrder;
+import static com.example.myapplication.database.JDBC.getOrderProduct;
+import static com.example.myapplication.database.JDBC.updateOrder;
+import static com.example.myapplication.database.JDBC.updateOrderProduct;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +14,14 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.example.myapplication.CurrentOrderActivity;
+import com.example.myapplication.OrdersActivity;
+import com.example.myapplication.RefundActivity;
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONSaleResponse;
+import com.example.myapplication.tables.Order;
+import com.example.myapplication.tables.OrderProduct;
 import com.google.gson.Gson;
 
 import java.util.concurrent.atomic.AtomicInteger;

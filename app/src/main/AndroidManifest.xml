@@ -59,28 +59,28 @@
             android:exported="false" />
 
         <receiver
-            android:name=".MyReceiver"
+            android:name=".receivers.MyReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.myapplication.senderIntentFilter" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".MyPrintReceiver"
+            android:name=".receivers.MyPrintReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.myapplication.senderIntentFilterPrint" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".MyVoidReceiver"
+            android:name=".receivers.MyVoidReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.myapplication.senderIntentFilterVoid" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".MyRefundReceiver"
+            android:name=".receivers.MyRefundReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.myapplication.senderIntentFilterRefund" />

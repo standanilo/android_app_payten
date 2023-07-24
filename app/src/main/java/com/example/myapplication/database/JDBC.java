@@ -1,6 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.database;
 
 import android.util.Log;
+
+import com.example.myapplication.tables.Order;
+import com.example.myapplication.tables.OrderProduct;
+import com.example.myapplication.tables.OrderProductInfo;
+import com.example.myapplication.tables.Product;
+import com.example.myapplication.tables.Staff;
 
 import java.sql.Connection;
 import java.sql.Date;

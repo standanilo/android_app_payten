@@ -1,9 +1,15 @@
-package com.example.myapplication;
+package com.example.myapplication.database;
 
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.myapplication.tables.Order;
+import com.example.myapplication.tables.OrderProduct;
+import com.example.myapplication.tables.OrderProductInfo;
+import com.example.myapplication.tables.Product;
+import com.example.myapplication.tables.Staff;
 
 import java.util.List;
 

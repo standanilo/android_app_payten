@@ -1,8 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.requestsandresponses;
 
+import com.example.myapplication.tables.Order;
 import com.google.gson.Gson;
 
-public class JSONRefundRequest {
+public class JSONVoidRequest {
 
     public Header header;
     public Request request;
@@ -38,22 +39,22 @@ public class JSONRefundRequest {
         public Financial financial;
     }
 
-    public JSONRefundRequest(int price, String invoice) {
-        this.header = new JSONRefundRequest.Header();
-        this.request = new JSONRefundRequest.Request();
-        this.request.financial = new JSONRefundRequest.Financial();
-        this.request.financial.transaction = "refund";
-        this.request.financial.amounts = new JSONRefundRequest.Amounts();
-        this.request.financial.id = new JSONRefundRequest.Id();
+    public JSONVoidRequest(Order order) {
+        this.header = new JSONVoidRequest.Header();
+        this.request = new JSONVoidRequest.Request();
+        this.request.financial = new JSONVoidRequest.Financial();
+        this.request.financial.transaction = "void";
+        this.request.financial.amounts = new JSONVoidRequest.Amounts();
+        this.request.financial.id = new JSONVoidRequest.Id();
 
-        this.request.financial.amounts.base = price + ".00";
+        this.request.financial.amounts.base = order.getPrice() + ".00";
         this.request.financial.amounts.currencyCode = "RSD";
 
-        this.request.financial.options = new JSONRefundRequest.Options();
+        this.request.financial.options = new JSONVoidRequest.Options();
         this.request.financial.options.language = "sr";
         this.request.financial.options.print = "true";
 
-        this.request.financial.id.invoice = invoice;
+        this.request.financial.id.invoice = order.getInvoice();
 
         String tempRequest = "\"request\":"+new Gson().toJson(this.request);
         String generatedSHA512 = HashUtils.performSHA512(tempRequest);

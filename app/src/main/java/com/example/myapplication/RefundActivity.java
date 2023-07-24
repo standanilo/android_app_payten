@@ -1,10 +1,9 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.getOnlyOrder;
-import static com.example.myapplication.JDBC.getProduct;
-import static com.example.myapplication.JDBC.getProducts;
-import static com.example.myapplication.JDBC.getProductsForOrder;
-import static com.example.myapplication.JDBC.type;
+import static com.example.myapplication.database.JDBC.getOnlyOrder;
+import static com.example.myapplication.database.JDBC.getProduct;
+import static com.example.myapplication.database.JDBC.getProducts;
+import static com.example.myapplication.database.JDBC.getProductsForOrder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -18,6 +17,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONRefundRequest;
+import com.example.myapplication.tables.Order;
+import com.example.myapplication.tables.OrderProduct;
+import com.example.myapplication.tables.Product;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 

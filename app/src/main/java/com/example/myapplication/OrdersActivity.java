@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.JDBC.*;
+import static com.example.myapplication.database.JDBC.*;
 import static com.example.myapplication.PayActivity.addLine;
 import static com.example.myapplication.PayActivity.preparePrint;
 
@@ -18,6 +18,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.myapplication.database.Dao;
+import com.example.myapplication.database.Database;
+import com.example.myapplication.requestsandresponses.JSONPrintRequest;
+import com.example.myapplication.requestsandresponses.JSONVoidRequest;
+import com.example.myapplication.tables.Order;
+import com.example.myapplication.tables.Product;
+import com.example.myapplication.tables.Staff;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
