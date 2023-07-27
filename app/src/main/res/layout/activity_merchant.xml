@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MerchantActivity">
+    tools:context=".MerchantActivity"
+    android:background="@color/cyan">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,16 +45,15 @@
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="75dp"
-        android:clickable="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="24dp"
         android:enabled="false"
         android:theme="@style/Theme.AppCompat.Light"
-        app:backgroundTint="@color/cyan4"
-        app:borderWidth="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/blue_grotto"
+        app:borderWidth="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/coordinator"
         app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:rippleColor="@color/cyan2"
+        app:rippleColor="@color/baby_blue"
         app:shapeAppearanceOverlay="@style/FabShapeAppearance"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
@@ -69,7 +69,7 @@
         <LinearLayout
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_gravity="bottom"
             android:backgroundTint="@color/cyan3"
             android:paddingTop="0dp">
@@ -81,8 +81,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/home"
-                android:textColor="@color/cyan3"
-                android:textSize="25sp" />
+                android:textColor="@color/baby_blue"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -93,8 +93,8 @@
                 android:gravity="center"
                 android:onClick="openOrders"
                 android:text="@string/orders"
-                android:textColor="@color/cyan5"
-                android:textSize="25sp" />
+                android:textColor="@color/blue_grotto"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -105,8 +105,8 @@
                 android:gravity="center"
                 android:onClick="openEdit"
                 android:text="@string/products"
-                android:textColor="@color/cyan5"
-                android:textSize="25sp" />
+                android:textColor="@color/blue_grotto"
+                android:textSize="24sp" />
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:text=""
-        android:textSize="25sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/floatingActionButton2" />

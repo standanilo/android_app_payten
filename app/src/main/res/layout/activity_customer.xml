@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerActivity">
+    tools:context=".CustomerActivity"
+    android:background="@color/cyan">
 
     <EditText
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="@string/ime"
         android:autofillHints="name"
@@ -23,7 +24,7 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/adresa"
         android:autofillHints="postalAddress"
@@ -36,7 +37,7 @@
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/telefon"
         android:autofillHints="phone"
@@ -49,15 +50,12 @@
         android:id="@+id/add"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         android:text="@string/dodaj"
-        android:theme="@style/Theme.AppCompat.Light"
-        app:backgroundTint="@color/cyan4"
-        app:borderWidth="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/merch_button"
         app:layout_constraintEnd_toEndOf="@+id/phone"
         app:layout_constraintStart_toStartOf="@+id/phone"
-        app:layout_constraintTop_toBottomOf="@+id/phone"
-        app:rippleColor="@color/cyan2"
-        app:shapeAppearanceOverlay="@style/FabShapeAppearance" />
+        app:layout_constraintTop_toBottomOf="@+id/phone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

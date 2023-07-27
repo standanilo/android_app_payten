@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StaffActivity">
+    tools:context=".StaffActivity"
+    android:background="@color/cyan">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -35,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:backgroundTint="@color/cyan5"
+        android:backgroundTint="@color/baby_blue"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +47,7 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/cyan5"
+        android:backgroundTint="@color/baby_blue"
         android:onClick="goBack"
         android:src="?attr/actionModeCloseDrawable"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"

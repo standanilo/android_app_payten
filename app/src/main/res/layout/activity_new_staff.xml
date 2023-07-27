@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewStaffActivity">
+    tools:context=".NewStaffActivity"
+    android:background="@color/cyan">
 
 
     <Button
@@ -14,15 +15,12 @@
         android:layout_marginTop="20dp"
         android:clickable="true"
         android:text="@string/dodaj"
-        android:theme="@style/Theme.AppCompat.Light"
-        app:backgroundTint="@color/cyan4"
-        app:borderWidth="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/merch_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        app:rippleColor="@color/cyan2"
-        app:shapeAppearanceOverlay="@style/FabShapeAppearance"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
     <TextView

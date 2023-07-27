@@ -5,12 +5,14 @@ import static com.example.myapplication.database.JDBC.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -50,45 +52,56 @@ public class EditActivity extends AppCompatActivity {
             LinearLayout linearLayout = new LinearLayout(this);
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                     0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
                     3
             );
             LinearLayout.LayoutParams button1Params = new LinearLayout.LayoutParams(
                     0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
                     1
             );
             LinearLayout.LayoutParams button2Params = new LinearLayout.LayoutParams(
                     0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
                     1
             );
 
+            textParams.leftMargin = 32;
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(p.getProductName());
-            if (type.equals("kurir")) {
-                textView.setTextSize(20);
-            } else {
-                textView.setTextSize(15);
-            }
+            textView.setTextSize(18);
+            textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setPadding(20, 0,0,0);
             textView.setLayoutParams(textParams);
             linearLayout.addView(textView);
 
 
+            button1Params.bottomMargin = 24;
+            button1Params.topMargin = 24;
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText(R.string.izmeni);
+            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            button1.setGravity(Gravity.CENTER);
+            button1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             if (!type.equals("kurir")) {
                 button1.setLayoutParams(button1Params);
                 linearLayout.addView(button1);
             }
 
+            button2Params.bottomMargin = 24;
+            button2Params.topMargin = 24;
+            button2Params.leftMargin = 32;
+            button2Params.rightMargin = 32;
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText(R.string.brisi);
-
+            button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            button2.setGravity(Gravity.CENTER);
+            button2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             if (!type.equals("kurir")) {
                 button2.setLayoutParams(button2Params);
                 linearLayout.addView(button2);
@@ -124,7 +137,7 @@ public class EditActivity extends AppCompatActivity {
                 builder.setMessage("Da li ste sigurni da zelite da izbrisete " + textView.getText().toString() + "?").setPositiveButton("Da", dialogClickListener).setNegativeButton("Ne", dialogClickListener).show();
             });
             if (products.indexOf(p) % 2 == 0) {
-                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
             } else {
                 linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
             }

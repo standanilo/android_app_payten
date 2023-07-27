@@ -5,15 +5,18 @@ import static com.example.myapplication.database.JDBC.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Room;
 
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,12 +66,12 @@ public class MerchantActivity extends AppCompatActivity {
                 LinearLayout linearLayout = new LinearLayout(this);
                 LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                         0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         10
                 );
                 LinearLayout.LayoutParams text1Params = new LinearLayout.LayoutParams(
                         0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         1
                 );
                 LinearLayout.LayoutParams button1Params = new LinearLayout.LayoutParams(
@@ -82,18 +85,24 @@ public class MerchantActivity extends AppCompatActivity {
                         3
                 );
 
+                textParams.leftMargin = 32;
                 TextView textView = new TextView(this);
                 textView.setId(View.generateViewId());
                 textView.setText(p.getProductName());
-                textView.setTextSize(15);
-                textView.setPadding(10, 0,0,0);
+                textView.setTextSize(18);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setPadding(16, 0,0,0);
                 textView.setLayoutParams(textParams);
                 linearLayout.addView(textView);
 
+                button1Params.bottomMargin = 24;
+                button1Params.topMargin = 24;
                 Button button1 = new Button(this);
                 button1.setId(View.generateViewId());
+                button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
                 button1.setText("+");
                 button1.setLayoutParams(button1Params);
+                button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_add_button, null));
                 linearLayout.addView(button1);
 
                 TextView textView1 = new TextView(this);
@@ -103,11 +112,16 @@ public class MerchantActivity extends AppCompatActivity {
                 textView1.setLayoutParams(text1Params);
                 linearLayout.addView(textView1);
 
+                button2Params.bottomMargin = 24;
+                button2Params.topMargin = 24;
+                button2Params.rightMargin = 32;
                 Button button2 = new Button(this);
                 button2.setId(View.generateViewId());
+                button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
                 button2.setText("-");
                 button2.setEnabled(false);
                 button2.setLayoutParams(button2Params);
+                button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_remove_button, null));
                 linearLayout.addView(button2);
 
                 button1.setOnClickListener(v -> {
@@ -116,6 +130,7 @@ public class MerchantActivity extends AppCompatActivity {
                     orders.put(p, amount);
                     button2.setEnabled(true);
                     button.setEnabled(true);
+                    button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.navy_blue)));
                     textView1.setText(String.valueOf(amount));
                     incPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
@@ -130,12 +145,13 @@ public class MerchantActivity extends AppCompatActivity {
                     }
                     if (num_of_orders.get() == 0) {
                         button.setEnabled(false);
+                        button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.blue_grotto)));
                     }
                     decPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
                 });
                 if (products.indexOf(p) % 2 == 0) {
-                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
                 } else {
                     linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                 }

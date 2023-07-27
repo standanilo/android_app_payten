@@ -7,9 +7,11 @@ import static com.example.myapplication.database.JDBC.getProductsForOrder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -114,6 +116,10 @@ public class RefundActivity extends AppCompatActivity {
             button1.setText("+");
             button1.setLayoutParams(button1Params);
             button1.setEnabled(false);
+            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            button1.setGravity(Gravity.CENTER);
+            button1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             linearLayout.addView(button1);
 
             TextView textView1 = new TextView(this);
@@ -127,6 +133,10 @@ public class RefundActivity extends AppCompatActivity {
             button2.setId(View.generateViewId());
             button2.setText("-");
             button2.setEnabled(true);
+            button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            button2.setGravity(Gravity.CENTER);
+            button2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             button2.setLayoutParams(button2Params);
             linearLayout.addView(button2);
 
@@ -141,6 +151,7 @@ public class RefundActivity extends AppCompatActivity {
                 }
                 button2.setEnabled(true);
                 button.setEnabled(true);
+                button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.navy_blue)));
                 textView1.setText(String.valueOf(amount));
                 incPrice(p.getProductPrice());
                 prices.setText("Povracaj: " + price);
@@ -156,12 +167,13 @@ public class RefundActivity extends AppCompatActivity {
                 }
                 if (num_of_orders.get() == 0) {
                     button.setEnabled(false);
+                    button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.blue_grotto)));
                 }
                 decPrice(p.getProductPrice());
                 prices.setText("Povracaj: " + price);
             });
             if (productsForOrder.indexOf(p) % 2 == 0) {
-                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
             } else {
                 linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
             }

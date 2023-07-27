@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">DS</string>
-    <string name="home">Home</string>
-    <string name="products">Products</string>
-    <string name="orders">Orders</string>
+    <string name="home">Pocetna</string>
+    <string name="products">Artikli</string>
+    <string name="orders">Porudzbine</string>
     <string name="porudzbina">Porudzbina</string>
     <string name="dodaj">Dodaj</string>
     <string name="ime">Ime</string>

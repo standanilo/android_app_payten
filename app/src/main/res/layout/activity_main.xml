@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/cyan">
 
     <EditText
         android:id="@+id/username"
@@ -24,7 +25,7 @@
         android:id="@+id/password"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:autofillHints="password"
         android:ems="10"
         android:hint="@string/sifra"
@@ -39,16 +40,13 @@
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:text="@string/uloguj_se"
-        android:theme="@style/Theme.AppCompat.Light"
-        app:backgroundTint="@color/cyan4"
-        app:borderWidth="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_login_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:rippleColor="@color/cyan2"
-        app:shapeAppearanceOverlay="@style/FabShapeAppearance" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -57,6 +55,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_search"
-        android:backgroundTint="@color/cyan4"/>
+        android:background="@drawable/custom_users"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

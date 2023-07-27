@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditActivity">
+    tools:context=".EditActivity"
+    android:background="@color/cyan">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
         <LinearLayout
             android:id="@+id/linear_layout_edit"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_gravity="bottom"
             android:backgroundTint="@color/cyan3"
             android:paddingTop="0dp">
@@ -55,8 +56,8 @@
                 android:gravity="center"
                 android:text="@string/home"
                 android:onClick="openHome"
-                android:textColor="@color/cyan5"
-                android:textSize="25sp" />
+                android:textColor="@color/blue_grotto"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView3_edit"
@@ -67,8 +68,8 @@
                 android:gravity="center"
                 android:onClick="openOrders"
                 android:text="@string/orders"
-                android:textColor="@color/cyan5"
-                android:textSize="25sp" />
+                android:textColor="@color/blue_grotto"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView2_edit"
@@ -78,8 +79,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/products"
-                android:textColor="@color/cyan3"
-                android:textSize="25sp" />
+                android:textColor="@color/baby_blue"
+                android:textSize="24sp" />
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

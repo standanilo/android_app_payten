@@ -81,7 +81,7 @@ public class OrdersActivity extends AppCompatActivity {
         t1.setText("placeno + dostavljeno +");
         t1.setTextSize(15);
         t1.setGravity(Gravity.CENTER_HORIZONTAL);
-        t1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+        t1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
         t1.setLayoutParams(t1Params);
         linearLayout.addView(t1);
 
@@ -305,9 +305,9 @@ public class OrdersActivity extends AppCompatActivity {
 
             if (o.getFinished() == 1) {
                 if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
                 } else {
                     linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
                     linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));

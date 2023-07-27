@@ -5,11 +5,13 @@ import static com.example.myapplication.database.JDBC.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -108,7 +110,10 @@ public class StaffActivity extends AppCompatActivity {
         button2.setId(View.generateViewId());
         button2.setText(R.string.brisi);
         button2.setLayoutParams(Params3);
-        button2.setVisibility(View.INVISIBLE);
+        button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+        button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        button2.setGravity(Gravity.CENTER);
+        button2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         linear.addView(button2);
 
         buttonContainer.addView(linear);
@@ -173,6 +178,10 @@ public class StaffActivity extends AppCompatActivity {
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText(R.string.brisi);
+            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            button1.setGravity(Gravity.CENTER);
+            button1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             button1.setLayoutParams(button1Params);
             linearLayout.addView(button1);
             button1.setOnClickListener(v -> {

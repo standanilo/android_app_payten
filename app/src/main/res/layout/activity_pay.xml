@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PayActivity">
+    tools:context=".PayActivity"
+    android:background="@color/cyan">
 
     <TextView
         android:id="@+id/kartica"
@@ -20,10 +21,10 @@
     <ImageButton
         android:id="@+id/print"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/cyan4"
+        android:layout_height="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/merch_button"
         android:contentDescription="@string/print"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,10 +33,10 @@
     <ImageButton
         android:id="@+id/back"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/cyan4"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/merch_button"
         android:contentDescription="@string/nazad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +46,7 @@
         android:id="@+id/delivery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/dostava"
         app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
