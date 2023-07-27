@@ -53,7 +53,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
                 TextView textView1 = new TextView(this);
                 textView1.setId(View.generateViewId());
                 textView1.setText(key.getProductName() + ": " + key.getProductPrice() + " x " + value + " = " + (key.getProductPrice() * value));
-                textView1.setTextSize(12);
+                textView1.setTextSize(14);
 
                 rowLayout.addView(textView1);
 

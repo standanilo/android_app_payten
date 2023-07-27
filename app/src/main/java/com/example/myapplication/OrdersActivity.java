@@ -180,6 +180,7 @@ public class OrdersActivity extends AppCompatActivity {
                     2
             );
 
+            textParams.leftMargin = 24;
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText("ID: " + o.getOrderID());
@@ -203,6 +204,8 @@ public class OrdersActivity extends AppCompatActivity {
             textView5.setLayoutParams(text5Params);
             linearLayout1.addView(textView5);
 
+            text1Params.leftMargin = 16;
+            text1Params.rightMargin = 4;
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
             if (o.getCustomerName() != null) {
@@ -212,6 +215,8 @@ public class OrdersActivity extends AppCompatActivity {
             textView1.setLayoutParams(text1Params);
             linearLayout2.addView(textView1);
 
+            text4Params.leftMargin = 4;
+            text4Params.rightMargin = 4;
             TextView textView4 = new TextView(this);
             textView4.setId(View.generateViewId());
             if (o.getPhone() != null) {
@@ -222,6 +227,8 @@ public class OrdersActivity extends AppCompatActivity {
             textView4.setLayoutParams(text4Params);
             linearLayout2.addView(textView4);
 
+            text2Params.leftMargin = 4;
+            text2Params.rightMargin = 16;
             TextView textView2 = new TextView(this);
             textView2.setId(View.generateViewId());
             if (o.getAddress() != null) {
@@ -233,32 +240,43 @@ public class OrdersActivity extends AppCompatActivity {
             linearLayout2.addView(textView2);
 
             buttonParams.leftMargin = 32;
+            buttonParams.rightMargin = 16;
+            buttonParams.bottomMargin = 16;
             Button button = new Button(this);
             button.setId(View.generateViewId());
             button.setText(R.string.plati);
             button.setLayoutParams(buttonParams);
+            button.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button);
 
+            button1Params.rightMargin = 16;
+            button1Params.bottomMargin = 16;
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText("Print");
             button1.setLayoutParams(button1Params);
+            button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button1);
 
+            button2Params.rightMargin = 16;
+            button2Params.bottomMargin = 16;
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText("Otkazi");
             button2.setLayoutParams(button2Params);
+            button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button2);
 
             button3Params.rightMargin = 32;
+            button3Params.bottomMargin = 16;
             Button button3 = new Button(this);
             button3.setId(View.generateViewId());
             button3.setText("Vrati");
             button3.setLayoutParams(button3Params);
+            button3.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button3);
             button3.setVisibility(View.INVISIBLE);
@@ -267,6 +285,7 @@ public class OrdersActivity extends AppCompatActivity {
                 if (o.getStaff() != null){
                     Staff staff = getCourierInfo(o.getStaff(), dao);
                     if (staff != null) {
+                        text6Params.rightMargin = 24;
                         TextView textView6 = new TextView(this);
                         textView6.setId(View.generateViewId());
                         textView6.setText("kurir: " + staff.getName());

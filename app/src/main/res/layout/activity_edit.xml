@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/cyan3"
+            android:background="@color/navy_blue"
             android:paddingTop="0dp">
 
             <TextView
@@ -57,7 +57,8 @@
                 android:text="@string/home"
                 android:onClick="openHome"
                 android:textColor="@color/blue_grotto"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu"/>
 
             <TextView
                 android:id="@+id/textView3_edit"
@@ -69,7 +70,8 @@
                 android:onClick="openOrders"
                 android:text="@string/orders"
                 android:textColor="@color/blue_grotto"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu"/>
 
             <TextView
                 android:id="@+id/textView2_edit"
@@ -80,7 +82,8 @@
                 android:gravity="center"
                 android:text="@string/products"
                 android:textColor="@color/baby_blue"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu_selected"/>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -104,6 +104,7 @@ public class RefundActivity extends AppCompatActivity {
             );
 
             textParams.leftMargin = 32;
+            textParams.topMargin = 24;
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(p.getProductName());
@@ -125,6 +126,7 @@ public class RefundActivity extends AppCompatActivity {
             button1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             linearLayout.addView(button1);
 
+            text1Params.topMargin = 24;
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
             textView1.setText(String.valueOf(order.get(p)));
@@ -132,8 +134,8 @@ public class RefundActivity extends AppCompatActivity {
             textView1.setLayoutParams(text1Params);
             linearLayout.addView(textView1);
 
-            button2Params.bottomMargin = 24;
             button2Params.topMargin = 24;
+            button2Params.bottomMargin = 24;
             button2Params.rightMargin = 32;
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
@@ -178,7 +180,7 @@ public class RefundActivity extends AppCompatActivity {
                 decPrice(p.getProductPrice());
                 prices.setText("Povracaj: " + price);
             });
-            if (productsForOrder.indexOf(p) % 2 == 0) {
+            if (products.indexOf(p) % 2 == 0) {
                 linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
             } else {
                 linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));

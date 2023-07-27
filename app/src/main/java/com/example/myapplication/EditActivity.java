@@ -39,7 +39,9 @@ public class EditActivity extends AppCompatActivity {
         Button button = new Button(this);
         button.setId(View.generateViewId());
         button.setText(R.string.dodaj);
-        button.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan4));
+        button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.add_button, null));
+        button.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        button.setGravity(Gravity.CENTER);
 
         button.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, NewProductActivity.class);

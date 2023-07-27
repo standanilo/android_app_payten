@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/cyan3"
+            android:background="@color/navy_blue"
             android:paddingTop="0dp">
 
             <TextView
@@ -82,7 +82,8 @@
                 android:gravity="center"
                 android:text="@string/home"
                 android:textColor="@color/baby_blue"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu_selected"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -94,7 +95,8 @@
                 android:onClick="openOrders"
                 android:text="@string/orders"
                 android:textColor="@color/blue_grotto"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -106,7 +108,8 @@
                 android:onClick="openEdit"
                 android:text="@string/products"
                 android:textColor="@color/blue_grotto"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:background="@drawable/menu"/>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.myapplication.database.Dao;
 import com.example.myapplication.database.Database;
 
+import java.util.regex.Pattern;
+
 public class CustomerActivity extends AppCompatActivity {
 
     @Override
@@ -34,17 +36,26 @@ public class CustomerActivity extends AppCompatActivity {
         Button button = findViewById(R.id.add);
 
         button.setOnClickListener(v -> {
-            updateOrder(orderID, name.getText().toString(), address.getText().toString(), phone.getText().toString(), dao);
-            Toast toast = Toast.makeText(this, "Porudzbina dodata", Toast.LENGTH_LONG);
-            toast.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent1 = new Intent(CustomerActivity.this, MerchantActivity.class);
-                    finish();
-                    startActivity(intent1);
-                }
-            }, 2000);
+            String regex = "\\+3816\\d{7,8}|06\\d{7,8}";
+            boolean isMatch = Pattern.compile("\\+3816\\d{7,8}|06\\d{7,8}")
+                    .matcher(phone.getText())
+                    .find(); // returns true
+            if (isMatch) {
+                updateOrder(orderID, name.getText().toString(), address.getText().toString(), phone.getText().toString(), dao);
+                Toast toast = Toast.makeText(this, "Porudzbina dodata", Toast.LENGTH_LONG);
+                toast.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent1 = new Intent(CustomerActivity.this, MerchantActivity.class);
+                        finish();
+                        startActivity(intent1);
+                    }
+                }, 2000);
+            } else {
+                Toast toast = Toast.makeText(this, "Pogresan format broja telefona", Toast.LENGTH_LONG);
+                toast.show();
+            }
         });
 
     }

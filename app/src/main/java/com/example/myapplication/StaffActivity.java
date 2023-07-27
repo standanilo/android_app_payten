@@ -42,7 +42,7 @@ public class StaffActivity extends AppCompatActivity {
         Button button = new Button(this);
         button.setId(View.generateViewId());
         button.setText(R.string.dodaj);
-        button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+        button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.add_button, null));
         button.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         button.setGravity(Gravity.CENTER);
 
@@ -84,6 +84,7 @@ public class StaffActivity extends AppCompatActivity {
         text.setText("ID");
         text.setTextSize(18);
         text.setPadding(20, 0,0,0);
+        text.setGravity(Gravity.CENTER);
         text.setLayoutParams(Params);
         linear.addView(text);
 
@@ -91,6 +92,7 @@ public class StaffActivity extends AppCompatActivity {
         text1.setId(View.generateViewId());
         text1.setText(R.string.ime);
         text1.setTextSize(18);
+        text1.setGravity(Gravity.CENTER);
         text1.setLayoutParams(Params1);
         linear.addView(text1);
 
@@ -98,6 +100,7 @@ public class StaffActivity extends AppCompatActivity {
         text2.setId(View.generateViewId());
         text2.setText("Username");
         text2.setTextSize(18);
+        text2.setGravity(Gravity.CENTER);
         text2.setLayoutParams(Params2);
         linear.addView(text2);
 
@@ -105,6 +108,7 @@ public class StaffActivity extends AppCompatActivity {
         text3.setId(View.generateViewId());
         text3.setText("Pozicija");
         text3.setTextSize(18);
+        text3.setGravity(Gravity.CENTER);
         text3.setLayoutParams(Params4);
         linear.addView(text3);
 
