@@ -103,6 +103,7 @@ public class RefundActivity extends AppCompatActivity {
                     3
             );
 
+            textParams.leftMargin = 32;
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setText(p.getProductName());
@@ -111,12 +112,14 @@ public class RefundActivity extends AppCompatActivity {
             textView.setLayoutParams(textParams);
             linearLayout.addView(textView);
 
+            button1Params.bottomMargin = 24;
+            button1Params.topMargin = 24;
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText("+");
             button1.setLayoutParams(button1Params);
             button1.setEnabled(false);
-            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_add_button, null));
             button1.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button1.setGravity(Gravity.CENTER);
             button1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -129,11 +132,14 @@ public class RefundActivity extends AppCompatActivity {
             textView1.setLayoutParams(text1Params);
             linearLayout.addView(textView1);
 
+            button2Params.bottomMargin = 24;
+            button2Params.topMargin = 24;
+            button2Params.rightMargin = 32;
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText("-");
             button2.setEnabled(true);
-            button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+            button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_remove_button, null));
             button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             button2.setGravity(Gravity.CENTER);
             button2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

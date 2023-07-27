@@ -6,6 +6,7 @@ import static com.example.myapplication.PayActivity.preparePrint;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Room;
 
 import android.content.Intent;
@@ -231,28 +232,34 @@ public class OrdersActivity extends AppCompatActivity {
             textView2.setLayoutParams(text2Params);
             linearLayout2.addView(textView2);
 
+            buttonParams.leftMargin = 32;
             Button button = new Button(this);
             button.setId(View.generateViewId());
             button.setText(R.string.plati);
             button.setLayoutParams(buttonParams);
+            button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button);
 
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText("Print");
             button1.setLayoutParams(button1Params);
+            button1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button1);
 
             Button button2 = new Button(this);
             button2.setId(View.generateViewId());
             button2.setText("Otkazi");
             button2.setLayoutParams(button2Params);
+            button2.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button2);
 
+            button3Params.rightMargin = 32;
             Button button3 = new Button(this);
             button3.setId(View.generateViewId());
             button3.setText("Vrati");
             button3.setLayoutParams(button3Params);
+            button3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
             linearLayout3.addView(button3);
             button3.setVisibility(View.INVISIBLE);
 

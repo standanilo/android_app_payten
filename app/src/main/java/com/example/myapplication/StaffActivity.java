@@ -42,7 +42,9 @@ public class StaffActivity extends AppCompatActivity {
         Button button = new Button(this);
         button.setId(View.generateViewId());
         button.setText(R.string.dodaj);
-        button.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan4));
+        button.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.merch_button, null));
+        button.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        button.setGravity(Gravity.CENTER);
 
         button.setOnClickListener(v -> {
             Intent secondActivityIntent = new Intent(this, NewStaffActivity.class);
@@ -106,6 +108,7 @@ public class StaffActivity extends AppCompatActivity {
         text3.setLayoutParams(Params4);
         linear.addView(text3);
 
+        Params3.rightMargin = 32;
         Button button2 = new Button(this);
         button2.setId(View.generateViewId());
         button2.setText(R.string.brisi);
@@ -114,6 +117,7 @@ public class StaffActivity extends AppCompatActivity {
         button2.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         button2.setGravity(Gravity.CENTER);
         button2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        button2.setVisibility(View.INVISIBLE);
         linear.addView(button2);
 
         buttonContainer.addView(linear);
@@ -152,12 +156,14 @@ public class StaffActivity extends AppCompatActivity {
             textView.setTextSize(18);
             textView.setPadding(20, 0,0,0);
             textView.setLayoutParams(textParams);
+            textView.setGravity(Gravity.CENTER);
             linearLayout.addView(textView);
 
             TextView textView1 = new TextView(this);
             textView1.setId(View.generateViewId());
             textView1.setText(s.getName());
             textView1.setTextSize(18);
+            textView1.setGravity(Gravity.CENTER);
             textView1.setLayoutParams(text1Params);
             linearLayout.addView(textView1);
 
@@ -165,6 +171,7 @@ public class StaffActivity extends AppCompatActivity {
             textView2.setId(View.generateViewId());
             textView2.setText(s.getUsername());
             textView2.setTextSize(18);
+            textView2.setGravity(Gravity.CENTER);
             textView2.setLayoutParams(text2Params);
             linearLayout.addView(textView2);
 
@@ -172,9 +179,12 @@ public class StaffActivity extends AppCompatActivity {
             textView3.setId(View.generateViewId());
             textView3.setText(s.getType());
             textView3.setTextSize(18);
+            textView3.setGravity(Gravity.CENTER);
             textView3.setLayoutParams(text3Params);
             linearLayout.addView(textView3);
 
+            button1Params.rightMargin = 32;
+            button1Params.bottomMargin = 32;
             Button button1 = new Button(this);
             button1.setId(View.generateViewId());
             button1.setText(R.string.brisi);
