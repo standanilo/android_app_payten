@@ -150,11 +150,12 @@ public class MerchantActivity extends AppCompatActivity {
                     decPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
                 });
-                if (products.indexOf(p) % 2 == 0) {
-                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
-                } else {
-                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                }
+                linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout, null));
+//                if (products.indexOf(p) % 2 == 0) {
+//                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+//                } else {
+//                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//                }
                 buttonContainer = findViewById(R.id.buttonContainer);
                 buttonContainer.addView(linearLayout);
             }

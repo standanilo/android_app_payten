@@ -138,11 +138,12 @@ public class EditActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
                 builder.setMessage("Da li ste sigurni da zelite da izbrisete " + textView.getText().toString() + "?").setPositiveButton("Da", dialogClickListener).setNegativeButton("Ne", dialogClickListener).show();
             });
-            if (products.indexOf(p) % 2 == 0) {
-                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
-            } else {
-                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-            }
+            linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout, null));
+//            if (products.indexOf(p) % 2 == 0) {
+//                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+//            } else {
+//                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//            }
             buttonContainer.addView(linearLayout);
         }
         if (!type.equals("kurir")) buttonContainer.addView(button);
