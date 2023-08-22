@@ -150,7 +150,7 @@ public class MerchantActivity extends AppCompatActivity {
                     decPrice(p.getProductPrice());
                     prices.setText("Cena: " + price);
                 });
-                linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout, null));
+                linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_cyan, null));
 //                if (products.indexOf(p) % 2 == 0) {
 //                    linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
 //                } else {

@@ -82,7 +82,7 @@ public class OrdersActivity extends AppCompatActivity {
         t1.setText("placeno + dostavljeno +");
         t1.setTextSize(15);
         t1.setGravity(Gravity.CENTER_HORIZONTAL);
-        t1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+        t1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
         t1.setLayoutParams(t1Params);
         linearLayout.addView(t1);
 
@@ -330,45 +330,57 @@ public class OrdersActivity extends AppCompatActivity {
             });
 
             if (o.getFinished() == 1) {
-                if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
-                } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
-                }
+                linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan));
+                linearLayout3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_cyan, null));
+//                if (orders.indexOf(o) % 2 == 0) {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
+//                } else {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan2));
+//                }
             } else if (o.getFinished() == 3){
-                if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
-                }
+                linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+                linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+                linearLayout3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_red, null));
+//                if (orders.indexOf(o) % 2 == 0) {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+//                } else {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red1));
+//                }
             } else if (o.getFinished() == 2){
-                if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
-                }
+                linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                linearLayout3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_green, null));
+//                if (orders.indexOf(o) % 2 == 0) {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+//                } else {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green1));
+//                }
             } else {
-                if (orders.indexOf(o) % 2 == 0) {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
-                } else {
-                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
-                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
-                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
-                }
+                linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                linearLayout3.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_yellow, null));
+//                if (orders.indexOf(o) % 2 == 0) {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+//                } else {
+//                    linearLayout1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
+//                    linearLayout2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
+//                    linearLayout3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.yellow1));
+//                }
             }
 
             button1.setOnClickListener(v -> {

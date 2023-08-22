@@ -55,17 +55,17 @@ public class EditActivity extends AppCompatActivity {
             LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    3
+                    5
             );
             LinearLayout.LayoutParams button1Params = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    1
+                    2
             );
             LinearLayout.LayoutParams button2Params = new LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    1
+                    2
             );
 
             textParams.leftMargin = 32;
@@ -138,7 +138,7 @@ public class EditActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
                 builder.setMessage("Da li ste sigurni da zelite da izbrisete " + textView.getText().toString() + "?").setPositiveButton("Da", dialogClickListener).setNegativeButton("Ne", dialogClickListener).show();
             });
-            linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout, null));
+            linearLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_layout_cyan, null));
 //            if (products.indexOf(p) % 2 == 0) {
 //                linearLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.cyan1));
 //            } else {

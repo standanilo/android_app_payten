@@ -48,37 +48,43 @@ public class PayActivity extends AppCompatActivity {
         if (type.equals("kurir")) {
             cb.setVisibility(View.INVISIBLE);
         }
+        CheckBox deliver = findViewById(R.id.delivery);
+        TextView tv = findViewById(R.id.kartica);
 
         if (resp != null) {
             JSONSaleResponse jres = gson.fromJson(resp, JSONSaleResponse.class);
             if (jres.response.financial.result.code.equals("Approved")) {
-                TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction approved");
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
             } else {
-                TextView tv = findViewById(R.id.kartica);
                 tv.setText("Transaction declined");
+                deliver.setVisibility(View.INVISIBLE);
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 print.setVisibility(View.INVISIBLE);
             }
         }
 
-        CheckBox deliver = findViewById(R.id.delivery);
 
         back.setOnClickListener(v -> {
             Intent secondActivityIntent;
-            if (deliver.isChecked()) {
-                delivery = true;
-                secondActivityIntent = new Intent(this, CustomerActivity.class);
-                secondActivityIntent.putExtra("ID", orderID);
-                payOrder(orderID, dao);
+            if (tv.getText().toString().equals("Transaction approved")) {
+                if (deliver.isChecked()) {
+                    delivery = true;
+                    secondActivityIntent = new Intent(this, CustomerActivity.class);
+                    secondActivityIntent.putExtra("ID", orderID);
+                    payOrder(orderID, dao);
+                } else {
+                    delivery = false;
+                    finishOrder(orderID, dao);
+                    secondActivityIntent = new Intent(this, OrdersActivity.class);
+                }
+                finish();
+                startActivity(secondActivityIntent);
             } else {
-                delivery = false;
-                finishOrder(orderID, dao);
                 secondActivityIntent = new Intent(this, OrdersActivity.class);
+                finish();
+                startActivity(secondActivityIntent);
             }
-            finish();
-            startActivity(secondActivityIntent);
         });
 
         print.setOnClickListener(v -> {
