@@ -60,10 +60,18 @@ public class MyRefundReceiver extends BroadcastReceiver {
             });
         }
         Order o = dao.getOnlyOrder(orderID);
+        AtomicInteger j = new AtomicInteger();
         RefundActivity.order.forEach((key, value) -> {
             OrderProduct op = getOrderProduct(key.getProductID(), orderID, dao);
-            if (op != null) Log.d("op", op.toString());
+            if (op != null) {
+                j.getAndIncrement();
+                Log.d("op", op.toString());
+            }
         });
+        if (j.get()==0) {
+            Order or = dao.getOnlyOrder(orderID);
+            dao.deleteOrder(or);
+        }
         i.putExtra("ResponseResult", res);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
